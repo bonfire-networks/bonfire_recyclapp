@@ -4,7 +4,7 @@ defmodule Bonfire.UI.Contribution.ContributionDashboardLive do
   use AbsintheClient, schema: Bonfire.GraphQL.Schema, action: [mode: :internal]
 
   alias Bonfire.UI.Social.{HashtagsLive, ParticipantsLive}
-  alias Bonfire.UI.Contribution.{IntentCreateActivityLive, CreateMilestoneLive, ProposalFeedLive, FiltersLive}
+ 
   alias Bonfire.Common.Web.LivePlugs
   alias Bonfire.Me.Users
   alias Bonfire.Me.Web.{CreateUserLive, LoggedDashboardLive}
