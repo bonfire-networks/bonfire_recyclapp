@@ -8,6 +8,7 @@ defmodule Bonfire.UI.Contribution.ContributionDashboardLive do
   alias Bonfire.Common.Web.LivePlugs
   alias Bonfire.Me.Users
   alias Bonfire.Me.Web.{CreateUserLive, LoggedDashboardLive}
+  alias Bonfire.UI.Contribution.CreateEventForm
 
   def mount(params, session, socket) do
     LivePlugs.live_plug params, session, socket, [
@@ -20,37 +21,83 @@ defmodule Bonfire.UI.Contribution.ContributionDashboardLive do
   end
 
   defp mounted(params, session, socket) do
-    intents = all_intents(socket)
-    IO.inspect(intents)
-
+    res = all_res(socket)
+    changeset = CreateEventForm.changeset()
     {:ok, socket
     |> assign(
       page_title: "Home",
-      selected_tab: "about",
-      list: intents,
-      main_labels: [
-        %{id: 1, name: "Frontend dev", items: 5, color: "blue"},
-        %{id: 2, name: "Backend dev", items: 0, color: "yellow"},
-        %{id: 3, name: "AP dev", items: 1, color: "pink"},
-        %{id: 4, name: "Content", items: 3, color: "red"}
-      ]
+      all_resources: res.resource_specifications,
+      all_events: res.economic_events_pages.edges,
+      changeset: changeset
     )}
   end
 
 
+  def handle_event("validate", %{"create_event_form" => params}, socket) do
+    changeset = CreateEventForm.changeset(params)
+    changeset = Map.put(changeset, :action, :insert)
+    socket = assign(socket, changeset: changeset)
+    {:noreply, socket}
+  end
+
+  def handle_event("submit",  %{"create_event_form" => params}, socket) do
+    changeset = CreateEventForm.changeset(params)
+
+    case CreateEventForm.send(changeset, params, socket) do
+      {:ok, session} ->
+        {:noreply,
+         socket
+         |> put_flash(:info, "Unit successfully created!")}
+
+      {:error, changeset} ->
+        {:noreply, assign(socket, changeset: changeset)}
+
+      {nil, message} ->
+        {:noreply,
+         socket
+         |> assign(changeset: CreateEventForm.changeset(%{}))
+         |> put_flash(:error, message)}
+    end
+  end
+
+
+
   @graphql """
-    {
-      intents {
+  {
+    resource_specifications {
+      id
+      note
+      name
+      default_unit_of_effort {
+        label
         id
-        name
-        provider
-        receiver
-        at_location
       }
     }
+    economic_events_pages(limit: 10) {
+      edges {
+        id
+        note
+        action {
+          id
+        }
+        receiver {
+          name
+        }
+        resource_inventoried_as {
+          name
+        }
+        resource_quantity {
+          has_unit {
+            label
+          }
+          has_numerical_value
+        }
+      }
+    }
+  }
   """
-  def intents(params \\ %{}, socket), do: liveql(socket, :intents, params)
-  def all_intents(socket), do: intents(socket)
+  def resource_specs(params \\ %{}, socket), do: liveql(socket, :resource_specs, params)
+  def all_res(socket), do: resource_specs(socket)
 
 
 end

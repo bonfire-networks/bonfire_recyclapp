@@ -1,123 +1,141 @@
 <div class="container h-screen max-w-screen-md mx-auto">
-
   <div class="flex mb-16 -mx-2">
     <div class="w-full px-2">
       <div class="flex items-center mt-6">
         <h2 class="flex-1 text-2xl antialiased font-bold text-gray-800 break-words">Home</h2>
         <%= link to: Routes.live_path(@socket, Bonfire.UI.Contribution.ContributionSettingsLive) do %>
-        <button type="button" class="mt-2 inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+        <button type="button" class="inline-flex items-center px-4 py-2 mt-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
           Settings
         </button>
         <% end %>
       </div>
 
-      <div class="mt-4">
+      <div class="mt-4" x-data="{ tab: 'donation' }">
         <div class="sm:hidden">
           <label for="tabs" class="sr-only">Select a tab</label>
           <select id="tabs" name="tabs" class="block w-full py-2 pl-3 pr-10 text-base border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-            <option selected>Register a donation</option>
-            <option>Transactions history</option>
+            <option @click="tab = 'donation'" selected="{ 'true': tab === 'donation' }">Register a donation</option>
+            <option @click="tab = 'txs'"  selected="{ 'true': tab === 'txs' }">Transactions history</option>
           </select>
         </div>
         <div class="hidden sm:block">
           <div class="border-b border-gray-200">
             <nav class="flex -mb-px space-x-8" aria-label="Tabs">
-              <a href="#" class="px-1 py-4 text-sm font-medium text-indigo-600 border-b-2 border-indigo-500 whitespace-nowrap" aria-current="page">
+              <button x-bind:class="{'text-indigo-600 border-indigo-500 hover:text-indigo-600 hover:border-indigo-500' : tab === 'donation'}" @click="tab = 'donation'" class="px-1 py-4 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300 whitespace-nowrap" aria-current="page">
                 Register a donation
-              </a>
-              <a href="#" class="px-1 py-4 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300 whitespace-nowrap">
+              </button>
+              <button x-bind:class="{'text-indigo-600 border-indigo-500 hover:text-indigo-600 hover:border-indigo-500' : tab === 'txs'}" @click="tab = 'txs'" class="px-1 py-4 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300 whitespace-nowrap">
                 Transactions history
-              </a>
+              </button>
             </nav>
           </div>
         </div>
-      </div>
-
-      <div class="mt-6 mb-8 bg-white rounded-lg shadow">
-        <form action="">
-          <div class="p-3">
-            <h3 class="text-2xl font-semibold text-gray-800 mb-4 ">Detail the donation</h3>
-
-          <div>
-            <label for="resource" class="block text-sm font-medium text-gray-700">Which resource do you want to donate?</label>
-            <select id="resource" name="resource" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-              <option>Textile</option>
-              <option selected>Canada</option>
-              <option>EU</option>
-            </select>
+        <div x-show="tab === 'donation'">
+          <div class="mt-6 mb-8 bg-white rounded-lg shadow">
+            <%= f = form_for @changeset, "#", [phx_submit: "submit", phx_change: "validate"] %>
+              <div class="p-3">
+                <h3 class="mb-4 text-2xl font-semibold text-gray-800 ">Detail the donation</h3>
+                <div class="mt-3">
+                  <%= label f, :resource, "Which resource do you want to donate?" %>
+                  <div class="mt-1">
+                    <%= select f, :resource, Enum.map(@all_resources, &{&1.name, &1.id}), class: "w-full" %>
+                  </div>
+                  <%= error_tag f, :resource %>
+                </div>
+                <div class="mt-3">
+                  <%= label f, :quantity, "Specify the amount" %>
+                  <div class="mt-1">
+                    <%= number_input f, :quantity, class: "w-full"%>
+                  </div>
+                  <%= error_tag f, :quantity %>
+                </div>
+                <div class="mt-3">
+                  <%= label f, :note, "Type a description for the resource" %>
+                  <div class="mt-1">
+                    <%= textarea f, :note, class: "w-full" %>
+                  </div>
+                  <%= error_tag f, :note %>
+                </div>   
+                <div class="mt-4">
+                  <h3 class="mb-4 text-2xl font-semibold text-gray-800 ">What is the quality per piece?</h3>
+                  <div class="flex items-center mb-4 rounded-md custom-number-input w-80 bg-cyan-200">
+                    <label for="custom-input-number" class="flex-1 pl-2 text-sm font-semibold text-gray-800">High quality
+                    </label>
+                    <div class="relative flex flex-row w-24 h-10 bg-transparent rounded-r-md">
+                      <button data-action="decrement" class="w-20 h-full text-gray-600 outline-none cursor-pointer bg-cyan-400 hover:text-gray-700 hover:bg-cyan-300">
+                        <span class="m-auto text-lg font-semibold">−</span>
+                      </button>
+                      <input type="number" class="flex items-center w-full font-semibold text-center text-gray-700 border-none rounded-none outline-none focus:outline-none bg-cyan-400 text-md hover:text-black focus:text-black md:text-basecursor-default" name="custom-input-number" value="0"></input>
+                      <button data-action="increment" class="w-20 h-full text-gray-600 rounded-r cursor-pointer bg-cyan-400 hover:text-gray-700 hover:bg-cyan-300">
+                        <span class="m-auto text-lg font-semibold">+</span>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="flex items-center mb-4 rounded-md custom-number-input w-80 bg-cyan-200">
+                    <label for="custom-input-number" class="flex-1 pl-2 text-sm font-semibold text-gray-800">Medium quality
+                    </label>
+                    <div class="relative flex flex-row w-24 h-10 bg-transparent rounded-r-md">
+                      <button data-action="decrement" class="w-20 h-full text-gray-600 outline-none cursor-pointer bg-cyan-400 hover:text-gray-700 hover:bg-cyan-300">
+                        <span class="m-auto text-lg font-semibold">−</span>
+                      </button>
+                      <input type="number" class="flex items-center w-full font-semibold text-center text-gray-700 border-none rounded-none outline-none focus:outline-none bg-cyan-400 text-md hover:text-black focus:text-black md:text-basecursor-default" name="custom-input-number" value="0"></input>
+                      <button data-action="increment" class="w-20 h-full text-gray-600 rounded-r cursor-pointer bg-cyan-400 hover:text-gray-700 hover:bg-cyan-300">
+                        <span class="m-auto text-lg font-semibold">+</span>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="flex items-center mb-4 rounded-md custom-number-input w-80 bg-cyan-200">
+                    <label for="custom-input-number" class="flex-1 pl-2 text-sm font-semibold text-gray-800">Low quality
+                    </label>
+                    <div class="relative flex flex-row w-24 h-10 bg-transparent rounded-r-md">
+                      <button data-action="decrement" class="w-20 h-full text-gray-600 outline-none cursor-pointer bg-cyan-400 hover:text-gray-700 hover:bg-cyan-300">
+                        <span class="m-auto text-lg font-semibold">−</span>
+                      </button>
+                      <input type="number" class="flex items-center w-full font-semibold text-center text-gray-700 border-none rounded-none outline-none focus:outline-none bg-cyan-400 text-md hover:text-black focus:text-black md:text-basecursor-default" name="custom-input-number" value="0"></input>
+                      <button data-action="increment" class="w-20 h-full text-gray-600 rounded-r cursor-pointer bg-cyan-400 hover:text-gray-700 hover:bg-cyan-300">
+                        <span class="m-auto text-lg font-semibold">+</span>
+                      </button>
+                    </div>
+                  </div>      
+                </div>
+                <button type="submit" class="flex justify-center w-full px-4 py-2 mt-8 text-sm font-medium text-gray-800 transition duration-150 ease-in-out bg-green-300 border border-transparent rounded-md hover:bg-green-400 hover:text-gray-900 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-200 active:bg-gray-700">
+                  Donate
+                </button>
+              </div>
+            </form>
           </div>
-
-
-          <div class="mt-4">
-            <label for="quantity" class="block text-sm font-medium text-gray-700">Specify the quantity</label>
-            <div class="mt-1 relative rounded-md shadow-sm">
-              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <span class="text-gray-500 sm:text-sm">
-                  $
-                </span>
-              </div>
-              <input type="text" name="quantity" id="quantity" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md" placeholder="0.00">
-              <div class="absolute inset-y-0 right-0 flex items-center">
-                <label for="unit" class="sr-only">unit</label>
-                <select id="unit" name="unit" class="focus:ring-indigo-500 focus:border-indigo-500 h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-gray-500 sm:text-sm rounded-md">
-                  <option>Kilo</option>
-                  <option>Each</option>
-                </select>
-              </div>
-            </div>
+        </div>
+        <div x-show="tab === 'txs'">
+          <!-- This example requires Tailwind CSS v2.0+ -->
+          <div class="flow-root">
+            <ul class="mt-8">
+              <%= for item <- @all_events do %>
+              <li>
+                <div class="relative pb-8">
+                  <span class="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true"></span>
+                  <div class="relative flex space-x-3">
+                    <div>
+                      <span class="flex items-center justify-center w-8 h-8 bg-green-500 rounded-full ring-8 ring-blueGray-100">
+                        <!-- Heroicon name: check -->
+                        <svg class="w-5 h-5 text-blueGray-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                        </svg>
+                      </span>
+                    </div>
+                    <div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
+                      <div>
+                        <p class="text-base text-gray-700">Donated <b><%= item.resource_quantity.has_numerical_value %> <%= item.resource_quantity.has_unit.label %></b> of <b><%= List.first(String.split(item.resource_inventoried_as.name, "-")) %></b> </p>
+                        <p class="mt-2 text-sm text-gray-500"><%= item.note %></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <% end %>
+            </ul>
           </div>
-
-           
-          <div class="mt-4">
-            <h3 class="text-2xl font-semibold text-gray-800 mb-4 ">What is the quality per piece?</h3>
-            <div class="custom-number-input flex w-80 items-center mb-4 rounded-md bg-cyan-200">
-              <label for="custom-input-number" class="flex-1 pl-2 text-gray-800 text-sm font-semibold">High quality
-              </label>
-              <div class="flex flex-row w-24 h-10 rounded-r-md relative bg-transparent">
-                <button data-action="decrement" class=" bg-cyan-400 text-gray-600 hover:text-gray-700 hover:bg-cyan-300 h-full w-20 cursor-pointer outline-none">
-                  <span class="m-auto text-lg font-semibold">−</span>
-                </button>
-                <input type="number" class="rounded-none border-none outline-none focus:outline-none text-center w-full bg-cyan-400 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-700  outline-none" name="custom-input-number" value="0"></input>
-                <button data-action="increment" class="bg-cyan-400 text-gray-600 hover:text-gray-700 hover:bg-cyan-300 h-full w-20 rounded-r cursor-pointer">
-                  <span class="m-auto text-lg font-semibold">+</span>
-                </button>
-              </div>
-            </div>
-            <div class="custom-number-input flex w-80 items-center mb-4 rounded-md bg-cyan-200">
-              <label for="custom-input-number" class="flex-1 pl-2 text-gray-800 text-sm font-semibold">Medium quality
-              </label>
-              <div class="flex flex-row w-24 h-10 rounded-r-md relative bg-transparent">
-                <button data-action="decrement" class=" bg-cyan-400 text-gray-600 hover:text-gray-700 hover:bg-cyan-300 h-full w-20 cursor-pointer outline-none">
-                  <span class="m-auto text-lg font-semibold">−</span>
-                </button>
-                <input type="number" class="rounded-none border-none outline-none focus:outline-none text-center w-full bg-cyan-400 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-700  outline-none" name="custom-input-number" value="0"></input>
-                <button data-action="increment" class="bg-cyan-400 text-gray-600 hover:text-gray-700 hover:bg-cyan-300 h-full w-20 rounded-r cursor-pointer">
-                  <span class="m-auto text-lg font-semibold">+</span>
-                </button>
-              </div>
-            </div>
-            <div class="custom-number-input flex w-80 items-center mb-4 rounded-md bg-cyan-200">
-              <label for="custom-input-number" class="flex-1 pl-2 text-gray-800 text-sm font-semibold">Low quality
-              </label>
-              <div class="flex flex-row w-24 h-10 rounded-r-md relative bg-transparent">
-                <button data-action="decrement" class=" bg-cyan-400 text-gray-600 hover:text-gray-700 hover:bg-cyan-300 h-full w-20 cursor-pointer outline-none">
-                  <span class="m-auto text-lg font-semibold">−</span>
-                </button>
-                <input type="number" class="rounded-none border-none outline-none focus:outline-none text-center w-full bg-cyan-400 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-700  outline-none" name="custom-input-number" value="0"></input>
-                <button data-action="increment" class="bg-cyan-400 text-gray-600 hover:text-gray-700 hover:bg-cyan-300 h-full w-20 rounded-r cursor-pointer">
-                  <span class="m-auto text-lg font-semibold">+</span>
-                </button>
-              </div>
-            </div>
-            
-           
-          </div>
-          <button type="submit" class="mt-8 flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-800 transition duration-150 ease-in-out bg-green-300 border border-transparent rounded-md hover:bg-green-400 hover:text-gray-900 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-200 active:bg-gray-700">
-            Donate
-          </button>
-        </form>
+        </div>
       </div>
     </div>
-    
   </div>
 </div>

@@ -11,53 +11,121 @@
         <% end %>
       </div>
 
-      <div class="mt-4">
+      <div class="mt-4" x-data="{ tab: 'units' }">
         <div class="sm:hidden">
           <label for="tabs" class="sr-only">Select a tab</label>
           <select id="tabs" name="tabs" class="block w-full py-2 pl-3 pr-10 text-base border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-            <option selected>Create a unit</option>
-            <option>Create a resource specification</option>
+            <option @click="tab = 'units'" selected="{ 'true': tab === 'units' }">Create a unit</option>
+            <option @click="tab = 'res'"  selected="{ 'true': tab === 'res' }">Create a resource specification</option>
           </select>
         </div>
         <div class="hidden sm:block">
           <div class="border-b border-gray-200">
             <nav class="flex -mb-px space-x-8" aria-label="Tabs">
-              <a href="#" class="px-1 py-4 text-sm font-medium text-indigo-600 border-b-2 border-indigo-500 whitespace-nowrap" aria-current="page">
+              <button x-bind:class="{'text-indigo-600 border-indigo-500 hover:text-indigo-600 hover:border-indigo-500' : tab === 'units'}" @click="tab = 'units'" class="px-1 py-4 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300 whitespace-nowrap" aria-current="page">
                 Create a unit
-              </a>
-              <a href="#" class="px-1 py-4 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300 whitespace-nowrap">
+              </button>
+              <button x-bind:class="{'text-indigo-600 border-indigo-500 hover:text-indigo-600 hover:border-indigo-500' : tab === 'res'}" @click="tab = 'res'" class="px-1 py-4 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300 whitespace-nowrap">
                 Create a resource specification
-              </a>
+              </button>
             </nav>
           </div>
         </div>
-      </div>
-
-      <div class="mt-6 mb-8 bg-white rounded-lg shadow">
-        <%= f = form_for @changeset, "#", [phx_submit: "submit", phx_change: "validate"] %>
-         <div class="p-3">
-            <h3 class="mb-4 text-2xl font-semibold text-gray-800 ">Create a new unit</h3>
-
-            <div>
-              <label for="label" class="block text-sm font-medium text-gray-700">Choose a label (eg. kilo)</label>
-              <div class="mt-1">
-                <input type="text" name="label" id="label" class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-              </div>
+    
+        <div x-show="tab === 'units'">
+          <div id="units" class="mt-6 mb-8 bg-white rounded-lg shadow">
+            <%= f = form_for @changeset, "#", [phx_submit: "submit", phx_change: "validate"] %>
+             <div class="p-3">
+                <h3 class="mb-4 text-2xl font-semibold text-gray-800 ">Create a new unit</h3>
+                <div>
+                  <%= label f, :label, "Choose a label (eg. kilo)?", class: "block text-sm font-medium text-gray-700" %>
+                  <div class="mt-1">
+                    <%= text_input f, :label, required: true, class: "w-full" %>
+                  </div>
+                  <%= error_tag f, :label %>
+                </div>
+    
+                <div class="mt-3">
+                  <%= label f, :symbol, "Choose a symbol (eg. kg)", class: "block text-sm font-medium text-gray-700" %>
+                  <div class="mt-1">
+                    <%= text_input f, :symbol, required: true, class: "w-full" %>
+                  </div>
+                  <%= error_tag f, :symbol %>
+                </div>
+    
+                <button type="submit" phx-disable-with="Creating..." class="flex justify-center w-full px-4 py-2 mt-8 text-sm font-medium text-gray-800 transition duration-150 ease-in-out bg-green-300 border border-transparent rounded-md hover:bg-green-400 hover:text-gray-900 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-200 active:bg-gray-700">
+                  Create
+                </button>
+              </form>
             </div>
-
-            <div class="mt-3">
-              <label for="symbol" class="block text-sm font-medium text-gray-700">Choose a symbol (eg. kg)</symbol>
-              <div class="mt-1">
-                <input type="text" name="symbol" id="symbol" class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+          </div>
+          <div class="p-3 space-y-3 bg-white divide-y-4 divide-gray-200 rounded shadow">
+            <h3 class="text-xl font-semibold text-gray-800">All units</h3>
+            <%= for x <- @all_units do %>
+              <div class="p-3 -mx-3">
+                <h4 class="text-lg font-semibold text-gray-700">Label: <%= x.label %></h4>
+                <p class="text-base italic text-gray-500">Symbol: <%= x.symbol %></p>
               </div>
-            </div>
+            <% end %>
+          </div>
+        </div>
+        <div x-show="tab === 'res'">
+          <div id="resources" class="mt-6 mb-8 bg-white rounded-lg shadow">
+            <%= f = form_for @changeset_resource, "#", [phx_submit: "submit_resource", phx_change: "validate_resource"] %>
+             <div class="p-3">
+                <h3 class="mb-4 text-2xl font-semibold text-gray-800 ">Create a new resource specification</h3>
+                <div>
+                  <%= label f, :name, "Choose a name of the resource", class: "block text-sm font-medium text-gray-700" %>
+                  <div class="mt-1">
+                    <%= text_input f, :name, class: "w-full" %>
+                  </div>
+                  <%= error_tag f, :name %>
+                </div>
+    
+                <div class="mt-3">
+                  <%= label f, :note, "Type a description for the resource" %>
+                  <div class="mt-1">
+                    <%= textarea f, :note, class: "w-full" %>
+                  </div>
+                  <%= error_tag f, :note %>
+                </div>
 
-          <button type="submit" class="flex justify-center w-full px-4 py-2 mt-8 text-sm font-medium text-gray-800 transition duration-150 ease-in-out bg-green-300 border border-transparent rounded-md hover:bg-green-400 hover:text-gray-900 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-200 active:bg-gray-700">
-            Create
-          </button>
-        </form>
+                <div class="mt-3">
+                  <%= label f, :unit, "Select the default unit for the resource" %>
+                  <div class="mt-1">
+                    <%= select f, :unit, Enum.map(@all_units, &{&1.label, &1.id}), class: "w-full" %>
+                  </div>
+                  <%= error_tag f, :unit %>
+                </div>
+    
+                <button type="submit" phx-disable-with="Creating..." class="flex justify-center w-full px-4 py-2 mt-8 text-sm font-medium text-gray-800 transition duration-150 ease-in-out bg-green-300 border border-transparent rounded-md hover:bg-green-400 hover:text-gray-900 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-200 active:bg-gray-700">
+                  Create
+                </button>
+              </form>
+            </div>
+          </div>
+          <div class="p-3 space-y-3 bg-white divide-y-4 divide-gray-200 rounded shadow">
+            <h3 class="text-xl font-semibold text-gray-800">All resource specifications</h3>
+            <%= for x <- @all_res do %>
+            <div class="p-3 -mx-3">
+              <h4 class="text-lg font-semibold text-gray-700"><%= x.name %></h4>
+              <p class="text-base italic text-gray-500"><%= x.note %></p>
+              <%= if x.default_unit_of_effort do %>
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-indigo-100 text-indigo-800">
+                Unit: <%= x.default_unit_of_effort.label %>
+              </span>
+              <% end %>
+            </div>
+            <% end %>
+          </div>
+        </div>
       </div>
     </div>
+
+
+      
+
+      
     
   </div>
 </div>
