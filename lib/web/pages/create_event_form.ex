@@ -1,5 +1,6 @@
 defmodule  Bonfire.UI.Contribution.CreateEventForm do
   import Ecto.Changeset
+  import Bonfire.UI.Contribution.Integration
   alias ValueFlows.EconomicEvent.EconomicEvents
   alias ValueFlows.EconomicEvent.EconomicEvent
   alias ValueFlows.Knowledge.ResourceSpecification.ResourceSpecifications
@@ -25,7 +26,7 @@ defmodule  Bonfire.UI.Contribution.CreateEventForm do
       user: user,
       id: resource
     ])
-    {float, ""} = Float.parse(quantity) 
+    {float, ""} = Float.parse(quantity)
     event_attrs = %{
       note: note,
       provider: user.id,
@@ -37,7 +38,7 @@ defmodule  Bonfire.UI.Contribution.CreateEventForm do
       }
     }
     d = DateTime.utc_now
-    
+
     new_inventoried_resource = %{
       name: resource_spec.name <> "-" <> DateTime.to_string(d),
 
@@ -45,15 +46,8 @@ defmodule  Bonfire.UI.Contribution.CreateEventForm do
 
     case apply_action(changeset, :insert) do
       {:ok, _} ->
-        res = EconomicEvents.create(user, event_attrs, %{
-          new_inventoried_resource: new_inventoried_resource
-        })
 
-        if(is_nil(res)) do
-          {nil, "Incorrect details. Please try again..."}
-        else
-          {:ok, res}
-        end
+        EconomicEvents.create(user, event_attrs, %{ new_inventoried_resource: new_inventoried_resource })
 
       {:error, changeset} ->
         {:error, changeset}

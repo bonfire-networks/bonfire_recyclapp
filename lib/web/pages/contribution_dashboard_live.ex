@@ -4,7 +4,7 @@ defmodule Bonfire.UI.Contribution.ContributionDashboardLive do
   use AbsintheClient, schema: Bonfire.GraphQL.Schema, action: [mode: :internal]
 
   alias Bonfire.UI.Social.{HashtagsLive, ParticipantsLive}
- 
+
   alias Bonfire.Common.Web.LivePlugs
   alias Bonfire.Me.Users
   alias Bonfire.Me.Web.{CreateUserLive, LoggedDashboardLive}
@@ -21,13 +21,13 @@ defmodule Bonfire.UI.Contribution.ContributionDashboardLive do
   end
 
   defp mounted(params, session, socket) do
-    res = all_res(socket)
+    queries = queries(socket)
     changeset = CreateEventForm.changeset()
     {:ok, socket
     |> assign(
       page_title: "Home",
-      all_resources: res.resource_specifications,
-      all_events: res.economic_events_pages.edges,
+      all_resources: queries.resource_specifications,
+      all_events: queries.economic_events_pages.edges,
       changeset: changeset
     )}
   end
@@ -44,15 +44,17 @@ defmodule Bonfire.UI.Contribution.ContributionDashboardLive do
     changeset = CreateEventForm.changeset(params)
 
     case CreateEventForm.send(changeset, params, socket) do
-      {:ok, session} ->
+      {:ok, event, resource} ->
         {:noreply,
          socket
-         |> put_flash(:info, "Unit successfully created!")}
+         |> put_flash(:info, "Donation successfully recorded!")
+         |> assign(all_events: [event] ++ socket.assigns.all_events)
+       }
 
       {:error, changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
 
-      {nil, message} ->
+      {_, message} ->
         {:noreply,
          socket
          |> assign(changeset: CreateEventForm.changeset(%{}))
@@ -96,8 +98,14 @@ defmodule Bonfire.UI.Contribution.ContributionDashboardLive do
     }
   }
   """
-  def resource_specs(params \\ %{}, socket), do: liveql(socket, :resource_specs, params)
-  def all_res(socket), do: resource_specs(socket)
+  def queries(params \\ %{}, socket), do: liveql(socket, :queries, params)
 
-
+  def spec_unit(spec) do
+    unit = e(spec, :default_unit_of_effort, :label, nil)
+    if unit do
+      " (#{unit})"
+    else
+      ""
+    end
+  end
 end

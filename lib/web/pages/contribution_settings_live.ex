@@ -1,6 +1,7 @@
 defmodule Bonfire.UI.Contribution.ContributionSettingsLive do
   use Bonfire.Web, {:live_view, [layout: {Bonfire.UI.Contribution.LayoutView, "live.html"}]}
   use AbsintheClient, schema: Bonfire.GraphQL.Schema, action: [mode: :internal]
+
   alias Bonfire.Common.Web.LivePlugs
   alias Bonfire.UI.Contribution.CreateUnitForm
   alias Bonfire.UI.Contribution.CreateResourceSpecForm
@@ -16,7 +17,8 @@ defmodule Bonfire.UI.Contribution.ContributionSettingsLive do
   end
 
   defp mounted(params, session, socket) do
-    units = all_units(socket)
+    settings_queries = settings_queries(socket)
+    # IO.inspect(settings_queries)
     changeset = CreateUnitForm.changeset()
     changeset_resource = CreateResourceSpecForm.changeset()
     {:ok, socket
@@ -24,36 +26,38 @@ defmodule Bonfire.UI.Contribution.ContributionSettingsLive do
       page_title: "Settings",
       changeset: changeset,
       changeset_resource: changeset_resource,
-      all_units: units.unitsPages.edges,
-      all_res: units.resource_specifications
+      all_units: settings_queries.units_pages.edges,
+      all_res: settings_queries.resource_specifications_pages.edges
     )}
   end
 
- 
-  def handle_event("validate", %{"create_unit_form" => params}, socket) do
+
+  def handle_event("validate_unit", %{"create_unit_form" => params}, socket) do
     changeset = CreateUnitForm.changeset(params)
     changeset = Map.put(changeset, :action, :insert)
     socket = assign(socket, changeset: changeset)
     {:noreply, socket}
   end
 
-  def handle_event("submit",  %{"create_unit_form" => params}, socket) do
+  def handle_event("submit_unit",  %{"create_unit_form" => params}, socket) do
     changeset = CreateUnitForm.changeset(params)
 
     case CreateUnitForm.send(changeset, params, socket) do
-      {:ok, session} ->
-        {:noreply,
+      {:ok, unit} ->
+        {:ok,
          socket
-         |> put_flash(:info, "Unit successfully created!")}
+         |> put_flash(:info, "Unit successfully created!")
+         |> assign(all_units: [unit] ++ socket.assigns.all_units)
+       }
 
       {:error, changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
 
-      {nil, message} ->
+      {_, message} ->
         {:noreply,
          socket
-         |> assign(changeset: CreateUnitForm.changeset(%{}))
          |> put_flash(:error, message)}
+         |> assign(changeset: CreateUnitForm.changeset(%{}))
     end
   end
 
@@ -68,15 +72,17 @@ defmodule Bonfire.UI.Contribution.ContributionSettingsLive do
     changeset = CreateResourceSpecForm.changeset(params)
 
     case CreateResourceSpecForm.send(changeset, params, socket) do
-      {:ok, session} ->
+      {:ok, resource} ->
         {:noreply,
          socket
-         |> put_flash(:info, "Resource specification correctly created!")}
+         |> put_flash(:info, "Resource specification correctly created!")
+         |> assign(all_res: [resource] ++ socket.assigns.all_res)
+        }
 
       {:error, changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
 
-      {nil, message} ->
+      {_, message} ->
         {:noreply,
          socket
          |> assign(changeset: CreateResourceSpecForm.changeset(%{}))
@@ -87,28 +93,29 @@ defmodule Bonfire.UI.Contribution.ContributionSettingsLive do
 
   @graphql """
     {
-      unitsPages {
+      units_pages {
         edges {
           id
           label
           symbol
         }
       }
-      resource_specifications {
-        id
-        note
-        name
-        default_unit_of_effort {
-          label
+      resource_specifications_pages {
+        edges {
           id
+          note
+          name
+          default_unit_of_effort {
+            label
+            id
+          }
         }
       }
     }
   """
 
 
-  def unitsPages(params \\ %{}, socket), do: liveql(socket, :unitsPages, params)
-  def all_units(socket), do: unitsPages(socket)
+  def settings_queries(params \\ %{}, socket), do: liveql(socket, :settings_queries, params)
 
 
 end

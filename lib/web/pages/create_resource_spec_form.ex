@@ -1,5 +1,6 @@
 defmodule  Bonfire.UI.Contribution.CreateResourceSpecForm do
   import Ecto.Changeset
+  import Bonfire.UI.Contribution.Integration
   alias ValueFlows.Knowledge.ResourceSpecification.ResourceSpecifications
   alias ValueFlows.Knowledge.ResourceSpecification.ResourceSpecification
 
@@ -22,12 +23,11 @@ defmodule  Bonfire.UI.Contribution.CreateResourceSpecForm do
     user = Map.get(socket.assigns, :current_user)
     case apply_action(changeset, :insert) do
       {:ok, _} ->
-        res = ResourceSpecifications.create(user, %{name: name, note: note, default_unit_of_effort: unit, is_public: true})
 
-        if(is_nil(res)) do
+        with {:ok, res} <- ResourceSpecifications.create(user, %{name: name, note: note, default_unit_of_effort: unit, is_public: true}) do
+          {:ok, repo.preload(res, :default_unit_of_effort)}
+        else _e ->
           {nil, "Incorrect details. Please try again..."}
-        else
-          {:ok, res}
         end
 
       {:error, changeset} ->
