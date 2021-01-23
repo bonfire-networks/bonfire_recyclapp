@@ -5,6 +5,9 @@ defmodule Bonfire.UI.Contribution.ContributionSettingsLive do
   alias Bonfire.Common.Web.LivePlugs
   alias Bonfire.UI.Contribution.CreateUnitForm
   alias Bonfire.UI.Contribution.CreateResourceSpecForm
+  alias Bonfire.UI.Contribution.CreateObservationForm
+  alias Bonfire.UI.Contribution.CreatePhenomenonForm
+
 
   def mount(params, session, socket) do
     LivePlugs.live_plug params, session, socket, [
@@ -21,17 +24,84 @@ defmodule Bonfire.UI.Contribution.ContributionSettingsLive do
     # IO.inspect(settings_queries)
     changeset = CreateUnitForm.changeset()
     changeset_resource = CreateResourceSpecForm.changeset()
+    changeset_property = CreateObservationForm.changeset()
+    changeset_phenomenon = CreatePhenomenonForm.changeset()
     {:ok, socket
     |> assign(
       page_title: "Settings",
       changeset: changeset,
       changeset_resource: changeset_resource,
+      changeset_property: changeset_property,
+      changeset_phenomenon: changeset_phenomenon,
       all_units: settings_queries.units_pages.edges,
-      all_res: settings_queries.resource_specifications_pages.edges
+      all_res: settings_queries.resource_specifications_pages.edges,
+      all_properties: settings_queries.observable_properties_pages.edges,
+      all_phenomenon: settings_queries.observable_phenomenon_pages.edges
     )}
   end
 
 
+  def handle_event("validate_property", %{"create_observation_form" => params}, socket) do
+    changeset = CreateObservationForm.changeset(params)
+    changeset = Map.put(changeset, :action, :insert)
+    socket = assign(socket, changeset_property: changeset)
+    {:noreply, socket}
+  end
+
+  def handle_event("submit_property",  %{"create_observation_form" => params}, socket) do
+    changeset = CreateObservationForm.changeset(params)
+
+    case CreateObservationForm.send(changeset, params, socket) do
+      {:ok, property} ->
+        {:noreply,
+         socket
+         |> put_flash(:info, "Property successfully created!")
+         |> assign(all_properties: [property] ++ socket.assigns.all_properties)
+       }
+
+      {:error, changeset} ->
+        {:noreply, assign(socket, changeset_property: changeset)}
+
+      {_, message} ->
+        {:noreply,
+         socket
+         |> put_flash(:error, message)}
+         |> assign(changeset_property: CreateObservationForm.changeset(%{}))
+    end
+  end
+
+  def handle_event("validate_phenomenon", %{"create_phenomenon_form" => params}, socket) do
+    changeset = CreatePhenomenonForm.changeset(params)
+    changeset = Map.put(changeset, :action, :insert)
+    socket = assign(socket, changeset_phenomenon: changeset)
+    {:noreply, socket}
+  end
+
+  def handle_event("submit_phenomenon",  %{"create_phenomenon_form" => params}, socket) do
+    changeset = CreatePhenomenonForm.changeset(params)
+
+    case CreatePhenomenonForm.send(changeset, params, socket) do
+      {:ok, phenomenon} ->
+        {:noreply,
+         socket
+         |> put_flash(:info, "phenomenon successfully created!")
+         |> assign(all_phenomenon: [phenomenon] ++ socket.assigns.all_phenomenon)
+       
+       }
+
+      {:error, changeset} ->
+        {:noreply, assign(socket, changeset_property: changeset)}
+
+      {_, message} ->
+        {:noreply,
+         socket
+         |> put_flash(:error, message)}
+         |> assign(changeset_property: CreatePhenomenonForm.changeset(%{}))
+    end
+  end
+
+
+ 
   def handle_event("validate_unit", %{"create_unit_form" => params}, socket) do
     changeset = CreateUnitForm.changeset(params)
     changeset = Map.put(changeset, :action, :insert)
@@ -44,7 +114,7 @@ defmodule Bonfire.UI.Contribution.ContributionSettingsLive do
 
     case CreateUnitForm.send(changeset, params, socket) do
       {:ok, unit} ->
-        {:ok,
+        {:noreply,
          socket
          |> put_flash(:info, "Unit successfully created!")
          |> assign(all_units: [unit] ++ socket.assigns.all_units)
@@ -98,6 +168,23 @@ defmodule Bonfire.UI.Contribution.ContributionSettingsLive do
           id
           label
           symbol
+        }
+      }
+      observable_properties_pages {
+        edges {
+          id
+          note
+          label
+        }
+      }
+      observable_phenomenon_pages {
+        edges {
+          label
+          note
+          formula_quantifier
+          choice_of {
+            label
+          }
         }
       }
       resource_specifications_pages {

@@ -26,12 +26,14 @@ defmodule Bonfire.UI.Contribution.ContributionDashboardLive do
     {:ok, socket
     |> assign(
       page_title: "Home",
+      high: 0,
+      medium: 0,
+      low: 0,
       all_resources: queries.resource_specifications,
       all_events: queries.economic_events_pages.edges,
       changeset: changeset
     )}
   end
-
 
   def handle_event("validate", %{"create_event_form" => params}, socket) do
     changeset = CreateEventForm.changeset(params)

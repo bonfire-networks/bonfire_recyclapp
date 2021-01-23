@@ -59,42 +59,24 @@
                 <div class="mt-4">
                   <h3 class="mb-4 text-2xl font-semibold text-gray-800 ">What is the quality per piece?</h3>
                   <div class="flex items-center mb-4 rounded-md custom-number-input w-80 bg-cyan-200">
-                    <label for="custom-input-number" class="flex-1 pl-2 text-sm font-semibold text-gray-800">High quality
+                    <label for="high" class="flex-1 pl-2 text-sm font-semibold text-gray-800">High quality
                     </label>
                     <div class="relative flex flex-row w-24 h-10 bg-transparent rounded-r-md">
-                      <button data-action="decrement" class="w-20 h-full text-gray-600 outline-none cursor-pointer bg-cyan-400 hover:text-gray-700 hover:bg-cyan-300">
-                        <span class="m-auto text-lg font-semibold">−</span>
-                      </button>
-                      <input type="number" class="flex items-center w-full font-semibold text-center text-gray-700 border-none rounded-none outline-none focus:outline-none bg-cyan-400 text-md hover:text-black focus:text-black md:text-basecursor-default" name="custom-input-number" value="0"></input>
-                      <button data-action="increment" class="w-20 h-full text-gray-600 rounded-r cursor-pointer bg-cyan-400 hover:text-gray-700 hover:bg-cyan-300">
-                        <span class="m-auto text-lg font-semibold">+</span>
-                      </button>
+                      <%= number_input f, :high, placeholder: "0", class: "flex items-center w-full font-semibold text-center text-gray-700 border-none rounded-none outline-none focus:outline-none bg-cyan-400 text-md hover:text-black focus:text-black md:text-basecursor-default" %>                      
                     </div>
                   </div>
                   <div class="flex items-center mb-4 rounded-md custom-number-input w-80 bg-cyan-200">
-                    <label for="custom-input-number" class="flex-1 pl-2 text-sm font-semibold text-gray-800">Medium quality
+                    <label for="medium" class="flex-1 pl-2 text-sm font-semibold text-gray-800">Medium quality
                     </label>
                     <div class="relative flex flex-row w-24 h-10 bg-transparent rounded-r-md">
-                      <button data-action="decrement" class="w-20 h-full text-gray-600 outline-none cursor-pointer bg-cyan-400 hover:text-gray-700 hover:bg-cyan-300">
-                        <span class="m-auto text-lg font-semibold">−</span>
-                      </button>
-                      <input type="number" class="flex items-center w-full font-semibold text-center text-gray-700 border-none rounded-none outline-none focus:outline-none bg-cyan-400 text-md hover:text-black focus:text-black md:text-basecursor-default" name="custom-input-number" value="0"></input>
-                      <button data-action="increment" class="w-20 h-full text-gray-600 rounded-r cursor-pointer bg-cyan-400 hover:text-gray-700 hover:bg-cyan-300">
-                        <span class="m-auto text-lg font-semibold">+</span>
-                      </button>
+                      <%= number_input f, :medium, placeholder: "0", class: "flex items-center w-full font-semibold text-center text-gray-700 border-none rounded-none outline-none focus:outline-none bg-cyan-400 text-md hover:text-black focus:text-black md:text-basecursor-default"%>      
                     </div>
                   </div>
                   <div class="flex items-center mb-4 rounded-md custom-number-input w-80 bg-cyan-200">
-                    <label for="custom-input-number" class="flex-1 pl-2 text-sm font-semibold text-gray-800">Low quality
+                    <label for="low" class="flex-1 pl-2 text-sm font-semibold text-gray-800">Low quality
                     </label>
                     <div class="relative flex flex-row w-24 h-10 bg-transparent rounded-r-md">
-                      <button data-action="decrement" class="w-20 h-full text-gray-600 outline-none cursor-pointer bg-cyan-400 hover:text-gray-700 hover:bg-cyan-300">
-                        <span class="m-auto text-lg font-semibold">−</span>
-                      </button>
-                      <input type="number" class="flex items-center w-full font-semibold text-center text-gray-700 border-none rounded-none outline-none focus:outline-none bg-cyan-400 text-md hover:text-black focus:text-black md:text-basecursor-default" name="custom-input-number" value="0"></input>
-                      <button data-action="increment" class="w-20 h-full text-gray-600 rounded-r cursor-pointer bg-cyan-400 hover:text-gray-700 hover:bg-cyan-300">
-                        <span class="m-auto text-lg font-semibold">+</span>
-                      </button>
+                      <%= number_input f, :low, placeholder: "0", class: "flex items-center w-full font-semibold text-center text-gray-700 border-none rounded-none outline-none focus:outline-none bg-cyan-400 text-md hover:text-black focus:text-black md:text-basecursor-default"%>                            
                     </div>
                   </div>
                 </div>
