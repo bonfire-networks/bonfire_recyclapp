@@ -17,21 +17,22 @@ defmodule  Bonfire.UI.Contribution.CreateObservationForm do
     |> validate_required([:has_feature_of_interest, :observed_property, :has_result])
   end
 
-  def send(changeset, %{"has_feature_of_interest" => has_feature_of_interest, "observed_property" => observed_property, "has_result" => has_result, "unit" => unit} = params, socket) do
+  def send(changeset, %{"has_feature_of_interest" => has_feature_of_interest, "observed_property" => observed_property} = params, socket) do
     user = Map.get(socket.assigns, :current_user)
     provider = user.id
     IO.inspect(params)
-    IO.inspect(has_result)
-    {float, ""} = Float.parse(has_result)
-    has_result = %{
-      has_numerical_value: float,
-      has_unit: unit
-    }
+    # IO.inspect(has_result)
+    # {float, ""} = Float.parse(has_result)
+    # has_result = %{
+    #   has_numerical_value: float,
+    #   has_unit: unit
+    # }
     attrs = %{
-      provider: provider, 
-      has_feature_of_interest: has_feature_of_interest, 
-      observed_property: observed_property, 
-      result_measure: has_result }
+      provider: provider,
+      has_feature_of_interest: has_feature_of_interest,
+      observed_property: observed_property,
+      result_phenomenon: params["result_phenomenon"]
+    }
     case apply_action(changeset, :insert) do
       {:ok, _} ->
 

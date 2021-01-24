@@ -5,7 +5,7 @@ defmodule Bonfire.UI.Contribution.ContributionSettingsLive do
   alias Bonfire.Common.Web.LivePlugs
   alias Bonfire.UI.Contribution.CreateUnitForm
   alias Bonfire.UI.Contribution.CreateResourceSpecForm
-  alias Bonfire.UI.Contribution.CreateObservatablePropertyForm
+  alias Bonfire.UI.Contribution.CreateObservablePropertyForm
   alias Bonfire.UI.Contribution.CreatePhenomenonForm
 
 
@@ -24,7 +24,7 @@ defmodule Bonfire.UI.Contribution.ContributionSettingsLive do
     # IO.inspect(settings_queries)
     changeset = CreateUnitForm.changeset()
     changeset_resource = CreateResourceSpecForm.changeset()
-    changeset_property = CreateObservatablePropertyForm.changeset()
+    changeset_property = CreateObservablePropertyForm.changeset()
     changeset_phenomenon = CreatePhenomenonForm.changeset()
     {:ok, socket
     |> assign(
@@ -41,17 +41,17 @@ defmodule Bonfire.UI.Contribution.ContributionSettingsLive do
   end
 
 
-  def handle_event("validate_property", %{"create_observatable_property_form" => params}, socket) do
-    changeset = CreateObservatablePropertyForm.changeset(params)
+  def handle_event("validate_property", %{"create_observable_property_form" => params}, socket) do
+    changeset = CreateObservablePropertyForm.changeset(params)
     changeset = Map.put(changeset, :action, :insert)
     socket = assign(socket, changeset_property: changeset)
     {:noreply, socket}
   end
 
-  def handle_event("submit_property",  %{"create_observatable_property_form" => params}, socket) do
-    changeset = CreateObservatablePropertyForm.changeset(params)
+  def handle_event("submit_property",  %{"create_observable_property_form" => params}, socket) do
+    changeset = CreateObservablePropertyForm.changeset(params)
 
-    case CreateObservatablePropertyForm.send(changeset, params, socket) do
+    case CreateObservablePropertyForm.send(changeset, params, socket) do
       {:ok, property} ->
         {:noreply,
          socket
@@ -66,7 +66,7 @@ defmodule Bonfire.UI.Contribution.ContributionSettingsLive do
         {:noreply,
          socket
          |> put_flash(:error, message)}
-         |> assign(changeset_property: CreateObservatablePropertyForm.changeset(%{}))
+         |> assign(changeset_property: CreateObservablePropertyForm.changeset(%{}))
     end
   end
 
@@ -84,9 +84,8 @@ defmodule Bonfire.UI.Contribution.ContributionSettingsLive do
       {:ok, phenomenon} ->
         {:noreply,
          socket
-         |> put_flash(:info, "phenomenon successfully created!")
+         |> put_flash(:info, "Phenomenon successfully created!")
          |> assign(all_phenomenon: [phenomenon] ++ socket.assigns.all_phenomenon)
-       
        }
 
       {:error, changeset} ->
@@ -95,13 +94,14 @@ defmodule Bonfire.UI.Contribution.ContributionSettingsLive do
       {_, message} ->
         {:noreply,
          socket
-         |> put_flash(:error, message)}
-         |> assign(changeset_property: CreatePhenomenonForm.changeset(%{}))
+         |> put_flash(:error, message)
+         |> assign(changeset_phenomenon: CreatePhenomenonForm.changeset(%{}))
+        }
     end
   end
 
 
- 
+
   def handle_event("validate_unit", %{"create_unit_form" => params}, socket) do
     changeset = CreateUnitForm.changeset(params)
     changeset = Map.put(changeset, :action, :insert)
