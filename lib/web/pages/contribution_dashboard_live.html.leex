@@ -36,47 +36,74 @@
               <div class="p-3">
                 <h3 class="mb-4 text-2xl font-semibold text-gray-800 ">Describe the donation</h3>
                 <div class="mt-3">
-                  <%= label f, :resource, "Which resource do you want to donate?" %>
+                  <%= label f, :resource, "Which resource do you want to donate?", class: "block text-sm font-medium text-gray-700" %>
                   <div class="mt-1">
                     <%= select f, :resource, Enum.map(@all_resources, &{&1.name <> spec_unit(&1), &1.id}), class: "w-full" %>
                   </div>
                   <%= error_tag f, :resource %>
                 </div>
                 <div class="mt-3">
-                  <%= label f, :quantity, "Specify the amount" %>
+                  <%= label f, :quantity, "Specify the amount", class: "block text-sm font-medium text-gray-700" %>
                   <div class="mt-1">
                     <%= number_input f, :quantity, class: "w-full"%>
                   </div>
                   <%= error_tag f, :quantity %>
                 </div>
                 <div class="mt-3">
-                  <%= label f, :note, "Type a description for the resource" %>
+                  <%= label f, :note, "Type a description for the resource", class: "block text-sm font-medium text-gray-700" %>
                   <div class="mt-1">
                     <%= textarea f, :note, class: "w-full" %>
                   </div>
                   <%= error_tag f, :note %>
                 </div>
+                <div class="mt-3">
+                  <%= label f, :property, "What do you want to observe?", class: "block text-sm font-medium text-gray-700" %>
+                  <div class="mt-1">
+                    <%= select f, :property, Enum.map(@all_observable_properties, &{&1.label, &1.id}), class: "w-full" %>
+                  </div>
+                  <%= error_tag f, :property %>
+                </div>
                 <div class="mt-4">
                   <h3 class="mb-4 text-2xl font-semibold text-gray-800 ">What is the quality per piece?</h3>
-                  <div class="flex items-center mb-4 rounded-md custom-number-input w-80 bg-cyan-200">
-                    <label for="high" class="flex-1 pl-2 text-sm font-semibold text-gray-800">High quality
-                    </label>
-                    <div class="relative flex flex-row w-24 h-10 bg-transparent rounded-r-md">
-                      <%= number_input f, :high, placeholder: "0", class: "flex items-center w-full font-semibold text-center text-gray-700 border-none rounded-none outline-none focus:outline-none bg-cyan-400 text-md hover:text-black focus:text-black md:text-basecursor-default" %>                      
+                  <div class="flex space-x-3">
+                    <div class="flex items-center mb-4 rounded-md custom-number-input w-80 bg-cyan-200">
+                      <label for="high" class="flex-1 pl-2 text-sm font-semibold text-gray-800">High quality
+                      </label>
+                      <div class="relative flex flex-row w-12 h-10 bg-transparent rounded-r-md">
+                        <%= number_input f, :high, placeholder: "0", class: "flex items-center w-full font-semibold text-center text-gray-700 border-none rounded-none outline-none focus:outline-none bg-cyan-400 text-md hover:text-black focus:text-black md:text-basecursor-default" %>                      
+                      </div>
+                      <div class="w-20">
+                        <div class="">
+                          <%= select f, :unit_high, Enum.map(@all_units, &{&1.symbol, &1.id}), class: "w-full" %>
+                        </div>
+                        <%= error_tag f, :unit_high %>
+                      </div>
                     </div>
-                  </div>
-                  <div class="flex items-center mb-4 rounded-md custom-number-input w-80 bg-cyan-200">
-                    <label for="medium" class="flex-1 pl-2 text-sm font-semibold text-gray-800">Medium quality
-                    </label>
-                    <div class="relative flex flex-row w-24 h-10 bg-transparent rounded-r-md">
-                      <%= number_input f, :medium, placeholder: "0", class: "flex items-center w-full font-semibold text-center text-gray-700 border-none rounded-none outline-none focus:outline-none bg-cyan-400 text-md hover:text-black focus:text-black md:text-basecursor-default"%>      
+                    <div class="flex items-center mb-4 rounded-md custom-number-input w-80 bg-cyan-200">
+                      <label for="medium" class="flex-1 pl-2 text-sm font-semibold text-gray-800">Medium quality
+                      </label>
+                      <div class="relative flex flex-row w-12 h-10 bg-transparent rounded-r-md">
+                        <%= number_input f, :medium, placeholder: "0", class: "flex items-center w-full font-semibold text-center text-gray-700 border-none rounded-none outline-none focus:outline-none bg-cyan-400 text-md hover:text-black focus:text-black md:text-basecursor-default"%>      
+                      </div>
+                      <div class="w-20">
+                        <div class="">
+                          <%= select f, :unit_medium, Enum.map(@all_units, &{&1.symbol, &1.id}), class: "w-full" %>
+                        </div>
+                        <%= error_tag f, :unit_medium %>
+                      </div>
                     </div>
-                  </div>
-                  <div class="flex items-center mb-4 rounded-md custom-number-input w-80 bg-cyan-200">
-                    <label for="low" class="flex-1 pl-2 text-sm font-semibold text-gray-800">Low quality
-                    </label>
-                    <div class="relative flex flex-row w-24 h-10 bg-transparent rounded-r-md">
-                      <%= number_input f, :low, placeholder: "0", class: "flex items-center w-full font-semibold text-center text-gray-700 border-none rounded-none outline-none focus:outline-none bg-cyan-400 text-md hover:text-black focus:text-black md:text-basecursor-default"%>                            
+                    <div class="flex items-center mb-4 rounded-md custom-number-input w-80 bg-cyan-200">
+                      <label for="low" class="flex-1 pl-2 text-sm font-semibold text-gray-800">Low quality
+                      </label>
+                      <div class="relative flex flex-row w-12 h-10 bg-transparent rounded-r-md">
+                        <%= number_input f, :low, placeholder: "0", class: "flex items-center w-full font-semibold text-center text-gray-700 border-none rounded-none outline-none focus:outline-none bg-cyan-400 text-md hover:text-black focus:text-black md:text-basecursor-default"%>                            
+                      </div>
+                      <div class="w-20">
+                        <div class="">
+                          <%= select f, :unit_low, Enum.map(@all_units, &{&1.symbol, &1.id}), class: "w-full" %>
+                        </div>
+                        <%= error_tag f, :unit_low %>
+                      </div>
                     </div>
                   </div>
                 </div>

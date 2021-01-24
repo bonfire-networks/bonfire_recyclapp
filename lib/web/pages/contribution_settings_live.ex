@@ -5,7 +5,7 @@ defmodule Bonfire.UI.Contribution.ContributionSettingsLive do
   alias Bonfire.Common.Web.LivePlugs
   alias Bonfire.UI.Contribution.CreateUnitForm
   alias Bonfire.UI.Contribution.CreateResourceSpecForm
-  alias Bonfire.UI.Contribution.CreateObservationForm
+  alias Bonfire.UI.Contribution.CreateObservatablePropertyForm
   alias Bonfire.UI.Contribution.CreatePhenomenonForm
 
 
@@ -24,7 +24,7 @@ defmodule Bonfire.UI.Contribution.ContributionSettingsLive do
     # IO.inspect(settings_queries)
     changeset = CreateUnitForm.changeset()
     changeset_resource = CreateResourceSpecForm.changeset()
-    changeset_property = CreateObservationForm.changeset()
+    changeset_property = CreateObservatablePropertyForm.changeset()
     changeset_phenomenon = CreatePhenomenonForm.changeset()
     {:ok, socket
     |> assign(
@@ -41,17 +41,17 @@ defmodule Bonfire.UI.Contribution.ContributionSettingsLive do
   end
 
 
-  def handle_event("validate_property", %{"create_observation_form" => params}, socket) do
-    changeset = CreateObservationForm.changeset(params)
+  def handle_event("validate_property", %{"create_observatable_property_form" => params}, socket) do
+    changeset = CreateObservatablePropertyForm.changeset(params)
     changeset = Map.put(changeset, :action, :insert)
     socket = assign(socket, changeset_property: changeset)
     {:noreply, socket}
   end
 
-  def handle_event("submit_property",  %{"create_observation_form" => params}, socket) do
-    changeset = CreateObservationForm.changeset(params)
+  def handle_event("submit_property",  %{"create_observatable_property_form" => params}, socket) do
+    changeset = CreateObservatablePropertyForm.changeset(params)
 
-    case CreateObservationForm.send(changeset, params, socket) do
+    case CreateObservatablePropertyForm.send(changeset, params, socket) do
       {:ok, property} ->
         {:noreply,
          socket
@@ -66,7 +66,7 @@ defmodule Bonfire.UI.Contribution.ContributionSettingsLive do
         {:noreply,
          socket
          |> put_flash(:error, message)}
-         |> assign(changeset_property: CreateObservationForm.changeset(%{}))
+         |> assign(changeset_property: CreateObservatablePropertyForm.changeset(%{}))
     end
   end
 

@@ -9,6 +9,7 @@ defmodule Bonfire.UI.Contribution.ContributionDashboardLive do
   alias Bonfire.Me.Users
   alias Bonfire.Me.Web.{CreateUserLive, LoggedDashboardLive}
   alias Bonfire.UI.Contribution.CreateEventForm
+  alias Bonfire.UI.Contribution.CreateObservationForm
 
   def mount(params, session, socket) do
     LivePlugs.live_plug params, session, socket, [
@@ -26,14 +27,15 @@ defmodule Bonfire.UI.Contribution.ContributionDashboardLive do
     {:ok, socket
     |> assign(
       page_title: "Home",
-      high: 0,
-      medium: 0,
-      low: 0,
       all_resources: queries.resource_specifications,
       all_events: queries.economic_events_pages.edges,
+      all_units: queries.units_pages.edges,
+      all_observable_properties: queries.observable_properties_pages.edges,
       changeset: changeset
     )}
   end
+
+
 
   def handle_event("validate", %{"create_event_form" => params}, socket) do
     changeset = CreateEventForm.changeset(params)
@@ -43,24 +45,52 @@ defmodule Bonfire.UI.Contribution.ContributionDashboardLive do
   end
 
   def handle_event("submit",  %{"create_event_form" => params}, socket) do
+    IO.inspect(params)
     changeset = CreateEventForm.changeset(params)
-
-    case CreateEventForm.send(changeset, params, socket) do
+     # has_result = %{
+    #   unit: resource_spec.default_unit_of_effort,
+    #   has_numerical_value: high
+    # }
+    # CreateObservationForm.send(changeset, %{has_feature_of_interest: resource.id, observed_property: property, }, socket)
+    # def send(changeset, %{"has_feature_of_interest" => has_feature_of_interest, "observed_property" => observed_property, "has_result" => has_result, "unit" => unit} = _params, socket) do
+    
+   case CreateEventForm.send(changeset, params, socket) do
       {:ok, event, resource} ->
-        {:noreply,
-         socket
-         |> put_flash(:info, "Donation successfully recorded!")
-         |> assign(all_events: [event] ++ socket.assigns.all_events)
-       }
+        with {:ok, high_obs} <- CreateObservationForm.send(changeset, %{
+          "has_feature_of_interest" => resource.id,
+          "observed_property" => params["property"],
+          "has_result" => params["high"],
+          "unit" => params["unit_high"]
+        }, socket),
+             {:ok, medium_obs} <- CreateObservationForm.send(changeset,  %{
+              "has_feature_of_interest" => resource.id,
+              "observed_property" => params["property"],
+              "has_result" => params["medium"],
+              "unit" => params["unit_medium"]
+        
+            }, socket),
+             {:ok, low_obs} <- CreateObservationForm.send(changeset, %{
+              "has_feature_of_interest" => resource.id,
+              "observed_property" => params["property"],
+              "has_result" => params["low"],
+              "unit" => params["unit_low"] 
+            }, socket)
+        do
+          {:noreply,
+          socket
+          |> put_flash(:info, "Donation successfully recorded!")
+          |> assign(all_events: [event] ++ socket.assigns.all_events)
+          }
+        else
+        {:error, changeset} ->
+          {:noreply, assign(socket, changeset: changeset)}
 
-      {:error, changeset} ->
-        {:noreply, assign(socket, changeset: changeset)}
-
-      {_, message} ->
-        {:noreply,
-         socket
-         |> assign(changeset: CreateEventForm.changeset(%{}))
-         |> put_flash(:error, message)}
+        {_, message} ->
+          {:noreply,
+          socket
+          |> assign(changeset: CreateEventForm.changeset(%{}))
+          |> put_flash(:error, message)}
+        end
     end
   end
 
@@ -75,6 +105,19 @@ defmodule Bonfire.UI.Contribution.ContributionDashboardLive do
       default_unit_of_effort {
         label
         id
+      }
+    }
+    units_pages {
+      edges {
+        id
+        label
+        symbol
+      }
+    }
+    observable_properties_pages(limit: 10) {
+      edges {
+        id
+        label
       }
     }
     economic_events_pages(limit: 10) {
