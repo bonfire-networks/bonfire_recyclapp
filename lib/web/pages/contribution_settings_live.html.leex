@@ -1,50 +1,65 @@
-<div class="container h-screen max-w-screen-md mx-auto">
 
-  <div class="flex mb-16 -mx-2">
-    <div class="w-full px-2">
-      <div class="flex items-center mt-6">
-        <h2 class="flex-1 text-2xl antialiased font-bold text-gray-800 break-words">Settings</h2>
-        <%= live_redirect to: Routes.live_path(@socket, Bonfire.UI.Contribution.ContributionDashboardLive) do %>
-        <button type="button" class="inline-flex items-center px-4 py-2 mt-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-          Home
-        </button>
-        <% end %>
-      </div>
+<header class="relative py-10">
+  <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+    <h1 class="text-3xl font-bold text-gray-800">
+      Settings
+    </h1>
+    <%= live_redirect to: Routes.live_path(@socket, Bonfire.UI.Contribution.ContributionDashboardLive) do %>
+    <button type="button" class="inline-flex items-center px-4 py-2 mt-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+      Back home
+    </button>
+    <% end %>
+  </div>
+</header>
+<main class="relative">
+<div class="max-w-screen-xl px-4 pb-6 mx-auto sm:px-6 lg:pb-16 lg:px-8">
+  <div class="overflow-hidden bg-white rounded-lg shadow">
+    <div  x-data="{ tab: 'units' }" class="divide-y divide-gray-200 lg:grid lg:grid-cols-12 lg:divide-y-0 lg:divide-x">
+      <aside class="py-6 lg:col-span-3">
+        <nav>
+          <button  x-bind:class="{'bg-teal-50 border-teal-500 text-teal-700 hover:bg-teal-50 hover:text-teal-700' : tab === 'units'}" @click="tab = 'units'" class="w-full flex items-center px-3 py-2 mt-1 text-sm font-medium text-gray-900 border-l-4 border-transparent hover:bg-gray-50 hover:text-gray-900 group" aria-current="page">
+            <svg x-bind:class="{'text-teal-500 group-hover:text-teal-500' : tab === 'units'}" class="flex-shrink-0 w-6 h-6 mr-3 -ml-1 text-gray-400 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"></path>
+            </svg>
+            <span class="truncate">
+              Units
+            </span>
+          </button>
 
-      <div class="mt-4" x-data="{ tab: 'units' }">
-        <div class="sm:hidden">
-          <label for="tabs" class="sr-only">Select a tab</label>
-          <select id="tabs" name="tabs" class="block w-full py-2 pl-3 pr-10 text-base border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-            <option @click="tab = 'units'" selected="{ 'true': tab === 'units' }">Units</option>
-            <option @click="tab = 'res'"  selected="{ 'true': tab === 'res' }">Resource Specifications</option>
-            <option @click="tab = 'property'"  selected="{ 'true': tab === 'property' }">Observable property</option>
-            <option @click="tab = 'phenomenon'"  selected="{ 'true': tab === 'phenomenon' }">Observable phenomenon</option>
-          </select>
-        </div>
-        <div class="hidden sm:block">
-          <div class="border-b border-gray-200">
-            <nav class="flex -mb-px space-x-8" aria-label="Tabs">
-              <button x-bind:class="{'text-indigo-600 border-indigo-500 hover:text-indigo-600 hover:border-indigo-500' : tab === 'units'}" @click="tab = 'units'" class="px-1 py-4 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300 whitespace-nowrap" aria-current="page">
-                Units
-              </button>
-              <button x-bind:class="{'text-indigo-600 border-indigo-500 hover:text-indigo-600 hover:border-indigo-500' : tab === 'res'}" @click="tab = 'res'" class="px-1 py-4 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300 whitespace-nowrap">
-                Resource Specifications
-              </button>
-              <button x-bind:class="{'text-indigo-600 border-indigo-500 hover:text-indigo-600 hover:border-indigo-500' : tab === 'property'}" @click="tab = 'property'" class="px-1 py-4 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300 whitespace-nowrap">
-                Observable property
-              </button>
-              <button x-bind:class="{'text-indigo-600 border-indigo-500 hover:text-indigo-600 hover:border-indigo-500' : tab === 'phenomenon'}" @click="tab = 'phenomenon'" class="px-1 py-4 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300 whitespace-nowrap">
-                Observable phenomenon
-              </button>
-            </nav>
-          </div>
-        </div>
+          <button @click="tab = 'res'" x-bind:class="{'bg-teal-50 border-teal-500 text-teal-700 hover:bg-teal-50 hover:text-teal-700' : tab === 'res'}" class="w-full flex items-center px-3 py-2 mt-1 text-sm font-medium text-gray-900 border-l-4 border-transparent hover:bg-gray-50 hover:text-gray-900 group">
+            <svg x-bind:class="{'text-teal-500 group-hover:text-teal-500' : tab === 'res'}" class="flex-shrink-0 w-6 h-6 mr-3 -ml-1 text-gray-400 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path>
+            </svg>
+            <span class="truncate">
+              Resource specifications
+            </span>
+          </button>
 
+          <button @click="tab = 'property'" x-bind:class="{'bg-teal-50 border-teal-500 text-teal-700 hover:bg-teal-50 hover:text-teal-700' : tab === 'property'}" class="w-full flex items-center px-3 py-2 mt-1 text-sm font-medium text-gray-900 border-l-4 border-transparent hover:bg-gray-50 hover:text-gray-900 group">
+            <svg x-bind:class="{'text-teal-500 group-hover:text-teal-500' : tab === 'property'}" class="flex-shrink-0 w-6 h-6 mr-3 -ml-1 text-gray-400 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+            </svg>
+            <span class="truncate">
+              Observable properties
+            </span>
+          </button>
+
+          <button @click="tab = 'phenomenon'" x-bind:class="{'bg-teal-50 border-teal-500 text-teal-700 hover:bg-teal-50 hover:text-teal-700' : tab === 'phenomenon'}" class="w-full flex items-center px-3 py-2 mt-1 text-sm font-medium text-gray-900 border-l-4 border-transparent hover:bg-gray-50 hover:text-gray-900 group">
+            <svg x-bind:class="{'text-teal-500 group-hover:text-teal-500' : tab === 'phenomenon'}" class="flex-shrink-0 w-6 h-6 mr-3 -ml-1 text-gray-400 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span class="truncate">
+              Observable phenomenons
+            </span>
+          </button>
+        </nav>
+      </aside>
+      <div class="divide-y divide-gray-200 lg:col-span-9"> 
         <div x-show="tab === 'units'">
-          <div id="units" class="mt-6 mb-8 bg-white rounded-lg shadow">
+          <div id="units" class="mt-6 mb-8">
             <%= f = form_for @changeset, "#", [phx_submit: "submit_unit", phx_change: "validate_unit"] %>
              <div class="p-3">
-                <h3 class="mb-4 text-2xl font-semibold text-gray-800 ">Create a new unit</h3>
+                <h3 class="mb-4 text-lg font-medium text-gray-800 ">Create a new unit</h3>
                 <div>
                   <%= label f, :label, "Choose a label (eg. kilo)?", class: "block text-sm font-medium text-gray-700" %>
                   <div class="mt-1">
@@ -52,7 +67,7 @@
                   </div>
                   <%= error_tag f, :label %>
                 </div>
-
+  
                 <div class="mt-3">
                   <%= label f, :symbol, "Choose a symbol (eg. kg)", class: "block text-sm font-medium text-gray-700" %>
                   <div class="mt-1">
@@ -60,25 +75,27 @@
                   </div>
                   <%= error_tag f, :symbol %>
                 </div>
-
+  
                 <button type="submit" phx-disable-with="Creating..." class="flex justify-center w-full px-4 py-2 mt-8 text-sm font-medium text-gray-800 transition duration-150 ease-in-out bg-green-300 border border-transparent rounded-md hover:bg-green-400 hover:text-gray-900 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-200 active:bg-gray-700">
                   Create
                 </button>
               </form>
             </div>
           </div>
-          <div class="p-3 space-y-3 bg-white divide-y-4 divide-gray-200 rounded shadow">
-            <h3 class="text-xl font-semibold text-gray-800">Units</h3>
+          <div class="p-3 divide-y divide-gray-200 bg-blueGray-50 border-t">
+            <h3 class="text-xs uppercase tracking-wider font-semibold text-gray-700 mb-3">All units</h3>
             <%= for x <- @all_units do %>
-              <div class="p-3 -mx-3">
-                <h4 class="text-lg font-semibold text-gray-700">Label: <%= x.label %></h4>
-                <p class="text-base italic text-gray-500">Symbol: <%= x.symbol %></p>
+              <div class="p-3 -mx-3 flex items-center">
+                <div>
+                  <h4 class="text-base font-semibold text-indigo-500">Label: <%= x.label %></h4>
+                  <p class="text-base text-gray-500">Symbol: <%= x.symbol %></p>
+                </div>
               </div>
             <% end %>
           </div>
         </div>
         <div x-show="tab === 'res'">
-          <div id="resources" class="mt-6 mb-8 bg-white rounded-lg shadow">
+          <div id="resources" class="mt-6 mb-8">
             <%= f = form_for @changeset_resource, "#", [phx_submit: "submit_resource", phx_change: "validate_resource"] %>
              <div class="p-3">
                 <h3 class="mb-4 text-2xl font-semibold text-gray-800 ">Create a new resource specification</h3>
@@ -89,7 +106,7 @@
                   </div>
                   <%= error_tag f, :name %>
                 </div>
-
+  
                 <div class="mt-3">
                   <%= label f, :note, "Type a description for the resource" %>
                   <div class="mt-1">
@@ -97,7 +114,7 @@
                   </div>
                   <%= error_tag f, :note %>
                 </div>
-
+  
                 <div class="mt-3">
                   <%= label f, :unit, "Select the default unit for the resource" %>
                   <div class="mt-1">
@@ -105,32 +122,34 @@
                   </div>
                   <%= error_tag f, :unit %>
                 </div>
-
+  
                 <button type="submit" phx-disable-with="Creating..." class="flex justify-center w-full px-4 py-2 mt-8 text-sm font-medium text-gray-800 transition duration-150 ease-in-out bg-green-300 border border-transparent rounded-md hover:bg-green-400 hover:text-gray-900 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-200 active:bg-gray-700">
                   Create
                 </button>
               </form>
             </div>
           </div>
-          <div class="p-3 space-y-3 bg-white divide-y-4 divide-gray-200 rounded shadow">
-            <h3 class="text-xl font-semibold text-gray-800">Resource specifications</h3>
+          <div class="p-3 divide-y divide-gray-200 bg-blueGray-50 border-t">
+            <h3 class="text-xs uppercase tracking-wider font-semibold text-gray-700 mb-3"> All Resource specifications</h3>
             <%= for x <- @all_res do %>
-            <div class="p-3 -mx-3">
-              <h4 class="text-lg font-semibold text-gray-700"><%= x.name %></h4>
-              <p class="text-base italic text-gray-500"><%= x.note %></p>
-              <%= if x.default_unit_of_effort do %>
-              <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-indigo-100 text-indigo-800">
-                Unit: <%= x.default_unit_of_effort.label %>
-              </span>
-              <% end %>
+            <div class="p-3 -mx-3 flex items-center">
+              <div>
+                <h4 class="text-lg font-semibold text-gray-700"><%= x.name %></h4>
+                <p class="text-base italic text-gray-500"><%= x.note %></p>
+                <%= if x.default_unit_of_effort do %>
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-indigo-100 text-indigo-800">
+                  Unit: <%= x.default_unit_of_effort.label %>
+                </span>
+                <% end %>
+              </div>
             </div>
             <% end %>
           </div>
         </div>
         <div x-show="tab === 'property'">
-          <div id="property" class="mt-6 mb-8 bg-white rounded-lg shadow">
+          <div id="property" class="mt-6 mb-8">
             <%= f = form_for @changeset_property, "#", [phx_submit: "submit_property", phx_change: "validate_property"] %>
-             <div class="p-3">
+              <div class="p-3">
                 <h3 class="mb-4 text-2xl font-semibold text-gray-800 ">Create a new observable property</h3>
                 <div>
                   <%= label f, :name, "A name for something that can be observed (eg. Temperature)", class: "block text-sm font-medium text-gray-700" %>
@@ -151,21 +170,23 @@
                 <button type="submit" phx-disable-with="Creating..." class="flex justify-center w-full px-4 py-2 mt-8 text-sm font-medium text-gray-800 transition duration-150 ease-in-out bg-green-300 border border-transparent rounded-md hover:bg-green-400 hover:text-gray-900 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-200 active:bg-gray-700">
                   Create
                 </button>
-              </form>
-            </div>
+              </div>     
+            </form>
           </div>
-          <div class="p-3 space-y-3 bg-white divide-y-4 divide-gray-200 rounded shadow">
-            <h3 class="text-xl font-semibold text-gray-800">All properties</h3>
+          <div class="p-3 divide-y divide-gray-200 bg-blueGray-50 border-t">
+            <h3 class="text-xs uppercase tracking-wider font-semibold text-gray-700 mb-3">All observable properties</h3>
             <%= for x <- @all_properties do %>
-              <div class="p-3 -mx-3">
-                <h4 class="text-lg font-semibold text-gray-700"><%= x.label %></h4>
-                <p class="text-base italic text-gray-500"><%= x.note %></p>
+              <div class="p-3 -mx-3 flex items-center">
+                <div>
+                  <h4 class="text-lg font-semibold text-gray-700"><%= x.label %></h4>
+                  <p class="text-base italic text-gray-500"><%= x.note %></p>
+                </div>
               </div>
             <% end %>
           </div>
         </div>
         <div x-show="tab === 'phenomenon'">
-          <div id="phenomenon" class="mt-6 mb-8 bg-white rounded-lg shadow">
+          <div id="phenomenon" class="mt-6 mb-8">
             <%= f = form_for @changeset_phenomenon, "#", [phx_submit: "submit_phenomenon", phx_change: "validate_phenomenon"] %>
              <div class="p-3">
                 <h3 class="mb-4 text-2xl font-semibold text-gray-800 ">Create a new observable phenomenon</h3>
@@ -184,7 +205,7 @@
                   </div>
                   <%= error_tag f, :name %>
                 </div>
-
+  
                 <div class="mt-3">
                   <%= label f, :formula, "A numerical representation of this phenomenon, to be used when automatic analysis is needed", class: "block text-sm font-medium text-gray-700" %>
                   <div class="mt-1">
@@ -192,7 +213,7 @@
                   </div>
                   <%= error_tag f, :formula %>
                 </div>
-
+  
                 <div class="mt-3">
                   <%= label f, :note, "Add a description", class: "block text-sm font-medium text-gray-700" %>
                   <div class="mt-1">
@@ -200,30 +221,27 @@
                   </div>
                   <%= error_tag f, :note %>
                 </div>
-
+  
                 <button type="submit" phx-disable-with="Creating..." class="flex justify-center w-full px-4 py-2 mt-8 text-sm font-medium text-gray-800 transition duration-150 ease-in-out bg-green-300 border border-transparent rounded-md hover:bg-green-400 hover:text-gray-900 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-200 active:bg-gray-700">
                   Create
                 </button>
               </form>
             </div>
           </div>
-          <div class="p-3 space-y-3 bg-white divide-y-4 divide-gray-200 rounded shadow">
-            <h3 class="text-xl font-semibold text-gray-800">All phenomenon</h3>
+          <div class="p-3 divide-y divide-gray-200 bg-blueGray-50 border-t">
+            <h3 class="text-xs uppercase tracking-wider font-semibold text-gray-700 mb-3">All phenomenons</h3>
             <%= for x <- @all_phenomenon do %>
-              <div class="p-3 -mx-3">
-                <h4 class="text-lg font-semibold text-gray-700"><%= x.label %> (<%= x.choice_of.label %>) (<%= x.formula_quantifier %>)</h4>
-                <p class="text-base italic text-gray-500"><%= x.note %></p>
+              <div class="p-3 -mx-3 flex items-center">
+                <div>
+                  <h4 class="text-lg font-semibold text-gray-700"><%= x.label %> (<%= x.choice_of.label %>) (<%= x.formula_quantifier %>)</h4>
+                  <p class="text-base italic text-gray-500"><%= x.note %></p>
+                </div>
               </div>
             <% end %>
           </div>
         </div>
       </div>
     </div>
-
-
-
-
-
-
   </div>
 </div>
+</main>
