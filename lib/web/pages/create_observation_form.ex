@@ -31,7 +31,7 @@ defmodule  Bonfire.UI.Contribution.CreateObservationForm do
       provider: provider, 
       has_feature_of_interest: has_feature_of_interest, 
       observed_property: observed_property, 
-      has_result: has_result }
+      result_measure: has_result }
     case apply_action(changeset, :insert) do
       {:ok, _} ->
 
