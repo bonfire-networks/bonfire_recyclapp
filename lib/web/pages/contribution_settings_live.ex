@@ -39,6 +39,7 @@ defmodule Bonfire.UI.Contribution.ContributionSettingsLive do
       all_resources: e(settings_queries, :resource_specifications_pages, :edges, []),
       all_properties: e(settings_queries, :observable_properties_pages, :edges, []),
       all_phenomenon: e(settings_queries, :observable_phenomenon_pages, :edges, []),
+      all_value_calculations: e(settings_queries, :value_calculations_pages, :edges, []),
       actions: e(settings_queries, :actions, [])
     )}
   end
@@ -55,10 +56,12 @@ defmodule Bonfire.UI.Contribution.ContributionSettingsLive do
   def handle_event("submit_value_calculation",  %{"create_value_calculation_form" => params}, socket) do
     changeset = CreateValueCalculationForm.changeset(params)
     case CreateValueCalculationForm.send(changeset, params, socket) do
-      {:ok, property} ->
+      {:ok, vc} ->
         {:noreply,
           socket
-          |> put_flash(:info, "Value calculation successfully created!")}
+          |> put_flash(:info, "Value calculation successfully created!")
+          |> assign(all_value_calculations: [vc] ++ socket.assigns.all_value_calculations)
+        }
 
       {:error, changeset} ->
         {:noreply, assign(socket, changeset_value_calculation: changeset)}
@@ -229,6 +232,13 @@ defmodule Bonfire.UI.Contribution.ContributionSettingsLive do
             id
           }
         }
+      }
+      value_calculations_pages {
+         edges {
+          id
+          note
+          name
+         }
       }
     }
   """
