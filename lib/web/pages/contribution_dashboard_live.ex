@@ -31,7 +31,7 @@ defmodule Bonfire.UI.Contribution.ContributionDashboardLive do
       all_events: e(queries, :economic_events_pages, :edges, []),
       all_observable_properties: e(queries, :observable_properties_pages, :edges, []),
       changeset: changeset,
-      selected_property: hd(e(queries, :observable_properties_pages, :edges, []))
+      selected_property: List.first(e(queries, :observable_properties_pages, :edges, []))
     )}
   end
 
