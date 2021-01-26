@@ -22,7 +22,7 @@ defmodule Bonfire.UI.Contribution.ContributionSuccessLive do
   end
 
   defp mounted(%{"reciprocal_id"=> reciprocal_id}, session, socket) do
-    
+
     IO.inspect(reciprocal_id)
     reciprocal = reciprocal_by_id(reciprocal_id, socket)
 
@@ -35,7 +35,7 @@ defmodule Bonfire.UI.Contribution.ContributionSuccessLive do
   defp mounted(params, session, socket) do
 
     {:ok, socket
-    |> assign(page_title: "Proposal",
+    |> assign(page_title: "Contribution",
     selected_tab: "about",
     reciprocal: nil
     )}
