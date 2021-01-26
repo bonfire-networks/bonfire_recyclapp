@@ -1,0 +1,19 @@
+<div class="container h-screen max-w-screen-sm mx-auto">
+  <div class="flex mb-16 -mx-2">
+    <div class="w-full px-2">
+      <div class="flex items-center mt-6">
+        <div class="flex-1 mt-16">
+          <h2 class="text-3xl font-bold tracking-widest text-center text-blue-800 uppercase">Rewards</h2>
+
+          <h4 class="mt-8 text-lg font-medium text-center text-gray-700">The donator received</h4>
+          <h3 class="p-3 mt-4 text-lg font-bold text-center text-blue-800 bg-gray-200 rounded">
+            <%= @reciprocal.resource_quantity.has_numerical_value %> <%= @reciprocal.resource_conforms_to.name %>
+          </h3>
+
+          
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

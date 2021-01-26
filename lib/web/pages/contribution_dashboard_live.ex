@@ -67,6 +67,7 @@ defmodule Bonfire.UI.Contribution.ContributionDashboardLive do
           socket
           |> put_flash(:info, "Donation successfully recorded!")
           |> assign(all_events: [event] ++ socket.assigns.all_events)
+          |> push_redirect(to: "/contribution/success/" <> reciprocals.id)
           }
         end
 

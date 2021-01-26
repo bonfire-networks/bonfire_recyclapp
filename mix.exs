@@ -17,6 +17,7 @@ defmodule Bonfire.UI.Contribution.MixProject do
         {:dbg, "~> 1.0", only: [:dev, :test]},
         {:floki, ">= 0.0.0", only: [:dev, :test]},
         {:absinthe, "~> 1.5.3", optional: true},
+        {:qr_code, "~> 2.2.0"},
         {:absinthe_plug, "~> 1.5", optional: true}
       ]
     ]

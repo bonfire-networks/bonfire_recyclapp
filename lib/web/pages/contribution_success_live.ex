@@ -4,7 +4,7 @@ defmodule Bonfire.UI.Contribution.ContributionSuccessLive do
   use AbsintheClient, schema: Bonfire.GraphQL.Schema, action: [mode: :internal]
 
   alias Bonfire.UI.Social.{HashtagsLive, ParticipantsLive}
-
+  alias QRCode.QR
   alias Bonfire.Common.Web.LivePlugs
   alias Bonfire.Me.Users
   alias Bonfire.Me.Web.{CreateUserLive, LoggedDashboardLive}
@@ -23,13 +23,12 @@ defmodule Bonfire.UI.Contribution.ContributionSuccessLive do
 
   defp mounted(%{"reciprocal_id"=> reciprocal_id}, session, socket) do
     
+    IO.inspect(reciprocal_id)
     reciprocal = reciprocal_by_id(reciprocal_id, socket)
-    IO.inspect(reciprocal)
 
     {:ok, socket
     |> assign(page_title: "Success",
-    reciprocal: reciprocal,
-
+    reciprocal: reciprocal.economic_event,
     )}
   end
 
@@ -47,6 +46,16 @@ defmodule Bonfire.UI.Contribution.ContributionSuccessLive do
       economic_event(id: $id) {
         id
         note
+        resource_quantity {
+          has_numerical_value
+          has_unit {
+            label
+          }
+        }
+        resource_conforms_to {
+          id
+          name
+        }
         provider
         receiver
         at_location
@@ -54,11 +63,8 @@ defmodule Bonfire.UI.Contribution.ContributionSuccessLive do
       }
     }
   """
-  def reciprocal(params, socket), do: []
-  def reciprocal_by_id(id, socket), do: reciprocal(%{id: id}, socket)
 
-
-
-
+  def queries(params \\ %{}, socket), do: liveql(socket, :queries, params)
+  def reciprocal_by_id(id, socket), do: queries(%{id: id}, socket)
 
 end
