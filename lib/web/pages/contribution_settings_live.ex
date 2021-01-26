@@ -21,7 +21,7 @@ defmodule Bonfire.UI.Contribution.ContributionSettingsLive do
 
   defp mounted(params, session, socket) do
     settings_queries = settings_queries(socket)
-    # IO.inspect(settings_queries)
+    IO.inspect(settings_queries: settings_queries)
     changeset = CreateUnitForm.changeset()
     changeset_resource = CreateResourceSpecForm.changeset()
     changeset_property = CreateObservablePropertyForm.changeset()
@@ -35,11 +35,11 @@ defmodule Bonfire.UI.Contribution.ContributionSettingsLive do
       changeset_property: changeset_property,
       changeset_phenomenon: changeset_phenomenon,
       changeset_value_calculation: changeset_value_calculation,
-      all_units: settings_queries.units_pages.edges,
-      all_resources: settings_queries.resource_specifications_pages.edges,
-      all_properties: settings_queries.observable_properties_pages.edges,
-      all_phenomenon: settings_queries.observable_phenomenon_pages.edges,
-      actions: settings_queries.actions
+      all_units: e(settings_queries, :units_pages, :edges, []),
+      all_resources: e(settings_queries, :resource_specifications_pages, :edges, []),
+      all_properties: e(settings_queries, :observable_properties_pages, :edges, []),
+      all_phenomenon: e(settings_queries, :observable_phenomenon_pages, :edges, []),
+      actions: e(settings_queries, :actions, [])
     )}
   end
 
@@ -56,7 +56,7 @@ defmodule Bonfire.UI.Contribution.ContributionSettingsLive do
     changeset = CreateValueCalculationForm.changeset(params)
     case CreateValueCalculationForm.send(changeset, params, socket) do
       {:ok, property} ->
-        {:noreply, 
+        {:noreply,
           socket
           |> put_flash(:info, "Value calculation successfully created!")}
 

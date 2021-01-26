@@ -43,7 +43,7 @@
                 <p class="mt-1 text-sm text-gray-500">
                   Specify what do you want to donate
                 </p>
-          
+
                 <div class="flex items-center mt-5 space-x-3">
                   <div class="flex-1">
                     <%= label f, :resource, "Which resource do you want to donate?", class: "block text-sm font-medium text-gray-700" %>
@@ -67,7 +67,7 @@
                   </div>
                   <%= error_tag f, :note %>
                 </div>
-                
+
                 <div class="p-3 pt-3 mt-4 -mx-3 border-t">
                   <div class="flex items-center">
                     <svg class="w-6 h-6 mr-2 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"></path></svg>
@@ -88,7 +88,7 @@
                   </div>
 
                   <div class="flex mt-3 space-x-5 ">
-                    <%= for phenomenon <- @all_phenomenons do %>
+                    <%= for phenomenon <- e(@selected_property, :has_choices, []) do %>
                     <div>
                       <div class="relative flex flex-row h-10 bg-transparent rounded-r-md">
                           <%= radio_button f, :phenomenon, phenomenon.id , class: "flex items-center w-8 mt-1 h-8 font-semibold rounded-full bg-blueGray-200 text-center text-gray-700 border-none rounded-none outline-none focus:outline-none text-md hover:text-black focus:text-black md:text-base cursor-default" %>

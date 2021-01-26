@@ -29,7 +29,6 @@ defmodule Bonfire.UI.Contribution.ContributionDashboardLive do
       page_title: "Home",
       all_resources: queries.resource_specifications,
       all_events: queries.economic_events_pages.edges,
-      all_units: queries.units_pages.edges,
       all_observable_properties: Map.get(queries.observable_properties_pages, :edges, []),
       changeset: changeset,
       selected_property: hd(Map.get(queries.observable_properties_pages, :edges, []))
@@ -93,19 +92,6 @@ defmodule Bonfire.UI.Contribution.ContributionDashboardLive do
       default_unit_of_effort {
         label
         id
-      }
-    }
-    units_pages {
-      edges {
-        id
-        label
-        symbol
-      }
-    }
-    observable_phenomenon_pages(limit: 10) {
-      edges {
-        id
-        label
       }
     }
     observable_properties_pages(limit: 10) {
