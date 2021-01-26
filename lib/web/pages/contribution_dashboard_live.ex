@@ -69,20 +69,24 @@ defmodule Bonfire.UI.Contribution.ContributionDashboardLive do
           |> assign(all_events: [event] ++ socket.assigns.all_events)
           |> push_redirect(to: "/contribution/success/" <> e(reciprocals, :id, e(event, :id, "")))
           }
+        else {_, message} ->
+          error("Donation successfully recorded! #{message}", socket)
         end
 
-      {:error, changeset} ->
+      {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
 
       {_, message} ->
-        {:noreply,
-        socket
-        |> assign(changeset: CreateEventForm.changeset(%{}))
-        |> put_flash(:error, message)}
+        error(message, socket)
     end
   end
 
-
+  def error(message, socket) do
+    {:noreply,
+        socket
+        |> assign(changeset: CreateEventForm.changeset(%{}))
+        |> put_flash(:error, message)}
+  end
 
   @graphql """
   {

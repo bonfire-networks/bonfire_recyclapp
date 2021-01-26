@@ -26,7 +26,7 @@ defmodule  Bonfire.UI.Contribution.CreateEventForm do
       user: user,
       id: resource
     ])
-    {float, ""} = Float.parse(quantity)
+    float = with {float, ""} <- Float.parse(quantity), do: float
     event_attrs = %{
       note: note,
       provider: user.id,
