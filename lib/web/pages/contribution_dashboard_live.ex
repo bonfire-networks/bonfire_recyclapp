@@ -30,13 +30,11 @@ defmodule Bonfire.UI.Contribution.ContributionDashboardLive do
       all_resources: queries.resource_specifications,
       all_events: queries.economic_events_pages.edges,
       all_units: queries.units_pages.edges,
+      all_phenomenons: queries.observable_phenomenon_pages.edges,
       all_observable_properties: queries.observable_properties_pages.edges,
       changeset: changeset,
-      selected_property: hd(queries.observable_properties_pages.edges)
     )}
   end
-
-
 
   def handle_event("validate", %{"create_event_form" => params}, socket) do
     IO.inspect(validate: params)
@@ -44,16 +42,6 @@ defmodule Bonfire.UI.Contribution.ContributionDashboardLive do
     changeset = CreateEventForm.changeset(params)
     changeset = Map.put(changeset, :action, :insert)
     socket = assign(socket, changeset: changeset)
-
-    socket = if params["property"] && params["property"] != Map.get(socket.assigns.selected_property, :id) do
-      # IO.inspect(socket.assigns.all_observable_properties)
-      property = Enum.find(socket.assigns.all_observable_properties, fn map -> map.id == params["property"] end)
-      IO.inspect(property)
-      assign(socket, selected_property: property)
-    else
-      socket
-    end
-
     {:noreply, socket}
   end
 
@@ -68,25 +56,13 @@ defmodule Bonfire.UI.Contribution.ContributionDashboardLive do
     # def send(changeset, %{"has_feature_of_interest" => has_feature_of_interest, "observed_property" => observed_property, "has_result" => has_result, "unit" => unit} = _params, socket) do
 
    case CreateEventForm.send(changeset, params, socket) do
-      {:ok, event, resource} ->
+    {:ok, %{economic_event: event, reciprocal_events: reciprocals, economic_resource: resource}} ->
+      IO.inspect(reciprocals)
         with {:ok, high_obs} <- CreateObservationForm.send(changeset, %{
           "has_feature_of_interest" => resource.id,
           "observed_property" => params["property"],
           "result_phenomenon" => params["phenomenon"]
         }, socket)
-        #      {:ok, medium_obs} <- CreateObservationForm.send(changeset,  %{
-        #       "has_feature_of_interest" => resource.id,
-        #       "observed_property" => params["property"],
-        #       "has_result" => params["medium"],
-        #       "unit" => params["unit_medium"]
-
-        #     }, socket),
-        #      {:ok, low_obs} <- CreateObservationForm.send(changeset, %{
-        #       "has_feature_of_interest" => resource.id,
-        #       "observed_property" => params["property"],
-        #       "has_result" => params["low"],
-        #       "unit" => params["unit_low"]
-        #     }, socket)
         do
           {:noreply,
           socket
@@ -124,6 +100,12 @@ defmodule Bonfire.UI.Contribution.ContributionDashboardLive do
         id
         label
         symbol
+      }
+    }
+    observable_phenomenon_pages(limit: 10) {
+      edges {
+        id
+        label
       }
     }
     observable_properties_pages(limit: 10) {
