@@ -30,9 +30,9 @@ defmodule Bonfire.UI.Contribution.ContributionDashboardLive do
       all_resources: queries.resource_specifications,
       all_events: queries.economic_events_pages.edges,
       all_units: queries.units_pages.edges,
-      all_observable_properties: queries.observable_properties_pages.edges,
+      all_observable_properties: Map.get(queries.observable_properties_pages, :edges, []),
       changeset: changeset,
-      selected_property: hd(queries.observable_properties_pages.edges)
+      selected_property: hd(Map.get(queries.observable_properties_pages, :edges, []))
     )}
   end
 
