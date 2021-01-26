@@ -27,7 +27,7 @@ defmodule Bonfire.UI.Contribution.ContributionDashboardLive do
     {:ok, socket
     |> assign(
       page_title: "Home",
-      all_resources: e(queries, :resource_specifications),
+      all_resources: e(queries, :resource_specifications, []),
       all_events: e(queries, :economic_events_pages, :edges, []),
       all_observable_properties: e(queries, :observable_properties_pages, :edges, []),
       changeset: changeset,
