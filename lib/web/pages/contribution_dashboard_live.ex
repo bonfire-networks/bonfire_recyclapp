@@ -27,11 +27,11 @@ defmodule Bonfire.UI.Contribution.ContributionDashboardLive do
     {:ok, socket
     |> assign(
       page_title: "Home",
-      all_resources: queries.resource_specifications,
-      all_events: queries.economic_events_pages.edges,
-      all_observable_properties: Map.get(queries.observable_properties_pages, :edges, []),
+      all_resources: e(queries, :resource_specifications),
+      all_events: e(queries, :economic_events_pages, :edges, []),
+      all_observable_properties: e(queries, :observable_properties_pages, :edges, []),
       changeset: changeset,
-      selected_property: hd(Map.get(queries.observable_properties_pages, :edges, []))
+      selected_property: hd(e(queries, :observable_properties_pages, :edges, []))
     )}
   end
 
