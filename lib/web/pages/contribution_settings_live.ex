@@ -7,7 +7,7 @@ defmodule Bonfire.UI.Contribution.ContributionSettingsLive do
   alias Bonfire.UI.Contribution.CreateResourceSpecForm
   alias Bonfire.UI.Contribution.CreateObservablePropertyForm
   alias Bonfire.UI.Contribution.CreatePhenomenonForm
-
+  alias Bonfire.UI.Contribution.CreateValueCalculationForm
 
   def mount(params, session, socket) do
     LivePlugs.live_plug params, session, socket, [
@@ -26,6 +26,7 @@ defmodule Bonfire.UI.Contribution.ContributionSettingsLive do
     changeset_resource = CreateResourceSpecForm.changeset()
     changeset_property = CreateObservablePropertyForm.changeset()
     changeset_phenomenon = CreatePhenomenonForm.changeset()
+    changeset_value_calculation = CreateValueCalculationForm.changeset()
     {:ok, socket
     |> assign(
       page_title: "Settings",
@@ -33,13 +34,42 @@ defmodule Bonfire.UI.Contribution.ContributionSettingsLive do
       changeset_resource: changeset_resource,
       changeset_property: changeset_property,
       changeset_phenomenon: changeset_phenomenon,
+      changeset_value_calculation: changeset_value_calculation,
       all_units: settings_queries.units_pages.edges,
-      all_res: settings_queries.resource_specifications_pages.edges,
+      all_resources: settings_queries.resource_specifications_pages.edges,
       all_properties: settings_queries.observable_properties_pages.edges,
-      all_phenomenon: settings_queries.observable_phenomenon_pages.edges
+      all_phenomenon: settings_queries.observable_phenomenon_pages.edges,
+      actions: settings_queries.actions
     )}
   end
 
+
+  def handle_event("validate_value_calculation", %{"create_value_calculation_form" => params}, socket) do
+    IO.inspect(params)
+    changeset = CreateValueCalculationForm.changeset(params)
+    changeset = Map.put(changeset, :action, :insert)
+    socket = assign(socket, changeset_value_calculation: changeset)
+    {:noreply, socket}
+  end
+
+  def handle_event("submit_value_calculation",  %{"create_value_calculation_form" => params}, socket) do
+    changeset = CreateValueCalculationForm.changeset(params)
+    case CreateValueCalculationForm.send(changeset, params, socket) do
+      {:ok, property} ->
+        {:noreply, 
+          socket
+          |> put_flash(:info, "Value calculation successfully created!")}
+
+      {:error, changeset} ->
+        {:noreply, assign(socket, changeset_value_calculation: changeset)}
+
+      {_, message} ->
+        {:noreply,
+         socket
+         |> put_flash(:error, message)}
+         |> assign(changeset_value_calculation: CreateValueCalculationForm.changeset(%{}))
+    end
+  end
 
   def handle_event("validate_property", %{"create_observable_property_form" => params}, socket) do
     changeset = CreateObservablePropertyForm.changeset(params)
@@ -100,8 +130,6 @@ defmodule Bonfire.UI.Contribution.ContributionSettingsLive do
     end
   end
 
-
-
   def handle_event("validate_unit", %{"create_unit_form" => params}, socket) do
     changeset = CreateUnitForm.changeset(params)
     changeset = Map.put(changeset, :action, :insert)
@@ -146,7 +174,7 @@ defmodule Bonfire.UI.Contribution.ContributionSettingsLive do
         {:noreply,
          socket
          |> put_flash(:info, "Resource specification correctly created!")
-         |> assign(all_res: [resource] ++ socket.assigns.all_res)
+         |> assign(all_resources: [resource] ++ socket.assigns.all_resources)
         }
 
       {:error, changeset} ->
@@ -176,6 +204,10 @@ defmodule Bonfire.UI.Contribution.ContributionSettingsLive do
           note
           label
         }
+      }
+      actions {
+        id
+        label
       }
       observable_phenomenon_pages {
         edges {

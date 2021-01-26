@@ -35,6 +35,10 @@ defmodule  Bonfire.UI.Contribution.CreateEventForm do
       resource_quantity: %{
         unit: resource_spec.default_unit_of_effort,
         has_numerical_value: float
+      },
+      effort_quantity: %{
+        unit: resource_spec.default_unit_of_effort,
+        has_numerical_value: float
       }
     }
     d = DateTime.utc_now
