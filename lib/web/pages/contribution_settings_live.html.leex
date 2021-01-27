@@ -1,17 +1,4 @@
-
-<header class="relative py-10">
-  <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-    <h1 class="text-3xl font-bold text-gray-800">
-      Settings
-    </h1>
-    <%= live_redirect to: Routes.live_path(@socket, Bonfire.UI.Contribution.ContributionDashboardLive) do %>
-    <button type="button" class="inline-flex items-center px-4 py-2 mt-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-      Back home
-    </button>
-    <% end %>
-  </div>
-</header>
-<main class="relative">
+<main class="relative mt-6">
 <div class="max-w-screen-xl px-4 pb-6 mx-auto sm:px-6 lg:pb-16 lg:px-8">
   <div class="overflow-hidden bg-white rounded-lg shadow">
     <div  x-data="{ tab: 'units' }" class="divide-y divide-gray-200 lg:grid lg:grid-cols-12 lg:divide-y-0 lg:divide-x">
@@ -289,7 +276,7 @@
                 <div class="inline-block mx-2 mb-2">
                   <%= label f, :formula, "Create the formula", class: "block text-sm font-medium text-gray-700" %>
                   <div class="mt-1">
-                    <%= text_input f, :formula, class: "w-full" %>
+                    <%= text_input f, :formula, class: "w-72" %>
                   </div>
                   <%= error_tag f, :formula %>
                 </div>

@@ -27,6 +27,7 @@ defmodule Bonfire.UI.Contribution.ContributionDashboardLive do
     {:ok, socket
     |> assign(
       page_title: "Home",
+      observed: [],
       all_resources: e(queries, :resource_specifications, []),
       all_events: e(queries, :economic_events_pages, :edges, []),
       all_observable_properties: e(queries, :observable_properties_pages, :edges, []),
@@ -35,6 +36,18 @@ defmodule Bonfire.UI.Contribution.ContributionDashboardLive do
     )}
   end
 
+
+  def handle_event("add_observation", %{"id" => id}, socket) do
+    cond do
+      Enum.member?(socket.assigns.observed, id) == false ->
+        socket = assign(socket, observed: [id] ++ socket.assigns.observed)
+        {:noreply, socket}
+      Enum.member?(socket.assigns.observed, id) == true ->
+        socket = assign(socket, observed: List.delete(socket.assigns.observed, id))
+        {:noreply, socket}
+    end
+  end
+  
   def handle_event("validate", %{"create_event_form" => params}, socket) do
     IO.inspect(validate: params)
 
@@ -47,12 +60,12 @@ defmodule Bonfire.UI.Contribution.ContributionDashboardLive do
   def handle_event("submit",  %{"create_event_form" => params}, socket) do
     IO.inspect(submit: params)
     changeset = CreateEventForm.changeset(params)
-     # has_result = %{
-    #   unit: resource_spec.default_unit_of_effort,
-    #   has_numerical_value: high
-    # }
-    # CreateObservationForm.send(changeset, %{has_feature_of_interest: resource.id, observed_property: property, }, socket)
-    # def send(changeset, %{"has_feature_of_interest" => has_feature_of_interest, "observed_property" => observed_property, "has_result" => has_result, "unit" => unit} = _params, socket) do
+      # has_result = %{
+      #   unit: resource_spec.default_unit_of_effort,
+      #   has_numerical_value: high
+      # }
+      # CreateObservationForm.send(changeset, %{has_feature_of_interest: resource.id, observed_property: property, }, socket)
+      # def send(changeset, %{"has_feature_of_interest" => has_feature_of_interest, "observed_property" => observed_property, "has_result" => has_result, "unit" => unit} = _params, socket) do
 
    case CreateEventForm.send(changeset, params, socket) do
     {:ok, %{economic_event: event, reciprocal_events: reciprocals, economic_resource: resource}} ->
