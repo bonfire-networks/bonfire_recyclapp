@@ -1,4 +1,4 @@
-<div class="bg-blue-900" id="breadpub-live">
+<div style="background: #0F2550 ;" id="breadpub-live">
   <% info = live_flash(@flash, :info) %>
   <% error = live_flash(@flash, :error) %>
   <%= if info || error do %>
@@ -32,7 +32,7 @@
           <div class="container mx-auto mb-16">
             <div class="p-4 lg:p-0">
               <%= live_redirect to: Routes.live_path(@socket, Bonfire.UI.Contribution.ContributionDashboardLive) do %>
-                <h1 style="font-size: 60px" class="mt-8 font-black leading-tight text-center text-green-400 uppercase">Recyc <br />-lapp</h1>
+                <h1 style="font-size: 60px; color: #52E277" class="mt-8 font-black leading-tight text-center uppercase">Recyc <br />-lapp</h1>
               <% end %>
               <%= @inner_content %>
             </div>
