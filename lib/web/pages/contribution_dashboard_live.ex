@@ -28,7 +28,7 @@ defmodule Bonfire.UI.Contribution.ContributionDashboardLive do
     |> assign(
       page_title: "Home",
       observed: [],
-      all_resources: e(queries, :resource_specifications, []),
+      all_resources: e(queries, :resource_specifications_pages, :edges, []),
       all_events: e(queries, :economic_events_pages, :edges, []),
       all_observable_properties: e(queries, :observable_properties_pages, :edges, []),
       changeset: changeset,
@@ -47,7 +47,7 @@ defmodule Bonfire.UI.Contribution.ContributionDashboardLive do
         {:noreply, socket}
     end
   end
-  
+
   def handle_event("validate", %{"create_event_form" => params}, socket) do
     IO.inspect(validate: params)
 
@@ -103,16 +103,18 @@ defmodule Bonfire.UI.Contribution.ContributionDashboardLive do
 
   @graphql """
   {
-    resource_specifications {
-      id
-      note
-      name
-      default_unit_of_effort {
-        label
-        id
+    resource_specifications_pages(limit: 100) {
+        edges {
+          id
+          note
+          name
+          default_unit_of_effort {
+            label
+            id
+          }
+        }
       }
-    }
-    observable_properties_pages(limit: 10) {
+    observable_properties_pages(limit: 100) {
       edges {
         id
         label
@@ -123,7 +125,7 @@ defmodule Bonfire.UI.Contribution.ContributionDashboardLive do
         }
       }
     }
-    economic_events_pages(limit: 10) {
+    economic_events_pages(limit: 100) {
       edges {
         id
         note

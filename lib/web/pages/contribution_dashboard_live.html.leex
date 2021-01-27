@@ -119,7 +119,7 @@
                     </div>
                     <div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
                       <div>
-                        <p class="text-base text-gray-100">Donated <b><%= item.resource_quantity.has_numerical_value %> <%= e(item, :resource_quantity, :has_unit, :label, e(item, :resource_quantity, :unit, :label, "")) %></b> of <b><%= List.first(String.split(item.resource_inventoried_as.name, "-")) %></b> </p>
+                        <p class="text-base text-gray-100">Donated <b><%= e(item, :resource_quantity,:has_numerical_value, "") %> <%= e(item, :resource_quantity, :has_unit, :label, e(item, :resource_quantity, :unit, :label, "")) %></b> of <b><%= List.first(String.split(e(item, :resource_inventoried_as, :name, ""), "-")) %></b> </p>
                         <p class="mt-2 text-sm text-gray-200"><%= item.note %></p>
                       </div>
                     </div>
