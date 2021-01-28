@@ -6,6 +6,7 @@ defmodule Bonfire.UI.Contribution.CreateEventLive do
 
   def mount(socket) do
     changeset = CreateEventForm.changeset()
+    events = e(queries, :economic_events_pages, :edges, [])
     {:ok, socket
     |> assign(
       changeset: changeset
