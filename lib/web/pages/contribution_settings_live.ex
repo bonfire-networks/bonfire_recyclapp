@@ -194,14 +194,14 @@ defmodule Bonfire.UI.Contribution.ContributionSettingsLive do
 
   @graphql """
     {
-      units_pages {
+      units_pages(limit: 100) {
         edges {
           id
           label
           symbol
         }
       }
-      observable_properties_pages {
+      observable_properties_pages(limit: 100) {
         edges {
           id
           note
@@ -212,7 +212,7 @@ defmodule Bonfire.UI.Contribution.ContributionSettingsLive do
         id
         label
       }
-      observable_phenomenon_pages {
+      observable_phenomenon_pages(limit: 100) {
         edges {
           label
           note
@@ -222,7 +222,7 @@ defmodule Bonfire.UI.Contribution.ContributionSettingsLive do
           }
         }
       }
-      resource_specifications_pages {
+      resource_specifications_pages(limit: 100) {
         edges {
           id
           note
@@ -233,7 +233,7 @@ defmodule Bonfire.UI.Contribution.ContributionSettingsLive do
           }
         }
       }
-      value_calculations_pages {
+      value_calculations_pages(limit: 100) {
          edges {
           id
           note

@@ -32,6 +32,7 @@ defmodule  Bonfire.UI.Contribution.CreateEventForm do
       provider: user.id,
       receiver: user.id,
       action: "transfer",
+      resource_conforms_to: resource_spec,
       resource_quantity: %{
         unit: resource_spec.default_unit_of_effort,
         has_numerical_value: float
