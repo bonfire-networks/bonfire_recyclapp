@@ -4,7 +4,7 @@
       <div class="flex items-center p-2 mt-6 bg-white rounded shadow">
         <h2 class="flex-1 text-2xl antialiased font-bold text-gray-600 break-words">Home</h2>
         <%= live_redirect to: Routes.live_path(@socket, Bonfire.UI.Contribution.ContributionSettingsLive) do %>
-        <button style="background-color: #52E277" type="button" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+        <button  type="button" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
           Settings
         </button>
         <% end %>
@@ -105,26 +105,16 @@
           <div class="flow-root">
             <ul class="mt-8">
               <%= for item <- @all_events do %>
-              <li>
-                <div class="relative pb-8">
-                  <span class="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true"></span>
-                  <div class="relative flex space-x-3">
-                    <div>
-                      <span class="flex items-center justify-center w-8 h-8 bg-green-500 rounded-full ring-2 ring-blue-900">
-                        <!-- Heroicon name: check -->
-                        <svg class="w-5 h-5 text-blueGray-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                        </svg>
-                      </span>
-                    </div>
-                    <div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
-                      <div>
-                        <p class="text-base text-gray-100">Donated <b><%= e(item, :resource_quantity,:has_numerical_value, "") %> <%= e(item, :resource_quantity, :has_unit, :label, e(item, :resource_quantity, :unit, :label, "")) %></b> of <b><%= List.first(String.split(e(item, :resource_inventoried_as, :name, ""), "-")) %></b> </p>
-                        <p class="mt-2 text-sm text-gray-200"><%= item.note %></p>
-                      </div>
-                    </div>
+              <li class="flex items-center p-3 mb-1 bg-white rounded shadow-md place-content-center">
+                <div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
+                  <div class="">
+                    <p class="text-base text-gray-800">Donated <b><%= e(item, :triggered_by, :resource_quantity,:has_numerical_value, "") %> <%= e(item, :triggered_by, :resource_quantity, :has_unit, :label, "") %></b> of <b><%= List.first(String.split(e(item, :triggered_by, :resource_conforms_to, :name, ""), "-")) %></b> </p>
+                    <p class="inline-flex items-center px-3 py-1 mt-1 text-sm font-medium text-green-800 bg-green-100 rounded-full">
+                      Received <b class="mx-1"><%= e(item, :resource_quantity,:has_numerical_value, "") %> <b><%= List.first(String.split(e(item, :resource_conforms_to, :name, ""), "-")) %></b>
+                    </p>
                   </div>
                 </div>
+                <span class="text-sm text-gray-400">28 Jan</span>
               </li>
               <% end %>
             </ul>
