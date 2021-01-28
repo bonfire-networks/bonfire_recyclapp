@@ -25,11 +25,8 @@ defmodule Bonfire.UI.Contribution.CreateResourceSpecificationLive do
 
     case CreateResourceSpecForm.send(changeset, params, socket) do
       {:ok, resource} ->
-        {:noreply,
-         socket
-         |> put_flash(:info, "Resource specification correctly created!")
-         |> assign(all_resources: [resource] ++ socket.assigns.all_resources)
-        }
+        send self(), {:add_resource_specification, resource}
+        {:noreply, socket}
 
       {:error, changeset} ->
         {:noreply, assign(socket, changeset: changeset)}

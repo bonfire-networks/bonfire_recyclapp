@@ -23,11 +23,8 @@ defmodule Bonfire.UI.Contribution.CreateObservablePropertyLive do
 
     case CreateObservablePropertyForm.send(changeset, params, socket) do
       {:ok, property} ->
-        {:noreply,
-         socket
-         |> put_flash(:info, "Property successfully created!")
-         |> assign(all_properties: [property] ++ socket.assigns.all_properties)
-       }
+        send self(), {:add_property, property}
+        {:noreply, socket}
 
       {:error, changeset} ->
         {:noreply, assign(socket, changeset_property: changeset)}

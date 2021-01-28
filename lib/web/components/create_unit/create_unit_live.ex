@@ -23,10 +23,11 @@ defmodule Bonfire.UI.Contribution.CreateUnitLive do
 
     case CreateUnitForm.send(changeset, params, socket) do
       {:ok, unit} ->
+        send self(), {:add_unit, unit}
         {:noreply,
          socket
-         |> put_flash(:info, "Unit successfully created!")
-         |> assign(all_units: [unit] ++ socket.assigns.all_units)
+         
+        #  |> assign(all_units: [unit] ++ socket.assigns.all_units)
        }
 
       {:error, changeset} ->

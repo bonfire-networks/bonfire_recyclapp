@@ -23,11 +23,8 @@ defmodule Bonfire.UI.Contribution.CreatePhenomenonLive do
 
     case CreatePhenomenonForm.send(changeset, params, socket) do
       {:ok, phenomenon} ->
-        {:noreply,
-         socket
-         |> put_flash(:info, "Phenomenon successfully created!")
-         |> assign(all_phenomenons: [phenomenon] ++ socket.assigns.all_phenomenons)
-       }
+        send self(), {:add_phenomenon, phenomenon}
+        {:noreply, socket}
 
       {:error, changeset} ->
         {:noreply, assign(socket, changeset_property: changeset)}

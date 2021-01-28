@@ -23,11 +23,9 @@ defmodule Bonfire.UI.Contribution.CreateValueCalculationLive do
     changeset = CreateValueCalculationForm.changeset(params)
     case CreateValueCalculationForm.send(changeset, params, socket) do
       {:ok, vc} ->
-        {:noreply,
-          socket
-          |> put_flash(:info, "Value calculation successfully created!")
-          |> assign(all_value_calculations: [vc] ++ socket.assigns.all_value_calculations)
-        }
+        send self(), {:add_vc, vc}
+        {:noreply, socket}
+        
 
       {:error, changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
