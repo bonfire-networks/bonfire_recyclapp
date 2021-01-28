@@ -1,0 +1,49 @@
+<%= f = form_for @changeset, "#", [phx_submit: "submit_phenomenon", phx_change: "validate_phenomenon", phx_target: @myself] %>
+  <div id="phenomenon" class="mt-6 mb-8">
+    <div class="p-3">
+      <h3 class="mb-4 text-2xl font-semibold text-gray-800 ">Create a new observable phenomenon</h3>
+      <div class="">
+        <%= label f, :property, "What observable property does this assessment apply to?", class: "block text-sm font-medium text-gray-700" %>
+        <div class="mt-1">
+          <%= select f, :property, Enum.map(@all_properties, &{&1.label, &1.id}), class: "w-full" %>
+        </div>
+        <%= error_tag f, :property %>
+      </div>
+      <div class="mt-3">
+        <%= label f, :name, "A name for this phenomenon (eg. high, ripe, organic)", class: "block text-sm font-medium text-gray-700" %>
+        <div class="mt-1">
+          <%= text_input f, :name, required: true, class: "w-full" %>
+        </div>
+        <%= error_tag f, :name %>
+      </div>
+      <div class="mt-3">
+        <%= label f, :formula, "A numerical representation of this phenomenon, to be used when automatic analysis is needed", class: "block text-sm font-medium text-gray-700" %>
+        <div class="mt-1">
+          <%= number_input f, :formula, required: true, placeholder: "0", class: "w-full" %>
+        </div>
+        <%= error_tag f, :formula %>
+      </div>
+      <div class="mt-3">
+        <%= label f, :note, "Add a description", class: "block text-sm font-medium text-gray-700" %>
+        <div class="mt-1">
+          <%= textarea f, :note, class: "w-full" %>
+        </div>
+        <%= error_tag f, :note %>
+      </div>
+      <button type="submit" phx-disable-with="Creating..." class="flex justify-center w-full px-4 py-2 mt-8 text-sm font-medium text-gray-800 transition duration-150 ease-in-out bg-green-300 border border-transparent rounded-md hover:bg-green-400 hover:text-gray-900 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-200 active:bg-gray-700">
+        Create
+      </button>
+    </div>
+  </div>
+</form>
+<div class="p-3 border-t divide-y divide-gray-200 bg-blueGray-50">
+  <h3 class="mb-3 text-xs font-semibold tracking-wider text-gray-700 uppercase">All phenomenons</h3>
+  <%= for x <- @all_phenomenons do %>
+    <div class="flex items-center p-3 -mx-3">
+      <div>
+        <h4 class="text-lg font-semibold text-gray-700"><%= e(x, :label, "") %> (<%= e(x, :choice_of, :label, "") %>) (<%= e(x, :formula_quantifier, "") %>)</h4>
+        <p class="text-base italic text-gray-500"><%= e(x, :note, "") %></p>
+      </div>
+    </div>
+  <% end %>
+</div>
