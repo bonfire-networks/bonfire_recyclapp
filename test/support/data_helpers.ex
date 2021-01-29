@@ -1,6 +1,6 @@
-defmodule Bonfire.UI.Contribution.DataHelpers do
+defmodule Bonfire.Recyclapp.DataHelpers do
 
   # import ExUnit.Assertions
-  # alias Bonfire.UI.Contribution.Fake
+  # alias Bonfire.Recyclapp.Fake
 
 end

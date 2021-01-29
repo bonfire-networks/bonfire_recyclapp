@@ -1,6 +1,6 @@
-defmodule Bonfire.UI.Contribution.CreateUnitLive do
+defmodule Bonfire.Recyclapp.CreateUnitLive do
   use Bonfire.Web, :live_component
-  alias Bonfire.UI.Contribution.CreateUnitForm
+  alias Bonfire.Recyclapp.CreateUnitForm
 
 
   def mount(socket) do

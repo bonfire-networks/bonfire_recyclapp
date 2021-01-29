@@ -1,4 +1,4 @@
-defmodule Bonfire.UI.Contribution.Integration do
+defmodule Bonfire.Recyclapp.Integration do
 
   def repo, do: Bonfire.Common.Config.get!(:repo_module)
 

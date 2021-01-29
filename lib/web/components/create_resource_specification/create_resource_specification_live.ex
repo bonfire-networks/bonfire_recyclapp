@@ -1,6 +1,6 @@
-defmodule Bonfire.UI.Contribution.CreateResourceSpecificationLive do
+defmodule Bonfire.Recyclapp.CreateResourceSpecificationLive do
   use Bonfire.Web, :live_component
-  alias Bonfire.UI.Contribution.CreateResourceSpecForm
+  alias Bonfire.Recyclapp.CreateResourceSpecForm
 
 
   def mount(socket) do

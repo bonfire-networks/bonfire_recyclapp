@@ -1,11 +1,11 @@
-defmodule Bonfire.UI.Contribution.Test.FakeHelpers do
+defmodule Bonfire.Recyclapp.Test.FakeHelpers do
 
   alias Bonfire.Data.Identity.Account
-  alias Bonfire.UI.Contribution.Fake
-  alias Bonfire.UI.Contribution.Identity.{Accounts, Users}
+  alias Bonfire.Recyclapp.Fake
+  alias Bonfire.Recyclapp.Identity.{Accounts, Users}
   import ExUnit.Assertions
 
-  import Bonfire.UI.Contribution.Integration
+  import Bonfire.Recyclapp.Integration
 
   def fake_account!(attrs \\ %{}) do
     cs = Accounts.signup_changeset(Fake.account(attrs))

@@ -1,6 +1,6 @@
-defmodule Bonfire.UI.Contribution.CreateValueCalculationLive do
+defmodule Bonfire.Recyclapp.CreateValueCalculationLive do
   use Bonfire.Web, :live_component
-  alias Bonfire.UI.Contribution.CreateValueCalculationForm
+  alias Bonfire.Recyclapp.CreateValueCalculationForm
 
 
   def mount(socket) do

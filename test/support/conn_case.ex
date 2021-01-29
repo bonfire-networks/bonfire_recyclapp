@@ -1,4 +1,4 @@
-defmodule Bonfire.UI.Contribution.ConnCase do
+defmodule Bonfire.Recyclapp.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -23,11 +23,11 @@ defmodule Bonfire.UI.Contribution.ConnCase do
       import Plug.Conn
       import Phoenix.ConnTest
       import Phoenix.LiveViewTest
-      import Bonfire.UI.Contribution.ConnCase
-      import Bonfire.UI.Contribution.Test.ConnHelpers
-      import Bonfire.UI.Contribution.Test.FakeHelpers
-      alias Bonfire.UI.Contribution.Fake
-      # alias Bonfire.UI.Contribution.Web.Router.Helpers, as: Routes
+      import Bonfire.Recyclapp.ConnCase
+      import Bonfire.Recyclapp.Test.ConnHelpers
+      import Bonfire.Recyclapp.Test.FakeHelpers
+      alias Bonfire.Recyclapp.Fake
+      # alias Bonfire.Recyclapp.Web.Router.Helpers, as: Routes
 
       # The default endpoint for testing
       @endpoint Bonfire.Common.Config.get!(:endpoint_module)
@@ -36,7 +36,7 @@ defmodule Bonfire.UI.Contribution.ConnCase do
 
   setup tags do
 
-    import Bonfire.UI.Contribution.Integration
+    import Bonfire.Recyclapp.Integration
 
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(repo())
 

@@ -1,4 +1,4 @@
-defmodule  Bonfire.UI.Contribution.CreatePhenomenonForm do
+defmodule  Bonfire.Recyclapp.CreatePhenomenonForm do
   import Ecto.Changeset
   alias ValueFlows.Observe.ObservablePhenomenons
 

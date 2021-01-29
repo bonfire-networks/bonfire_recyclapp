@@ -1,12 +1,12 @@
-defmodule Bonfire.UI.Contribution.ContributionDashboardLive do
-  use Bonfire.Web, {:live_view, [layout: {Bonfire.UI.Contribution.LayoutView, "live.html"}]}
+defmodule Bonfire.Recyclapp.RecyclappDashboardLive do
+  use Bonfire.Web, {:live_view, [layout: {Bonfire.Recyclapp.LayoutView, "live.html"}]}
 
   use AbsintheClient, schema: Bonfire.GraphQL.Schema, action: [mode: :internal]
 
   alias Bonfire.Common.Web.LivePlugs
   alias Bonfire.Me.Users
   alias Bonfire.Me.Web.{CreateUserLive, LoggedDashboardLive}
-  alias Bonfire.UI.Contribution.CreateEventLive
+  alias Bonfire.Recyclapp.CreateEventLive
 
   def mount(params, session, socket) do
     LivePlugs.live_plug params, session, socket, [
@@ -37,7 +37,7 @@ defmodule Bonfire.UI.Contribution.ContributionDashboardLive do
       socket
       |> put_flash(:info, "Donation successfully recorded!")
       |> assign(all_events: [event] ++ socket.assigns.all_events)
-      |> push_redirect(to: "/contribution/success/" <> e(reciprocals, :id, e(event, :id, "")))
+      |> push_redirect(to: "/recyclapp/success/" <> e(reciprocals, :id, e(event, :id, "")))
       }
   end
 

@@ -1,6 +1,6 @@
-defmodule Bonfire.UI.Contribution.CreatePhenomenonLive do
+defmodule Bonfire.Recyclapp.CreatePhenomenonLive do
   use Bonfire.Web, :live_component
-  alias Bonfire.UI.Contribution.CreatePhenomenonForm
+  alias Bonfire.Recyclapp.CreatePhenomenonForm
 
 
   def mount(socket) do

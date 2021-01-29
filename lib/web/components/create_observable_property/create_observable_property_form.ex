@@ -1,4 +1,4 @@
-defmodule  Bonfire.UI.Contribution.CreateObservablePropertyForm do
+defmodule  Bonfire.Recyclapp.CreateObservablePropertyForm do
   import Ecto.Changeset
   alias ValueFlows.Observe.ObservableProperties
 

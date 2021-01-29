@@ -1,5 +1,5 @@
-defmodule Bonfire.UI.Contribution.ContributionSuccessLive do
-  use Bonfire.Web, {:live_view, [layout: {Bonfire.UI.Contribution.LayoutView, "live.html"}]}
+defmodule Bonfire.Recyclapp.RecyclappSuccessLive do
+  use Bonfire.Web, {:live_view, [layout: {Bonfire.Recyclapp.LayoutView, "live.html"}]}
 
   use AbsintheClient, schema: Bonfire.GraphQL.Schema, action: [mode: :internal]
 
@@ -8,8 +8,8 @@ defmodule Bonfire.UI.Contribution.ContributionSuccessLive do
   alias Bonfire.Common.Web.LivePlugs
   alias Bonfire.Me.Users
   alias Bonfire.Me.Web.{CreateUserLive, LoggedDashboardLive}
-  alias Bonfire.UI.Contribution.CreateEventForm
-  alias Bonfire.UI.Contribution.CreateObservationForm
+  alias Bonfire.Recyclapp.CreateEventForm
+  alias Bonfire.Recyclapp.CreateObservationForm
 
   def mount(params, session, socket) do
     LivePlugs.live_plug params, session, socket, [
@@ -35,7 +35,7 @@ defmodule Bonfire.UI.Contribution.ContributionSuccessLive do
   defp mounted(params, session, socket) do
 
     {:ok, socket
-    |> assign(page_title: "Contribution",
+    |> assign(page_title: "Recyclapp",
     selected_tab: "about",
     reciprocal: nil
     )}

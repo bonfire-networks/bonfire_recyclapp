@@ -1,6 +1,6 @@
-defmodule  Bonfire.UI.Contribution.CreateResourceSpecForm do
+defmodule  Bonfire.Recyclapp.CreateResourceSpecForm do
   import Ecto.Changeset
-  import Bonfire.UI.Contribution.Integration
+  import Bonfire.Recyclapp.Integration
   alias ValueFlows.Knowledge.ResourceSpecification.ResourceSpecifications
   alias ValueFlows.Knowledge.ResourceSpecification.ResourceSpecification
 

@@ -1,11 +1,11 @@
 Code.eval_file("mess.exs")
-defmodule Bonfire.UI.Contribution.MixProject do
+defmodule Bonfire.Recyclapp.MixProject do
 
   use Mix.Project
 
   def project do
     [
-      app: :bonfire_ui_contribution,
+      app: :bonfire_recyclapp,
       version: "0.1.0",
       elixir: "~> 1.10",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -25,7 +25,7 @@ defmodule Bonfire.UI.Contribution.MixProject do
 
   def application do
     [
-      # mod: {Bonfire.UI.Contribution.FallbackApplication, []},
+      # mod: {Bonfire.Recyclapp.FallbackApplication, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end

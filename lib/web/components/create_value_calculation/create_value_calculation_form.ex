@@ -1,4 +1,4 @@
-defmodule  Bonfire.UI.Contribution.CreateValueCalculationForm do
+defmodule  Bonfire.Recyclapp.CreateValueCalculationForm do
   import Ecto.Changeset
   alias ValueFlows.ValueCalculation.ValueCalculations
 

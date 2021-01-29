@@ -1,6 +1,6 @@
-defmodule  Bonfire.UI.Contribution.CreateEventForm do
+defmodule  Bonfire.Recyclapp.CreateEventForm do
   import Ecto.Changeset
-  import Bonfire.UI.Contribution.Integration
+  import Bonfire.Recyclapp.Integration
   alias ValueFlows.EconomicEvent.EconomicEvents
   alias ValueFlows.EconomicEvent.EconomicEvent
   alias ValueFlows.Knowledge.ResourceSpecification.ResourceSpecifications

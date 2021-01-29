@@ -14,7 +14,7 @@
             <%= @reciprocal.resource_quantity.has_numerical_value %> <%= e(@reciprocal, :resource_conforms_to, :name, "") %>
           </h3>
 
-          <%= live_redirect to: Routes.live_path(@socket, Bonfire.UI.Contribution.ContributionDashboardLive) do %>
+          <%= live_redirect to: Routes.live_path(@socket, Bonfire.Recyclapp.RecyclappDashboardLive) do %>
         <button type="button" class="items-center block w-48 px-4 py-2 mx-auto mt-6 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
           Submit a new donation
         </button>

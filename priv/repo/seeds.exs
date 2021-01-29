@@ -5,7 +5,7 @@
 # Inside the script, you can read and write to any of your
 # repositories directly:
 #
-#     Bonfire.UI.Contribution.Repo.insert!(%Bonfire.UI.Contribution.SomeSchema{})
+#     Bonfire.Recyclapp.Repo.insert!(%Bonfire.Recyclapp.SomeSchema{})
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.

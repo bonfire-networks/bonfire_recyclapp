@@ -1,13 +1,13 @@
-defmodule Bonfire.UI.Contribution.ContributionSettingsLive do
-  use Bonfire.Web, {:live_view, [layout: {Bonfire.UI.Contribution.LayoutView, "live.html"}]}
+defmodule Bonfire.Recyclapp.RecyclappSettingsLive do
+  use Bonfire.Web, {:live_view, [layout: {Bonfire.Recyclapp.LayoutView, "live.html"}]}
   use AbsintheClient, schema: Bonfire.GraphQL.Schema, action: [mode: :internal]
 
   alias Bonfire.Common.Web.LivePlugs
-  alias Bonfire.UI.Contribution.CreateUnitLive
-  alias Bonfire.UI.Contribution.CreateObservablePropertyLive
-  alias Bonfire.UI.Contribution.CreateValueCalculationLive
-  alias Bonfire.UI.Contribution.CreatePhenomenonLive
-  alias Bonfire.UI.Contribution.CreateResourceSpecificationLive
+  alias Bonfire.Recyclapp.CreateUnitLive
+  alias Bonfire.Recyclapp.CreateObservablePropertyLive
+  alias Bonfire.Recyclapp.CreateValueCalculationLive
+  alias Bonfire.Recyclapp.CreatePhenomenonLive
+  alias Bonfire.Recyclapp.CreateResourceSpecificationLive
 
   def mount(params, session, socket) do
     LivePlugs.live_plug params, session, socket, [

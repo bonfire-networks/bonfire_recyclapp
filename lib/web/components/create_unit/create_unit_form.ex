@@ -1,4 +1,4 @@
-defmodule  Bonfire.UI.Contribution.CreateUnitForm do
+defmodule  Bonfire.Recyclapp.CreateUnitForm do
   import Ecto.Changeset
   alias  Bonfire.Quantify.Units
   alias Bonfire.Quantify.Unit

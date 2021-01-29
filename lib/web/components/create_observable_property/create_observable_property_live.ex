@@ -1,6 +1,6 @@
-defmodule Bonfire.UI.Contribution.CreateObservablePropertyLive do
+defmodule Bonfire.Recyclapp.CreateObservablePropertyLive do
   use Bonfire.Web, :live_component
-  alias Bonfire.UI.Contribution.CreateObservablePropertyForm
+  alias Bonfire.Recyclapp.CreateObservablePropertyForm
 
 
   def mount(socket) do

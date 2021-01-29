@@ -1,4 +1,4 @@
-# Bonfire:UI:Contribution
+# Bonfire:Recyclapp
 
 An extension for [Bonfire](https://bonfire.cafe/) that handles:
 
