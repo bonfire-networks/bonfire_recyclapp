@@ -20,12 +20,13 @@ defmodule Bonfire.UI.Contribution.ContributionDashboardLive do
 
   defp mounted(params, session, socket) do
     queries = queries(socket)
+    events = e(queries, :economic_events_pages, :edges, [])
     {:ok, socket
     |> assign(
       page_title: "Home",
       observed: [],
       all_resources: e(queries, :resource_specifications_pages, :edges, []),
-      all_events: e(queries, :economic_events_pages, :edges, []),
+      all_events: Enum.filter(events, fn ev -> ev.triggered_by != nil end),
       all_observable_properties: e(queries, :observable_properties_pages, :edges, []),
       selected_property: List.first(e(queries, :observable_properties_pages, :edges, []))
     )}
@@ -39,10 +40,6 @@ defmodule Bonfire.UI.Contribution.ContributionDashboardLive do
       |> push_redirect(to: "/contribution/success/" <> e(reciprocals, :id, e(event, :id, "")))
       }
   end
-
-  
-
-
 
   @graphql """
   {
@@ -71,12 +68,25 @@ defmodule Bonfire.UI.Contribution.ContributionDashboardLive do
     economic_events_pages(limit: 100) {
       edges {
         id
-        note
         action {
           id
         }
-        receiver {
+        resource_conforms_to {
           name
+        }
+        triggered_by {
+          action {
+            id
+          }
+          resource_conforms_to {
+            name
+          }
+          resource_quantity {
+            has_unit {
+              label
+            }
+            has_numerical_value
+          }
         }
         resource_inventoried_as {
           name
@@ -91,6 +101,7 @@ defmodule Bonfire.UI.Contribution.ContributionDashboardLive do
     }
   }
   """
+  
   def queries(params \\ %{}, socket), do: liveql(socket, :queries, params)
 
  
