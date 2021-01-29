@@ -6,6 +6,7 @@ defmodule Bonfire.UI.Contribution.CreateEventLive do
 
   def mount(socket) do
     changeset = CreateEventForm.changeset()
+    events = e(queries, :economic_events_pages, :edges, [])
     {:ok, socket
     |> assign(
       changeset: changeset
@@ -72,7 +73,73 @@ defmodule Bonfire.UI.Contribution.CreateEventLive do
         |> assign(changeset: CreateEventForm.changeset(%{}))
         |> put_flash(:error, message)}
   end
+<<<<<<< HEAD:lib/web/components/create_event/create_event_live.ex
   
+=======
+
+  @graphql """
+  {
+    resource_specifications_pages(limit: 100) {
+        edges {
+          id
+          note
+          name
+          default_unit_of_effort {
+            label
+            id
+          }
+        }
+      }
+    observable_properties_pages(limit: 100) {
+      edges {
+        id
+        label
+        has_choices {
+          id
+          label
+          formula_quantifier
+        }
+      }
+    }
+    economic_events_pages(limit: 100) {
+      edges {
+        id
+        action {
+          id
+        }
+        resource_conforms_to {
+          name
+        }
+        triggered_by {
+          action {
+            id
+          }
+          resource_conforms_to {
+            name
+          }
+          resource_quantity {
+            has_unit {
+              label
+            }
+            has_numerical_value
+          }
+        }
+        resource_inventoried_as {
+          name
+        }
+        resource_quantity {
+          has_unit {
+            label
+          }
+          has_numerical_value
+        }
+      }
+    }
+  }
+  """
+  def queries(params \\ %{}, socket), do: liveql(socket, :queries, params)
+
+>>>>>>> 004a36c3bea7a8942124b6659991e01960bd0056:lib/web/pages/contribution_dashboard_live.ex
   def spec_unit(spec) do
     unit = e(spec, :default_unit_of_effort, :label, nil)
     if unit do
