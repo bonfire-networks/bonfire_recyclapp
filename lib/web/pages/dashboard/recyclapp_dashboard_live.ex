@@ -3,7 +3,7 @@ defmodule Bonfire.Recyclapp.RecyclappDashboardLive do
 
   use AbsintheClient, schema: Bonfire.GraphQL.Schema, action: [mode: :internal]
 
-  alias Bonfire.Common.Web.LivePlugs
+  alias Bonfire.Web.LivePlugs
   alias Bonfire.Me.Users
   alias Bonfire.Me.Web.{CreateUserLive, LoggedDashboardLive}
   alias Bonfire.Recyclapp.CreateEventLive
@@ -101,8 +101,8 @@ defmodule Bonfire.Recyclapp.RecyclappDashboardLive do
     }
   }
   """
-  
+
   def queries(params \\ %{}, socket), do: liveql(socket, :queries, params)
 
- 
+
 end

@@ -2,7 +2,7 @@ defmodule Bonfire.Recyclapp.RecyclappSettingsLive do
   use Bonfire.Web, {:live_view, [layout: {Bonfire.Recyclapp.LayoutView, "live.html"}]}
   use AbsintheClient, schema: Bonfire.GraphQL.Schema, action: [mode: :internal]
 
-  alias Bonfire.Common.Web.LivePlugs
+  alias Bonfire.Web.LivePlugs
   alias Bonfire.Recyclapp.CreateUnitLive
   alias Bonfire.Recyclapp.CreateObservablePropertyLive
   alias Bonfire.Recyclapp.CreateValueCalculationLive
@@ -70,7 +70,7 @@ defmodule Bonfire.Recyclapp.RecyclappSettingsLive do
       |> assign(all_value_calculations: [vc] ++ socket.assigns.all_value_calculations)
     }
   end
-  
+
 
   @graphql """
     {
