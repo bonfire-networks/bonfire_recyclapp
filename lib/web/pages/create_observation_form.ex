@@ -21,7 +21,7 @@ defmodule  Bonfire.Recyclapp.CreateObservationForm do
     user = Map.get(socket.assigns, :current_user)
     provider = user.id
     IO.inspect(params)
-    # IO.inspect(has_result)
+    #IO.inspect(has_result)
     # {float, ""} = Float.parse(has_result)
     # has_result = %{
     #   has_numerical_value: float,
