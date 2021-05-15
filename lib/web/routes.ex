@@ -3,8 +3,6 @@ defmodule Bonfire.Recyclapp.Routes do
 
     quote do
 
-      alias Bonfire.Recyclapp.Routes.Helpers, as: SocialRoutes
-
       pipeline :recyclapp do
         plug :put_root_layout, {Bonfire.Recyclapp.LayoutView, :root}
       end

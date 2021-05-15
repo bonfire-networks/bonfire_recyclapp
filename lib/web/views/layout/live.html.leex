@@ -31,7 +31,7 @@
         <div class="flex flex-col flex-1 w-0">
           <div class="container mx-auto mb-16">
             <div class="p-4 lg:p-0">
-              <%= live_redirect to: Routes.live_path(@socket, Bonfire.Recyclapp.RecyclappDashboardLive) do %>
+              <%= live_redirect to: path(Bonfire.Recyclapp.RecyclappDashboardLive) do %>
                 <h1 style="font-size: 60px; color: #52E277" class="mt-8 font-black leading-tight text-center uppercase">Recycl<br />-app</h1>
               <% end %>
               <%= @inner_content %>
