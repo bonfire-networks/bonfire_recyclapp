@@ -1,8 +1,6 @@
 defmodule Bonfire.Recyclapp.MapLive do
   use Bonfire.Web, {:live_view, [layout: {Bonfire.Recyclapp.LayoutView, "live.html"}]}
 
-  use AbsintheClient, schema: Bonfire.GraphQL.Schema, action: [mode: :internal]
-
   alias Bonfire.Web.LivePlugs
 
   def mount(params, session, socket) do
@@ -39,7 +37,7 @@ defmodule Bonfire.Recyclapp.MapLive do
         things
         |> Enum.map(
           &Map.merge(
-            Bonfire.Geolocate.Geolocations.populate_coordinates(Map.get(&1, :at_location)),
+            Map.get(&1, :at_location),
             &1 || %{}
           )
         )
