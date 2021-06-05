@@ -1,6 +1,7 @@
 defmodule  Bonfire.Recyclapp.CreateObservationForm do
   import Ecto.Changeset
   alias ValueFlows.Observe.Observations
+  alias Bonfire.Common.Utils
 
   defstruct [:name, :note]
 
@@ -18,7 +19,7 @@ defmodule  Bonfire.Recyclapp.CreateObservationForm do
   end
 
   def send(changeset, %{"has_feature_of_interest" => has_feature_of_interest, "observed_property" => observed_property, "result_phenomenon" => result_phenomenon} = params, socket) when is_binary(result_phenomenon) do
-    user = Map.get(socket.assigns, :current_user)
+    user = Utils.e(socket.assigns, :current_user, nil)
     provider = user.id
     IO.inspect(params)
     #IO.inspect(has_result)

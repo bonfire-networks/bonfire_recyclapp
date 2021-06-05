@@ -1,6 +1,7 @@
 defmodule  Bonfire.Recyclapp.CreateObservablePropertyForm do
   import Ecto.Changeset
   alias ValueFlows.Observe.ObservableProperties
+  alias Bonfire.Common.Utils
 
   defstruct [:name, :note]
 
@@ -17,7 +18,7 @@ defmodule  Bonfire.Recyclapp.CreateObservablePropertyForm do
   end
 
   def send(changeset, %{"name" => name, "note" => note} = _params, socket) do
-    user = Map.get(socket.assigns, :current_user)
+    user = Utils.e(socket.assigns, :current_user, nil)
     case apply_action(changeset, :insert) do
       {:ok, _} ->
 

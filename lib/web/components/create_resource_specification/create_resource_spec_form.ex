@@ -3,6 +3,7 @@ defmodule  Bonfire.Recyclapp.CreateResourceSpecForm do
   import Bonfire.Recyclapp.Integration
   alias ValueFlows.Knowledge.ResourceSpecification.ResourceSpecifications
   alias ValueFlows.Knowledge.ResourceSpecification.ResourceSpecification
+  alias Bonfire.Common.Utils
 
   defstruct [:label, :symbol]
 
@@ -20,7 +21,7 @@ defmodule  Bonfire.Recyclapp.CreateResourceSpecForm do
   end
 
   def send(changeset, %{"name" => name, "note" => note, "unit" => unit} = _params, socket) do
-    user = Map.get(socket.assigns, :current_user)
+    user = Utils.e(socket.assigns, :current_user, nil)
     case apply_action(changeset, :insert) do
       {:ok, _} ->
 

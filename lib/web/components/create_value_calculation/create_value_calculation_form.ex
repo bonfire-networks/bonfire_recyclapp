@@ -1,6 +1,7 @@
 defmodule  Bonfire.Recyclapp.CreateValueCalculationForm do
   import Ecto.Changeset
   alias ValueFlows.ValueCalculation.ValueCalculations
+  alias Bonfire.Common.Utils
 
   defstruct [:name, :note]
 
@@ -22,20 +23,20 @@ defmodule  Bonfire.Recyclapp.CreateValueCalculationForm do
   end
 
   def send(changeset, %{
-    "name" => name, 
-    "formula" => formula, 
-    "resource_conforms_to" => resource_conforms_to, 
+    "name" => name,
+    "formula" => formula,
+    "resource_conforms_to" => resource_conforms_to,
     "note" => note,
     "action" => action,
     "value_action" => value_action,
     "value_unit" => value_unit,
     "value_resource_conforms_to" => value_resource_conforms_to
     } = _params, socket) do
-    user = Map.get(socket.assigns, :current_user)
+    user = Utils.e(socket.assigns, :current_user, nil)
     value_attrs = %{
-      name: name, 
-      formula: formula, 
-      resource_conforms_to: resource_conforms_to, 
+      name: name,
+      formula: formula,
+      resource_conforms_to: resource_conforms_to,
       note: note,
       action: action,
       value_action: value_action,
@@ -50,7 +51,7 @@ defmodule  Bonfire.Recyclapp.CreateValueCalculationForm do
           IO.inspect(e)
           {nil, "Incorrect details. Please try again..."}
         end
-        
+
         {:error, changeset} ->
         {:error, changeset}
     end

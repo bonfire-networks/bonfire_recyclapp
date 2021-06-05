@@ -4,6 +4,7 @@ defmodule  Bonfire.Recyclapp.CreateEventForm do
   alias ValueFlows.EconomicEvent.EconomicEvents
   alias ValueFlows.EconomicEvent.EconomicEvent
   alias ValueFlows.Knowledge.ResourceSpecification.ResourceSpecifications
+  alias Bonfire.Common.Utils
 
   defstruct [:label, :symbol]
 
@@ -20,7 +21,7 @@ defmodule  Bonfire.Recyclapp.CreateEventForm do
   end
 
   def send(changeset, %{"resource" => resource, "note" => note, "quantity" => quantity} = _params, socket) do
-    user = Map.get(socket.assigns, :current_user)
+    user = Utils.e(socket.assigns, :current_user, nil)
     {:ok, resource_spec} =  ResourceSpecifications.one([
       :default,
       user: user,

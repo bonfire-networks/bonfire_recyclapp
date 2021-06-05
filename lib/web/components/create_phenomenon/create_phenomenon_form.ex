@@ -1,6 +1,7 @@
 defmodule  Bonfire.Recyclapp.CreatePhenomenonForm do
   import Ecto.Changeset
   alias ValueFlows.Observe.ObservablePhenomenons
+  alias Bonfire.Common.Utils
 
   defstruct [:name, :note]
 
@@ -19,7 +20,7 @@ defmodule  Bonfire.Recyclapp.CreatePhenomenonForm do
   end
 
   def send(changeset, %{"name" => name, "formula" => formula, "property" => property, "note" => note} = _params, socket) do
-    user = Map.get(socket.assigns, :current_user)
+    user = Utils.e(socket.assigns, :current_user, nil)
     {float, ""} = Float.parse(formula)
     case apply_action(changeset, :insert) do
       {:ok, _} ->

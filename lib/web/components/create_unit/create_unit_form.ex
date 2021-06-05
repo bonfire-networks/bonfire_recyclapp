@@ -2,6 +2,7 @@ defmodule  Bonfire.Recyclapp.CreateUnitForm do
   import Ecto.Changeset
   alias  Bonfire.Quantify.Units
   alias Bonfire.Quantify.Unit
+  alias Bonfire.Common.Utils
 
   defstruct [:label, :symbol]
 
@@ -18,7 +19,7 @@ defmodule  Bonfire.Recyclapp.CreateUnitForm do
   end
 
   def send(changeset, %{"label" => label, "symbol" => symbol} = _params, socket) do
-    user = Map.get(socket.assigns, :current_user)
+    user = Utils.e(socket.assigns, :current_user, nil)
     case apply_action(changeset, :insert) do
       {:ok, _} ->
 
