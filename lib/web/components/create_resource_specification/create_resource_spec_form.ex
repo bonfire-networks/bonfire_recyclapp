@@ -21,7 +21,7 @@ defmodule  Bonfire.Recyclapp.CreateResourceSpecForm do
   end
 
   def send(changeset, %{"name" => name, "note" => note, "unit" => unit} = _params, socket) do
-    user = Utils.e(socket.assigns, :current_user, nil)
+    user = Utils.current_user(socket)
     case apply_action(changeset, :insert) do
       {:ok, _} ->
 

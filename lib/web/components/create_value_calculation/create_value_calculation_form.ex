@@ -32,7 +32,7 @@ defmodule  Bonfire.Recyclapp.CreateValueCalculationForm do
     "value_unit" => value_unit,
     "value_resource_conforms_to" => value_resource_conforms_to
     } = _params, socket) do
-    user = Utils.e(socket.assigns, :current_user, nil)
+    user = Utils.current_user(socket)
     value_attrs = %{
       name: name,
       formula: formula,

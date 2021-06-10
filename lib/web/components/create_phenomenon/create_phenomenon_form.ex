@@ -20,7 +20,7 @@ defmodule  Bonfire.Recyclapp.CreatePhenomenonForm do
   end
 
   def send(changeset, %{"name" => name, "formula" => formula, "property" => property, "note" => note} = _params, socket) do
-    user = Utils.e(socket.assigns, :current_user, nil)
+    user = Utils.current_user(socket)
     {float, ""} = Float.parse(formula)
     case apply_action(changeset, :insert) do
       {:ok, _} ->

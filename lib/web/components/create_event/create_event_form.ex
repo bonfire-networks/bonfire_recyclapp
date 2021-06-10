@@ -21,7 +21,7 @@ defmodule  Bonfire.Recyclapp.CreateEventForm do
   end
 
   def send(changeset, %{"resource" => resource, "note" => note, "quantity" => quantity} = _params, socket) do
-    user = Utils.e(socket.assigns, :current_user, nil)
+    user = Utils.current_user(socket)
     {:ok, resource_spec} =  ResourceSpecifications.one([
       :default,
       user: user,
