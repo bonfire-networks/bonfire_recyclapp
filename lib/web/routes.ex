@@ -8,13 +8,13 @@ defmodule Bonfire.Recyclapp.Routes do
       end
 
       # pages anyone can view
-      scope "/bread", Bonfire.Recyclapp do
+      scope "/breadpub", Bonfire.Recyclapp do
         pipe_through :browser
 
       end
 
       # pages you need an account to view
-      scope "/bread", Bonfire.Recyclapp do
+      scope "/breadpub", Bonfire.Recyclapp do
         pipe_through :browser
         pipe_through :account_required
 
