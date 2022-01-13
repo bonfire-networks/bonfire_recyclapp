@@ -1,23 +1,23 @@
-<div class="mt-6 mb-8 bg-white rounded-lg shadow">
+<div class="mt-6 mb-8 bg-base-100 rounded-lg shadow">
   <%= f = form_for @changeset, "#", [phx_submit: "submit", phx_change: "validate", phx_target: @myself] %>
     <div class="p-3">
       <div class="flex items-center">
-        <svg class="w-6 h-6 mr-2 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"></path></svg>
-        <h3 class="text-lg font-medium leading-6 text-gray-800">
+        <svg class="w-6 h-6 mr-2 text-primary-content-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"></path></svg>
+        <h3 class="text-lg font-medium leading-6 text-primary-content-800">
           Donation
         </h3>
       </div>
 
       <div class="flex items-center mt-5 space-x-3">
         <div class="flex-1">
-          <%= label f, :resource, "Which kind of resource is being donated?", class: "block text-sm font-medium text-gray-700" %>
+          <%= label f, :resource, "Which kind of resource is being donated?", class: "block text-sm font-medium text-primary-content-700" %>
           <div class="mt-1">
             <%= select f, :resource, Enum.map(@all_resources, &{&1.name <> spec_unit(&1), &1.id}), class: "w-full" %>
           </div>
           <%= error_tag f, :resource %>
         </div>
         <div class="flex-1">
-          <%= label f, :quantity, "What amount?", class: "block text-sm font-medium text-gray-700" %>
+          <%= label f, :quantity, "What amount?", class: "block text-sm font-medium text-primary-content-700" %>
           <div class="mt-1">
             <%= number_input f, :quantity, class: "w-full"%>
           </div>
@@ -25,7 +25,7 @@
         </div>
       </div>
       <div class="mt-5">
-        <%= label f, :note, "Enter a description for the donated resource...", class: "block text-sm font-medium text-gray-700" %>
+        <%= label f, :note, "Enter a description for the donated resource...", class: "block text-sm font-medium text-primary-content-700" %>
         <div class="mt-1">
           <%= textarea f, :note, class: "w-full" %>
         </div>
@@ -33,14 +33,14 @@
       </div>
       <div class="p-3 pt-3 mt-4 -mx-3 border-t">
         <div class="flex items-center">
-          <svg class="w-6 h-6 mr-2 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"></path></svg>
-          <h3 class="text-lg font-medium leading-6 text-gray-900">
+          <svg class="w-6 h-6 mr-2 text-primary-content-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"></path></svg>
+          <h3 class="text-lg font-medium leading-6 text-primary-content-900">
             What is the quality of the items being donated?
           </h3>
         </div>
 
         <div class="mt-5" style="display: none">
-          <%= label f, :property, "", class: "block text-sm font-medium text-gray-700" %>
+          <%= label f, :property, "", class: "block text-sm font-medium text-primary-content-700" %>
           <div class="mt-1">
             <%= select f, :property, Enum.map(@all_observable_properties, &{&1.label, &1.id}), class: "w-full" %>
           </div>
@@ -51,16 +51,16 @@
           <%= for phenomenon <- e(@selected_property, :has_choices, []) do %>
           <div class="flex items-center">
             <div class="relative flex flex-row h-10 bg-transparent rounded-r-md">
-                <%= radio_button f, :phenomenon, phenomenon.id , class: "flex items-center w-8 mt-1 h-8 font-semibold rounded-full bg-blueGray-200 text-center text-gray-700 border-none rounded-none outline-none focus:outline-none text-md hover:text-black focus:text-black md:text-base cursor-default" %>
+                <%= radio_button f, :phenomenon, phenomenon.id , class: "flex items-center w-8 mt-1 h-8 font-semibold rounded-full bg-blueGray-200 text-center text-primary-content-700 border-none rounded-none outline-none focus:outline-none text-md hover:text-black focus:text-black md:text-base cursor-default" %>
               </div>
             <div class="flex items-center custom-number-input">
-              <label for="property" class="flex-1 pl-2 text-sm font-medium text-gray-700"><%= phenomenon.label %></label>
+              <label for="property" class="flex-1 pl-2 text-sm font-medium text-primary-content-700"><%= phenomenon.label %></label>
             </div>
           </div>
           <% end %>
         </div>
       </div>
-      <button style="background-color: #52E277" phx-disable-with="Donating..." type="submit" class="flex justify-center w-full px-4 py-2 mt-4 text-sm font-medium text-gray-800 transition duration-150 ease-in-out border border-transparent rounded-md hover:bg-green-400 hover:text-gray-900 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-200 active:bg-gray-700">
+      <button style="background-color: #52E277" phx-disable-with="Donating..." type="submit" class="flex justify-center w-full px-4 py-2 mt-4 text-sm font-medium text-primary-content-800 transition duration-150 ease-in-out border border-transparent rounded-md hover:bg-green-400 hover:text-primary-content-900 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-primary-content-200 active:bg-neutral-700">
         Donate
       </button>
     </div>

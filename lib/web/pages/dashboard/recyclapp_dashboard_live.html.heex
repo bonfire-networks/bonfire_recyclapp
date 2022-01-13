@@ -1,10 +1,10 @@
 <div class="container h-screen max-w-screen-md mx-auto">
   <div class="flex mb-16 -mx-2">
     <div class="w-full px-2">
-      <div class="flex items-center p-2 mt-6 bg-white rounded shadow">
-        <h2 class="flex-1 text-2xl antialiased font-bold text-gray-600 break-words">Home</h2>
+      <div class="flex items-center p-2 mt-6 bg-base-100 rounded shadow">
+        <h2 class="flex-1 text-2xl antialiased font-bold text-primary-content-600 break-words">Home</h2>
         <%= live_redirect to: path(Bonfire.Recyclapp.RecyclappSettingsLive) do %>
-        <button  type="button" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+        <button  type="button" class="inline-flex items-center px-4 py-2 text-sm font-medium text-primary-content-700 bg-base-100 border border-gray-300 rounded-md shadow-sm hover:bg-neutral-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
           Settings
         </button>
         <% end %>
@@ -21,10 +21,10 @@
         <div class="hidden sm:block">
           <div class="border-b border-gray-200">
             <nav class="flex -mb-px space-x-8" aria-label="Tabs">
-              <button x-bind:class="{'text-white border-white hover:text-white hover:border-white' : tab === 'donation'}" @click="tab = 'donation'" class="px-1 py-4 text-sm font-medium text-gray-300 border-b-2 border-transparent hover:text-gray-400 hover:border-gray-300 whitespace-nowrap" aria-current="page">
+              <button x-bind:class="{'text-white border-white hover:text-white hover:border-white' : tab === 'donation'}" @click="tab = 'donation'" class="px-1 py-4 text-sm font-medium text-primary-content-300 border-b-2 border-transparent hover:text-primary-content-400 hover:border-gray-300 whitespace-nowrap" aria-current="page">
                 Register a donation
               </button>
-              <button x-bind:class="{'text-white border-white hover:text-white hover:border-white' : tab === 'txs'}" @click="tab = 'txs'" class="px-1 py-4 text-sm font-medium text-gray-300 border-b-2 border-transparent hover:text-gray-400 hover:border-gray-300 whitespace-nowrap">
+              <button x-bind:class="{'text-white border-white hover:text-white hover:border-white' : tab === 'txs'}" @click="tab = 'txs'" class="px-1 py-4 text-sm font-medium text-primary-content-300 border-b-2 border-transparent hover:text-primary-content-400 hover:border-gray-300 whitespace-nowrap">
                 Transactions history
               </button>
             </nav>
@@ -44,16 +44,16 @@
           <div class="flow-root">
             <ul class="mt-8">
               <%= for item <- @all_events do %>
-              <li class="flex items-center p-3 mb-1 bg-white rounded shadow-md place-content-center">
+              <li class="flex items-center p-3 mb-1 bg-base-100 rounded shadow-md place-content-center">
                 <div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
                   <div class="">
-                    <p class="text-base text-gray-800">Donated <b><%= e(item, :triggered_by, :resource_quantity,:has_numerical_value, "") %> <%= e(item, :triggered_by, :resource_quantity, :has_unit, :label, "") %></b> of <b><%= List.first(String.split(e(item, :triggered_by, :resource_conforms_to, :name, ""), "-")) %></b> </p>
+                    <p class="text-base text-primary-content-800">Donated <b><%= e(item, :triggered_by, :resource_quantity,:has_numerical_value, "") %> <%= e(item, :triggered_by, :resource_quantity, :has_unit, :label, "") %></b> of <b><%= List.first(String.split(e(item, :triggered_by, :resource_conforms_to, :name, ""), "-")) %></b> </p>
                     <p class="inline-flex items-center px-3 py-1 mt-1 text-sm font-medium text-green-800 bg-green-100 rounded-full">
                       Received <b class="mx-1"><%= e(item, :resource_quantity,:has_numerical_value, "") %></b> <b><%= List.first(String.split(e(item, :resource_conforms_to, :name, ""), "-")) %></b>
                     </p>
                   </div>
                 </div>
-                <span class="text-sm text-gray-400">28 Jan</span>
+                <span class="text-sm text-primary-content-400">28 Jan</span>
               </li>
               <% end %>
             </ul>
