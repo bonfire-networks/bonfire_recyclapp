@@ -10,12 +10,12 @@
             style="background-image: url(https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F4%2F4e%2FQRcode_image.svg%2F1200px-QRcode_image.svg.png&f=1&nofb=1)">
           </div>
           <h4 class="mt-4 text-lg font-medium text-center text-primary-content-100">The donator received</h4>
-          <h3 class="p-3 mx-auto mt-4 text-lg font-bold text-center text-blue-800 bg-neutral-200 rounded w-96">
+          <h3 class="p-3 mx-auto mt-4 text-lg font-bold text-center text-blue-800 bg-neutral rounded w-96">
             <%= @reciprocal.resource_quantity.has_numerical_value %> <%= e(@reciprocal, :resource_conforms_to, :name, "") %>
           </h3>
 
           <%= live_redirect to: path(Bonfire.Recyclapp.RecyclappDashboardLive) do %>
-        <button type="button" class="items-center block w-48 px-4 py-2 mx-auto mt-6 text-sm font-medium text-primary-content-700 bg-base-100 border border-gray-300 rounded-md shadow-sm hover:bg-neutral-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+        <button type="button" class="items-center block w-48 px-4 py-2 mx-auto mt-6 text-sm font-medium text-primary-content-700 bg-base-100 border border-gray-300 rounded-md shadow-sm hover:bg-neutral focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary-500">
           Submit a new donation
         </button>
         <% end %>
