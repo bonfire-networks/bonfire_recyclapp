@@ -24,7 +24,7 @@ defmodule Bonfire.Recyclapp.CreateEventLive do
   end
 
   def handle_event("validate", %{"create_event_form" => params}, socket) do
-    IO.inspect(validate: params)
+    debug(validate: params)
 
     changeset = CreateEventForm.changeset(params)
     changeset = Map.put(changeset, :action, :insert)
@@ -33,7 +33,7 @@ defmodule Bonfire.Recyclapp.CreateEventLive do
   end
 
   def handle_event("submit",  %{"create_event_form" => params}, socket) do
-    IO.inspect(submit: params)
+    debug(submit: params)
     changeset = CreateEventForm.changeset(params)
       # has_result = %{
       #   unit: resource_spec.default_unit_of_effort,
@@ -44,7 +44,7 @@ defmodule Bonfire.Recyclapp.CreateEventLive do
 
    case CreateEventForm.send(changeset, params, socket) do
     {:ok, %{economic_event: event, reciprocal_events: reciprocals, economic_resource: resource}} ->
-      IO.inspect(reciprocals)
+      debug(reciprocals)
         with {:ok, high_obs} <- CreateObservationForm.send(changeset, %{
           "has_feature_of_interest" => resource.id,
           "observed_property" => params["property"],
@@ -53,7 +53,7 @@ defmodule Bonfire.Recyclapp.CreateEventLive do
         do
           send self(), {:add_event, %{"event" => event, "reciprocals" => reciprocals}}
           {:noreply, socket}
-          
+
         else {_, message} ->
           error("Donation successfully recorded! #{message}", socket)
         end
@@ -72,7 +72,7 @@ defmodule Bonfire.Recyclapp.CreateEventLive do
         |> assign(changeset: CreateEventForm.changeset(%{}))
         |> put_flash(:error, message)}
   end
-  
+
   def spec_unit(spec) do
     unit = e(spec, :default_unit_of_effort, :label, nil)
     if unit do

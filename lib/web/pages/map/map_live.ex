@@ -15,7 +15,7 @@ defmodule Bonfire.Recyclapp.MapLive do
 
   defp mounted(params, session, socket) do
     # intents = Bonfire.UI.ValueFlows.ProposalLive.all_intents(socket)
-    #IO.inspect(intents)
+    #debug(intents)
 
     {:ok, socket
     |> assign(
@@ -31,7 +31,7 @@ defmodule Bonfire.Recyclapp.MapLive do
   def fetch_place_things(filters, socket) do
     with {:ok, things} <-
            ValueFlows.Planning.Intent.Intents.many(filters) do
-      IO.inspect(things)
+      debug(things)
 
       things =
         things
@@ -42,20 +42,20 @@ defmodule Bonfire.Recyclapp.MapLive do
           )
         )
 
-      IO.inspect(things)
+      debug(things)
 
       things
     else
       e ->
-        IO.inspect(error: e)
+        debug(error: e)
         nil
     end
   end
 
   # proxy relevent events to the map component
   def handle_event("map_"<>_action = event, params, socket) do
-    IO.inspect(proxy_event: event)
-    IO.inspect(proxy_params: params)
+    debug(proxy_event: event)
+    debug(proxy_params: params)
     Bonfire.Geolocate.MapLive.handle_event(event, params, socket, true)
   end
 

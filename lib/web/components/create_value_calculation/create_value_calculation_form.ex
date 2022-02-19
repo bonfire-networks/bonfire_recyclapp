@@ -48,7 +48,7 @@ defmodule  Bonfire.Recyclapp.CreateValueCalculationForm do
         with {:ok, value_calc} <- ValueCalculations.create(user, value_attrs) do
           {:ok, value_calc}
         else e ->
-          IO.inspect(e)
+          debug(e)
           {nil, "Incorrect details. Please try again..."}
         end
 

@@ -12,7 +12,7 @@ defmodule Bonfire.Recyclapp.CreateUnitLive do
   end
 
   def handle_event("validate_unit", %{"create_unit_form" => params}, socket) do
-    IO.inspect(params)
+    debug(params)
     changeset = CreateUnitForm.changeset(params)
     changeset = Map.put(changeset, :action, :insert)
     socket = assign(socket, changeset: changeset)
@@ -27,7 +27,7 @@ defmodule Bonfire.Recyclapp.CreateUnitLive do
         send self(), {:add_unit, unit}
         {:noreply,
          socket
-         
+
         #  |> assign(all_units: [unit] ++ socket.assigns.all_units)
        }
 

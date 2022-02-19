@@ -23,7 +23,7 @@ defmodule Bonfire.Recyclapp.RecyclappSuccessLive do
 
   defp mounted(%{"reciprocal_id"=> reciprocal_id}, session, socket) do
 
-    IO.inspect(reciprocal_id)
+    debug(reciprocal_id)
     reciprocal = reciprocal_by_id(reciprocal_id, socket)
 
     {:ok, socket

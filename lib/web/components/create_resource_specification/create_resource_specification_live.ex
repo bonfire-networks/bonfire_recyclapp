@@ -11,9 +11,9 @@ defmodule Bonfire.Recyclapp.CreateResourceSpecificationLive do
     )}
   end
 
-  
+
   def handle_event("validate_resource", %{"create_resource_spec_form" => params}, socket) do
-    IO.inspect(params)
+    debug(params)
     changeset = CreateResourceSpecForm.changeset(params)
     changeset = Map.put(changeset, :action, :insert)
     socket = assign(socket, changeset: changeset)

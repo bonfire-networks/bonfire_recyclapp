@@ -12,7 +12,7 @@ defmodule Bonfire.Recyclapp.CreateValueCalculationLive do
   end
 
   def handle_event("validate_value_calculation", %{"create_value_calculation_form" => params}, socket) do
-    IO.inspect(params)
+    debug(params)
     changeset = CreateValueCalculationForm.changeset(params)
     changeset = Map.put(changeset, :action, :insert)
     socket = assign(socket, changeset: changeset)
@@ -25,7 +25,7 @@ defmodule Bonfire.Recyclapp.CreateValueCalculationLive do
       {:ok, vc} ->
         send self(), {:add_vc, vc}
         {:noreply, socket}
-        
+
 
       {:error, changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
@@ -37,5 +37,5 @@ defmodule Bonfire.Recyclapp.CreateValueCalculationLive do
          |> assign(changeset: CreateValueCalculationForm.changeset(%{}))
     end
   end
-  
+
 end

@@ -21,8 +21,8 @@ defmodule  Bonfire.Recyclapp.CreateObservationForm do
   def send(changeset, %{"has_feature_of_interest" => has_feature_of_interest, "observed_property" => observed_property, "result_phenomenon" => result_phenomenon} = params, socket) when is_binary(result_phenomenon) do
     user = Utils.current_user(socket)
     provider = user.id
-    IO.inspect(params)
-    #IO.inspect(has_result)
+    debug(params)
+    #debug(has_result)
     # {float, ""} = Float.parse(has_result)
     # has_result = %{
     #   has_numerical_value: float,
