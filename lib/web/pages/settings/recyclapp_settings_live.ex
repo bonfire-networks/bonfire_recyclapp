@@ -1,6 +1,6 @@
 defmodule Bonfire.Recyclapp.RecyclappSettingsLive do
   use Bonfire.Web, {:live_view, [layout: {Bonfire.Recyclapp.LayoutView, "live.html"}]}
-  use AbsintheClient, schema: Bonfire.GraphQL.Schema, action: [mode: :internal]
+  use AbsintheClient, schema: Bonfire.API.GraphQL.Schema, action: [mode: :internal]
 
   alias Bonfire.Web.LivePlugs
   alias Bonfire.Recyclapp.CreateUnitLive
