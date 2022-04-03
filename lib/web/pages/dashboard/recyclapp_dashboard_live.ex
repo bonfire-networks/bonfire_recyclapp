@@ -5,7 +5,7 @@ defmodule Bonfire.Recyclapp.RecyclappDashboardLive do
 
   alias Bonfire.Web.LivePlugs
   alias Bonfire.Me.Users
-  alias Bonfire.Me.Web.{CreateUserLive, LoggedDashboardLive}
+  alias Bonfire.Me.Web.CreateUserLive
   alias Bonfire.Recyclapp.CreateEventLive
 
   def mount(params, session, socket) do

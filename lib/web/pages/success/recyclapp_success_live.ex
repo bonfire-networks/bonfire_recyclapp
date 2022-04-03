@@ -7,7 +7,7 @@ defmodule Bonfire.Recyclapp.RecyclappSuccessLive do
   alias QRCode.QR
   alias Bonfire.Web.LivePlugs
   alias Bonfire.Me.Users
-  alias Bonfire.Me.Web.{CreateUserLive, LoggedDashboardLive}
+  alias Bonfire.Me.Web.CreateUserLive
   alias Bonfire.Recyclapp.CreateEventForm
   alias Bonfire.Recyclapp.CreateObservationForm
 
