@@ -1,9 +1,9 @@
 <div id="resources" class="mt-6 mb-8">
   <%= f = form_for @changeset, "#", [phx_submit: "submit_resource", phx_change: "validate_resource", phx_target: @myself] %>
     <div class="p-3">
-      <h3 class="mb-4 text-2xl font-semibold text-primary-content-800 ">Create a new resource specification</h3>
+      <h3 class="mb-4 text-2xl font-semibold text-base-content-800 ">Create a new resource specification</h3>
       <div>
-        <%= label f, :name, "Choose a name of the resource", class: "block text-sm font-medium text-primary-content-700" %>
+        <%= label f, :name, "Choose a name of the resource", class: "block text-sm font-medium text-base-content-700" %>
         <div class="mt-1">
           <%= text_input f, :name, class: "w-full" %>
         </div>
@@ -26,21 +26,21 @@
         <%= error_tag f, :unit %>
       </div>
 
-      <button style="background-color: #52E277" type="submit" phx-disable-with="Creating..." class="flex justify-center w-full px-4 py-2 mt-8 text-sm font-medium text-primary-content-800 transition duration-150 ease-in-out bg-green-300 border border-transparent rounded-md hover:bg-green-400 hover:text-primary-content-900 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-primary-content-200 active:bg-neutral">
+      <button style="background-color: #52E277" type="submit" phx-disable-with="Creating..." class="flex justify-center w-full px-4 py-2 mt-8 text-sm font-medium text-base-content-800 transition duration-150 ease-in-out bg-green-300 border border-transparent rounded-md hover:bg-green-400 hover:text-base-content-900 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-base-content-200 active:bg-neutral">
         Create
       </button>
     </div>
   </form>
 </div>
 <div class="p-3 border-t divide-y divide-gray-200 bg-blueGray-50">
-  <h3 class="mb-3 text-xs font-semibold tracking-wider text-primary-content-700 uppercase"> All Resource specifications</h3>
+  <h3 class="mb-3 text-xs font-semibold tracking-wider text-base-content-700 uppercase"> All Resource specifications</h3>
   <%= for x <- @all_resources do %>
   <div class="flex items-center p-3 -mx-3">
     <div>
-      <h4 class="text-lg font-semibold text-primary-content-700"><%= x.name %></h4>
-      <p class="text-base italic text-primary-content-500"><%= x.note %></p>
+      <h4 class="text-lg font-semibold text-base-content-700"><%= x.name %></h4>
+      <p class="text-base italic text-base-content-500"><%= x.note %></p>
       <%= if x.default_unit_of_effort do %>
-      <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-indigo-100 text-primary-content">
+      <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-indigo-100 text-base-content">
         Unit: <%= x.default_unit_of_effort.label %>
       </span>
       <% end %>
