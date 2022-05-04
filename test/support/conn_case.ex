@@ -26,7 +26,7 @@ defmodule Bonfire.Recyclapp.ConnCase do
       import Bonfire.UI.Common.Testing.Helpers
 
       import Phoenix.LiveViewTest
-      import Bonfire.Recyclapp.ConnCase
+      # import Bonfire.Recyclapp.ConnCase
       import Bonfire.Recyclapp.Test.ConnHelpers
       import Bonfire.Recyclapp.Test.FakeHelpers
       alias Bonfire.Recyclapp.Fake
