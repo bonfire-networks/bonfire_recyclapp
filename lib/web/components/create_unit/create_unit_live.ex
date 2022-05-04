@@ -1,5 +1,5 @@
 defmodule Bonfire.Recyclapp.CreateUnitLive do
-  use Bonfire.Web, :live_component
+  use Bonfire.UI.Common.Web, :live_component
   alias Bonfire.Recyclapp.CreateUnitForm
 
 

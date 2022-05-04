@@ -1,5 +1,5 @@
 defmodule Bonfire.Recyclapp.CreateEventLive do
-  use Bonfire.Web, :live_component
+  use Bonfire.UI.Common.Web, :live_component
   alias Bonfire.Recyclapp.CreateEventForm
   alias Bonfire.Recyclapp.CreateObservationForm
 

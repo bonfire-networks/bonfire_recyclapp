@@ -22,6 +22,9 @@ defmodule Bonfire.Recyclapp.ConnCase do
       # Import conveniences for testing with connections
       import Plug.Conn
       import Phoenix.ConnTest
+
+      import Bonfire.UI.Common.Testing.Helpers
+
       import Phoenix.LiveViewTest
       import Bonfire.Recyclapp.ConnCase
       import Bonfire.Recyclapp.Test.ConnHelpers

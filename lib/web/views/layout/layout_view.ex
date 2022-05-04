@@ -1,3 +1,3 @@
 defmodule Bonfire.Recyclapp.LayoutView do
-  use Bonfire.Web, {:layout_view, [namespace: Bonfire.Recyclapp]}
+  use Bonfire.UI.Common.Web, {:layout_view, [namespace: Bonfire.Recyclapp]}
 end

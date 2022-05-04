@@ -1,22 +1,23 @@
 defmodule Bonfire.Recyclapp.RecyclappSuccessLive do
-  use Bonfire.Web, {:live_view, [layout: {Bonfire.Recyclapp.LayoutView, "live.html"}]}
+  use Bonfire.UI.Common.Web, {:live_view, [layout: {Bonfire.Recyclapp.LayoutView, "live.html"}]}
 
   use AbsintheClient, schema: Bonfire.API.GraphQL.Schema, action: [mode: :internal]
 
   alias Bonfire.UI.Social.{HashtagsLive, ParticipantsLive}
   alias QRCode.QR
-  alias Bonfire.Web.LivePlugs
+  alias Bonfire.Me.Web.LivePlugs
   alias Bonfire.Me.Users
   alias Bonfire.Me.Web.CreateUserLive
   alias Bonfire.Recyclapp.CreateEventForm
   alias Bonfire.Recyclapp.CreateObservationForm
 
   def mount(params, session, socket) do
-    LivePlugs.live_plug params, session, socket, [
+    live_plug params, session, socket, [
       LivePlugs.LoadCurrentAccount,
       LivePlugs.LoadCurrentUser,
-      LivePlugs.StaticChanged,
-      LivePlugs.Csrf, LivePlugs.Locale,
+      Bonfire.UI.Common.LivePlugs.StaticChanged,
+      Bonfire.UI.Common.LivePlugs.Csrf,
+      Bonfire.UI.Common.LivePlugs.Locale,
       &mounted/3,
     ]
   end
