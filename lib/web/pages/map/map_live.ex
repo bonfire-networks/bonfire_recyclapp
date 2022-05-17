@@ -1,7 +1,7 @@
 defmodule Bonfire.Recyclapp.MapLive do
   use Bonfire.UI.Common.Web, {:live_view, [layout: {Bonfire.Recyclapp.LayoutView, "live.html"}]}
 
-  alias Bonfire.Me.Web.LivePlugs
+  alias Bonfire.UI.Me.LivePlugs
 
   def mount(params, session, socket) do
     live_plug params, session, socket, [

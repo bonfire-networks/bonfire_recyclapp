@@ -5,9 +5,9 @@ defmodule Bonfire.Recyclapp.RecyclappSuccessLive do
 
   alias Bonfire.UI.Social.{HashtagsLive, ParticipantsLive}
   alias QRCode.QR
-  alias Bonfire.Me.Web.LivePlugs
+  alias Bonfire.UI.Me.LivePlugs
   alias Bonfire.Me.Users
-  alias Bonfire.Me.Web.CreateUserLive
+  alias Bonfire.UI.Me.CreateUserLive
   alias Bonfire.Recyclapp.CreateEventForm
   alias Bonfire.Recyclapp.CreateObservationForm
 
