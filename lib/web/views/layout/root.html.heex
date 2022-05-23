@@ -26,7 +26,6 @@
 
   </head>
   <body id="breadpub-root" class="overflow-hidden">
-    <%= if Code.ensure_loaded?(Thesis.View), do: Thesis.View.thesis_editor(@conn) %>
     <%= @inner_content %>
   </body>
 </html>
