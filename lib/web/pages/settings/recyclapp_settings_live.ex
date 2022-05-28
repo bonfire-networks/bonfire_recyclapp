@@ -38,20 +38,20 @@ defmodule Bonfire.Recyclapp.RecyclappSettingsLive do
     {:noreply,
     socket
     |> assign(all_units: [unit] ++ socket.assigns.all_units)
-    |> put_flash(:info, "Unit successfully created!")}
+    |> assign_flash(:info, "Unit successfully created!")}
   end
 
   def handle_info({:add_resource_specification, resource}, socket) do
     {:noreply,
     socket
     |> assign(all_units: [resource] ++ socket.assigns.all_resources)
-    |> put_flash(:info, "Resource specification successfully created!")}
+    |> assign_flash(:info, "Resource specification successfully created!")}
   end
 
   def handle_info({:add_property, property}, socket) do
     {:noreply,
       socket
-      |> put_flash(:info, "Property successfully created!")
+      |> assign_flash(:info, "Property successfully created!")
       |> assign(all_properties: [property] ++ socket.assigns.all_properties)
     }
   end
@@ -59,7 +59,7 @@ defmodule Bonfire.Recyclapp.RecyclappSettingsLive do
   def handle_info({:add_phenomenon, phenomenon}, socket) do
     {:noreply,
       socket
-      |> put_flash(:info, "Phenomenon successfully created!")
+      |> assign_flash(:info, "Phenomenon successfully created!")
       |> assign(all_phenomenons: [phenomenon] ++ socket.assigns.all_phenomenons)
     }
   end
@@ -67,7 +67,7 @@ defmodule Bonfire.Recyclapp.RecyclappSettingsLive do
   def handle_info({:add_vc, vc}, socket) do
     {:noreply,
       socket
-      |> put_flash(:info, "Value calculation successfully created!")
+      |> assign_flash(:info, "Value calculation successfully created!")
       |> assign(all_value_calculations: [vc] ++ socket.assigns.all_value_calculations)
     }
   end

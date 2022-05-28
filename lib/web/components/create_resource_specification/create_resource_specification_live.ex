@@ -35,7 +35,7 @@ defmodule Bonfire.Recyclapp.CreateResourceSpecificationLive do
         {:noreply,
          socket
          |> assign(changeset: CreateResourceSpecForm.changeset(%{}))
-         |> put_flash(:error, message)}
+         |> assign_flash(:error, message)}
     end
   end
 

@@ -32,7 +32,7 @@ defmodule Bonfire.Recyclapp.CreatePhenomenonLive do
       {_, message} ->
         {:noreply,
          socket
-         |> put_flash(:error, message)
+         |> assign_flash(:error, message)
          |> assign(changeset: CreatePhenomenonForm.changeset(%{}))
         }
     end

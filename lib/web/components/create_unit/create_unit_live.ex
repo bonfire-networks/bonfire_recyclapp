@@ -37,7 +37,7 @@ defmodule Bonfire.Recyclapp.CreateUnitLive do
       {_, message} ->
         {:noreply,
          socket
-         |> put_flash(:error, message)}
+         |> assign_flash(:error, message)}
          |> assign(changeset: CreateUnitForm.changeset(%{}))
     end
   end

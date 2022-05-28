@@ -70,7 +70,7 @@ defmodule Bonfire.Recyclapp.CreateEventLive do
     {:noreply,
         socket
         |> assign(changeset: CreateEventForm.changeset(%{}))
-        |> put_flash(:error, message)}
+        |> assign_flash(:error, message)}
   end
 
   def spec_unit(spec) do

@@ -33,7 +33,7 @@ defmodule Bonfire.Recyclapp.CreateValueCalculationLive do
       {_, message} ->
         {:noreply,
          socket
-         |> put_flash(:error, message)}
+         |> assign_flash(:error, message)}
          |> assign(changeset: CreateValueCalculationForm.changeset(%{}))
     end
   end
