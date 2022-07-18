@@ -24,7 +24,7 @@ defmodule Bonfire.Recyclapp.RecyclappSettingsLive do
     settings_queries = settings_queries(socket)
     {:ok, socket
     |> assign(
-      page_title: "Settings",
+      page_title: l("Settings"),
       all_units: e(settings_queries, :units_pages, :edges, []),
       all_resources: e(settings_queries, :resource_specifications_pages, :edges, []),
       all_properties: e(settings_queries, :observable_properties_pages, :edges, []),
