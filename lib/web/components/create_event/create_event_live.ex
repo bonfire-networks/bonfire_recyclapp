@@ -55,18 +55,18 @@ defmodule Bonfire.Recyclapp.CreateEventLive do
           {:noreply, socket}
 
         else {_, message} ->
-          error("Donation successfully recorded! #{message}", socket)
+          return_error("Donation successfully recorded! #{message}", socket)
         end
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
 
       {_, message} ->
-        error(message, socket)
+        return_error(message, socket)
     end
   end
 
-  def error(message, socket) do
+  def return_error(message, socket) do
     {:noreply,
         socket
         |> assign(changeset: CreateEventForm.changeset(%{}))

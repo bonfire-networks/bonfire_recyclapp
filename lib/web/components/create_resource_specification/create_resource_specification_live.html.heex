@@ -1,5 +1,5 @@
 <div id="resources" class="mt-6 mb-8">
-  <%= f = form_for @changeset, "#", [phx_submit: "submit_resource", phx_change: "validate_resource", phx_target: @myself] %>
+  <%= form_for @changeset, "#", [phx_submit: "submit_resource", phx_change: "validate_resource", phx_target: @myself], fn f -> %>
     <div class="p-3">
       <h3 class="mb-4 text-2xl font-semibold text-base-content opacity-80 ">Create a new resource specification</h3>
       <div>
@@ -30,7 +30,7 @@
         Create
       </button>
     </div>
-  </form>
+  <% end %>
 </div>
 <div class="p-3 border-t divide-y divide-gray-200 bg-blueGray-50">
   <h3 class="mb-3 text-xs font-semibold tracking-wider text-base-content opacity-70 uppercase"> All Resource specifications</h3>

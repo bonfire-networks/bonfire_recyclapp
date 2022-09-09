@@ -1,5 +1,5 @@
 defmodule Bonfire.Recyclapp.RecyclappDashboardLive do
-  use Bonfire.UI.Common.Web, {:live_view, [layout: {Bonfire.Recyclapp.LayoutView, "live.html"}]}
+  use Bonfire.UI.Common.Web, :live_view
 
   use AbsintheClient, schema: Bonfire.API.GraphQL.Schema, action: [mode: :internal]
 
@@ -7,6 +7,9 @@ defmodule Bonfire.Recyclapp.RecyclappDashboardLive do
   alias Bonfire.Me.Users
   alias Bonfire.UI.Me.CreateUserLive
   alias Bonfire.Recyclapp.CreateEventLive
+
+
+  declare_extension("EveryCycle", icon: "mdi:bicycle-penny-farthing")
 
   def mount(params, session, socket) do
     live_plug params, session, socket, [

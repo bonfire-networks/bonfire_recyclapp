@@ -4,17 +4,17 @@ defmodule Bonfire.Recyclapp.Routes do
     quote do
 
       pipeline :recyclapp do
-        plug :put_root_layout, {Bonfire.Recyclapp.LayoutView, :root}
+        # plug :put_root_layout, {Bonfire.Recyclapp.LayoutView, :root}
       end
 
       # pages anyone can view
-      scope "/breadpub", Bonfire.Recyclapp do
+      scope "/recyclapp", Bonfire.Recyclapp do
         pipe_through :browser
 
       end
 
       # pages you need an account to view
-      scope "/breadpub", Bonfire.Recyclapp do
+      scope "/recyclapp", Bonfire.Recyclapp do
         pipe_through :browser
         pipe_through :account_required
 

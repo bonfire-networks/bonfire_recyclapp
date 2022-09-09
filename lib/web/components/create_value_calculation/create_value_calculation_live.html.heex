@@ -1,4 +1,4 @@
-<%= f = form_for @changeset, "#", [phx_submit: "submit_value_calculation", phx_change: "validate_value_calculation", phx_target: @myself] %>
+<%= form_for @changeset, "#", [phx_submit: "submit_value_calculation", phx_change: "validate_value_calculation", phx_target: @myself], fn f -> %>
   <div id="value_calculation" class="mt-6 mb-8">
     <div class="p-3">
       <h3 class="mb-4 text-2xl font-semibold text-base-content opacity-80 ">Create a new value calculation</h3>
@@ -71,7 +71,7 @@
   <button style="background-color: #52E277" type="submit" phx-disable-with="Creating (this takes some time while we run some calculations, please be patient)..." class="flex justify-center w-full px-4 py-2 mt-8 text-sm font-medium text-base-content opacity-80 transition duration-150 ease-in-out bg-green-300 border border-transparent rounded-md hover:bg-green-400 hover:text-base-content opacity-90 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-base-content opacity-60 active:bg-neutral">
     Create value calculation
   </button>
-</form>
+<% end %>
 
 
 <div class="p-3 border-t divide-y divide-gray-200 bg-blueGray-50">

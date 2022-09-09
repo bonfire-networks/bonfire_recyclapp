@@ -1,4 +1,4 @@
-<%= f = form_for @changeset, "#", [phx_submit: "submit_phenomenon", phx_change: "validate_phenomenon", phx_target: @myself] %>
+<%= form_for @changeset, "#", [phx_submit: "submit_phenomenon", phx_change: "validate_phenomenon", phx_target: @myself], fn f -> %>
   <div id="phenomenon" class="mt-6 mb-8">
     <div class="p-3">
       <h3 class="mb-4 text-2xl font-semibold text-base-content opacity-80 ">Create a new observable phenomenon</h3>
@@ -35,7 +35,7 @@
       </button>
     </div>
   </div>
-</form>
+<% end %>
 <div class="p-3 border-t divide-y divide-gray-200 bg-blueGray-50">
   <h3 class="mb-3 text-xs font-semibold tracking-wider text-base-content opacity-70 uppercase">All phenomenons</h3>
   <%= for x <- @all_phenomenons do %>

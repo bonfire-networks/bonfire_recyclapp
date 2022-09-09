@@ -1,5 +1,5 @@
 <div id="units" class="mt-6 mb-8">
-  <%= f = form_for @changeset, "#", [phx_submit: "submit_unit", phx_change: "validate_unit", phx_target: @myself] %>
+  <%= form_for @changeset, "#", [phx_submit: "submit_unit", phx_change: "validate_unit", phx_target: @myself], fn f -> %>
     <div class="p-3">
       <h3 class="mb-4 text-lg font-medium text-base-content opacity-80 ">Create a new unit</h3>
       <div>
@@ -16,7 +16,7 @@
         Create
       </button>
     </div>
-  </form>
+  <% end %>
 </div>
 <div class="p-3 border-t divide-y divide-gray-200 bg-blueGray-50">
   <h3 class="mb-3 text-xs font-semibold tracking-wider text-base-content opacity-70 uppercase">All units</h3>

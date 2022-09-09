@@ -1,5 +1,5 @@
 defmodule Bonfire.Recyclapp.MapLive do
-  use Bonfire.UI.Common.Web, {:live_view, [layout: {Bonfire.Recyclapp.LayoutView, "live.html"}]}
+  use Bonfire.UI.Common.Web, :live_view
 
   alias Bonfire.UI.Me.LivePlugs
 
