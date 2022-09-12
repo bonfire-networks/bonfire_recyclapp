@@ -1,4 +1,4 @@
-defmodule  Bonfire.Recyclapp.CreateObservablePropertyForm do
+defmodule Bonfire.Recyclapp.CreateObservablePropertyForm do
   import Ecto.Changeset
   alias ValueFlows.Observe.ObservableProperties
   alias Bonfire.Common.Utils
@@ -19,13 +19,15 @@ defmodule  Bonfire.Recyclapp.CreateObservablePropertyForm do
 
   def send(changeset, %{"name" => name, "note" => note} = _params, socket) do
     user = Utils.current_user(socket)
+
     case apply_action(changeset, :insert) do
       {:ok, _} ->
-
-        with {:ok, property} <- ObservableProperties.create(user, %{name: name, note: note}) do
+        with {:ok, property} <-
+               ObservableProperties.create(user, %{name: name, note: note}) do
           {:ok, property}
-        else _e ->
-          {nil, "Incorrect details. Please try again..."}
+        else
+          _e ->
+            {nil, "Incorrect details. Please try again..."}
         end
 
       {:error, changeset} ->

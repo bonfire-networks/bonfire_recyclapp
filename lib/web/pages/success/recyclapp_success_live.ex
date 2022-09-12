@@ -1,9 +1,13 @@
 defmodule Bonfire.Recyclapp.RecyclappSuccessLive do
   use Bonfire.UI.Common.Web, :live_view
 
-  use AbsintheClient, schema: Bonfire.API.GraphQL.Schema, action: [mode: :internal]
+  use AbsintheClient,
+    schema: Bonfire.API.GraphQL.Schema,
+    action: [mode: :internal]
 
-  alias Bonfire.UI.Social.{HashtagsLive, ParticipantsLive}
+  alias Bonfire.UI.Social.HashtagsLive
+  alias Bonfire.UI.Social.ParticipantsLive
+
   alias QRCode.QR
   alias Bonfire.UI.Me.LivePlugs
   alias Bonfire.Me.Users
@@ -12,34 +16,36 @@ defmodule Bonfire.Recyclapp.RecyclappSuccessLive do
   alias Bonfire.Recyclapp.CreateObservationForm
 
   def mount(params, session, socket) do
-    live_plug params, session, socket, [
+    live_plug(params, session, socket, [
       LivePlugs.LoadCurrentAccount,
       LivePlugs.LoadCurrentUser,
       Bonfire.UI.Common.LivePlugs.StaticChanged,
       Bonfire.UI.Common.LivePlugs.Csrf,
       Bonfire.UI.Common.LivePlugs.Locale,
-      &mounted/3,
-    ]
+      &mounted/3
+    ])
   end
 
-  defp mounted(%{"reciprocal_id"=> reciprocal_id}, session, socket) do
-
+  defp mounted(%{"reciprocal_id" => reciprocal_id}, session, socket) do
     debug(reciprocal_id)
     reciprocal = reciprocal_by_id(reciprocal_id, socket)
 
-    {:ok, socket
-    |> assign(page_title: "Success",
-    reciprocal: reciprocal.economic_event,
-    )}
+    {:ok,
+     assign(
+       socket,
+       page_title: "Success",
+       reciprocal: reciprocal.economic_event
+     )}
   end
 
   defp mounted(params, session, socket) do
-
-    {:ok, socket
-    |> assign(page_title: "Recyclapp",
-    selected_tab: "about",
-    reciprocal: nil
-    )}
+    {:ok,
+     assign(
+       socket,
+       page_title: "Recyclapp",
+       selected_tab: "about",
+       reciprocal: nil
+     )}
   end
 
   @graphql """
@@ -67,5 +73,4 @@ defmodule Bonfire.Recyclapp.RecyclappSuccessLive do
 
   def queries(params \\ %{}, socket), do: liveql(socket, :queries, params)
   def reciprocal_by_id(id, socket), do: queries(%{id: id}, socket)
-
 end

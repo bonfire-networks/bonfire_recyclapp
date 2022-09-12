@@ -2,28 +2,36 @@ defmodule Bonfire.Recyclapp.CreatePhenomenonLive do
   use Bonfire.UI.Common.Web, :live_component
   alias Bonfire.Recyclapp.CreatePhenomenonForm
 
-
   def mount(socket) do
     changeset = CreatePhenomenonForm.changeset()
-    {:ok, socket
-    |> assign(
-      changeset: changeset
-    )}
+
+    {:ok,
+     assign(socket,
+       changeset: changeset
+     )}
   end
 
-  def handle_event("validate_phenomenon", %{"create_phenomenon_form" => params}, socket) do
+  def handle_event(
+        "validate_phenomenon",
+        %{"create_phenomenon_form" => params},
+        socket
+      ) do
     changeset = CreatePhenomenonForm.changeset(params)
     changeset = Map.put(changeset, :action, :insert)
     socket = assign(socket, changeset: changeset)
     {:noreply, socket}
   end
 
-  def handle_event("submit_phenomenon",  %{"create_phenomenon_form" => params}, socket) do
+  def handle_event(
+        "submit_phenomenon",
+        %{"create_phenomenon_form" => params},
+        socket
+      ) do
     changeset = CreatePhenomenonForm.changeset(params)
 
     case CreatePhenomenonForm.send(changeset, params, socket) do
       {:ok, phenomenon} ->
-        send self(), {:add_phenomenon, phenomenon}
+        send(self(), {:add_phenomenon, phenomenon})
         {:noreply, socket}
 
       {:error, changeset} ->
@@ -33,10 +41,7 @@ defmodule Bonfire.Recyclapp.CreatePhenomenonLive do
         {:noreply,
          socket
          |> assign_flash(:error, message)
-         |> assign(changeset: CreatePhenomenonForm.changeset(%{}))
-        }
+         |> assign(changeset: CreatePhenomenonForm.changeset(%{}))}
     end
   end
-
-
 end

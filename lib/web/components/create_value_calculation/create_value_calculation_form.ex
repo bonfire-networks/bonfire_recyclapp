@@ -1,4 +1,4 @@
-defmodule  Bonfire.Recyclapp.CreateValueCalculationForm do
+defmodule Bonfire.Recyclapp.CreateValueCalculationForm do
   import Ecto.Changeset
   import Untangle
   alias ValueFlows.ValueCalculation.ValueCalculations
@@ -19,21 +19,35 @@ defmodule  Bonfire.Recyclapp.CreateValueCalculationForm do
 
   def changeset(attrs \\ %{}) do
     {%__MODULE__{}, @types}
-    |> cast(attrs, [:name, :note, :resource_conforms_to, :action, :value_action, :formula, :value_unit, :value_resource_conforms_to])
+    |> cast(attrs, [
+      :name,
+      :note,
+      :resource_conforms_to,
+      :action,
+      :value_action,
+      :formula,
+      :value_unit,
+      :value_resource_conforms_to
+    ])
     |> validate_required([:name, :formula, :value_unit, :action, :value_action])
   end
 
-  def send(changeset, %{
-    "name" => name,
-    "formula" => formula,
-    "resource_conforms_to" => resource_conforms_to,
-    "note" => note,
-    "action" => action,
-    "value_action" => value_action,
-    "value_unit" => value_unit,
-    "value_resource_conforms_to" => value_resource_conforms_to
-    } = _params, socket) do
+  def send(
+        changeset,
+        %{
+          "name" => name,
+          "formula" => formula,
+          "resource_conforms_to" => resource_conforms_to,
+          "note" => note,
+          "action" => action,
+          "value_action" => value_action,
+          "value_unit" => value_unit,
+          "value_resource_conforms_to" => value_resource_conforms_to
+        } = _params,
+        socket
+      ) do
     user = Utils.current_user(socket)
+
     value_attrs = %{
       name: name,
       formula: formula,
@@ -44,16 +58,18 @@ defmodule  Bonfire.Recyclapp.CreateValueCalculationForm do
       value_unit: value_unit,
       value_resource_conforms_to: value_resource_conforms_to
     }
+
     case apply_action(changeset, :insert) do
       {:ok, _} ->
         with {:ok, value_calc} <- ValueCalculations.create(user, value_attrs) do
           {:ok, value_calc}
-        else e ->
-          debug(e)
-          {nil, "Incorrect details. Please try again..."}
+        else
+          e ->
+            debug(e)
+            {nil, "Incorrect details. Please try again..."}
         end
 
-        {:error, changeset} ->
+      {:error, changeset} ->
         {:error, changeset}
     end
   end

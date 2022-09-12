@@ -2,17 +2,20 @@ defmodule Bonfire.Recyclapp.CreateResourceSpecificationLive do
   use Bonfire.UI.Common.Web, :live_component
   alias Bonfire.Recyclapp.CreateResourceSpecForm
 
-
   def mount(socket) do
     changeset = CreateResourceSpecForm.changeset()
-    {:ok, socket
-    |> assign(
-      changeset: changeset
-    )}
+
+    {:ok,
+     assign(socket,
+       changeset: changeset
+     )}
   end
 
-
-  def handle_event("validate_resource", %{"create_resource_spec_form" => params}, socket) do
+  def handle_event(
+        "validate_resource",
+        %{"create_resource_spec_form" => params},
+        socket
+      ) do
     debug(params)
     changeset = CreateResourceSpecForm.changeset(params)
     changeset = Map.put(changeset, :action, :insert)
@@ -20,12 +23,16 @@ defmodule Bonfire.Recyclapp.CreateResourceSpecificationLive do
     {:noreply, socket}
   end
 
-  def handle_event("submit_resource",  %{"create_resource_spec_form" => params}, socket) do
+  def handle_event(
+        "submit_resource",
+        %{"create_resource_spec_form" => params},
+        socket
+      ) do
     changeset = CreateResourceSpecForm.changeset(params)
 
     case CreateResourceSpecForm.send(changeset, params, socket) do
       {:ok, resource} ->
-        send self(), {:add_resource_specification, resource}
+        send(self(), {:add_resource_specification, resource})
         {:noreply, socket}
 
       {:error, changeset} ->
@@ -38,5 +45,4 @@ defmodule Bonfire.Recyclapp.CreateResourceSpecificationLive do
          |> assign_flash(:error, message)}
     end
   end
-
 end

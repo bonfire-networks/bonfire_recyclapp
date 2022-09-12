@@ -2,16 +2,20 @@ defmodule Bonfire.Recyclapp.CreateValueCalculationLive do
   use Bonfire.UI.Common.Web, :live_component
   alias Bonfire.Recyclapp.CreateValueCalculationForm
 
-
   def mount(socket) do
     changeset = CreateValueCalculationForm.changeset()
-    {:ok, socket
-    |> assign(
-      changeset: changeset
-    )}
+
+    {:ok,
+     assign(socket,
+       changeset: changeset
+     )}
   end
 
-  def handle_event("validate_value_calculation", %{"create_value_calculation_form" => params}, socket) do
+  def handle_event(
+        "validate_value_calculation",
+        %{"create_value_calculation_form" => params},
+        socket
+      ) do
     debug(params)
     changeset = CreateValueCalculationForm.changeset(params)
     changeset = Map.put(changeset, :action, :insert)
@@ -19,23 +23,25 @@ defmodule Bonfire.Recyclapp.CreateValueCalculationLive do
     {:noreply, socket}
   end
 
-  def handle_event("submit_value_calculation",  %{"create_value_calculation_form" => params}, socket) do
+  def handle_event(
+        "submit_value_calculation",
+        %{"create_value_calculation_form" => params},
+        socket
+      ) do
     changeset = CreateValueCalculationForm.changeset(params)
+
     case CreateValueCalculationForm.send(changeset, params, socket) do
       {:ok, vc} ->
-        send self(), {:add_vc, vc}
+        send(self(), {:add_vc, vc})
         {:noreply, socket}
-
 
       {:error, changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
 
       {_, message} ->
-        {:noreply,
-         socket
-         |> assign_flash(:error, message)}
-         |> assign(changeset: CreateValueCalculationForm.changeset(%{}))
+        assign({:noreply, assign_flash(socket, :error, message)},
+          changeset: CreateValueCalculationForm.changeset(%{})
+        )
     end
   end
-
 end

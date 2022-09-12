@@ -1,6 +1,9 @@
 defmodule Bonfire.Recyclapp.RecyclappSettingsLive do
   use Bonfire.UI.Common.Web, :live_view
-  use AbsintheClient, schema: Bonfire.API.GraphQL.Schema, action: [mode: :internal]
+
+  use AbsintheClient,
+    schema: Bonfire.API.GraphQL.Schema,
+    action: [mode: :internal]
 
   alias Bonfire.UI.Me.LivePlugs
   alias Bonfire.Recyclapp.CreateUnitLive
@@ -10,68 +13,66 @@ defmodule Bonfire.Recyclapp.RecyclappSettingsLive do
   alias Bonfire.Recyclapp.CreateResourceSpecificationLive
 
   def mount(params, session, socket) do
-    live_plug params, session, socket, [
+    live_plug(params, session, socket, [
       LivePlugs.LoadCurrentAccount,
       LivePlugs.LoadCurrentUser,
       Bonfire.UI.Common.LivePlugs.StaticChanged,
       Bonfire.UI.Common.LivePlugs.Csrf,
       Bonfire.UI.Common.LivePlugs.Locale,
-      &mounted/3,
-    ]
+      &mounted/3
+    ])
   end
 
   defp mounted(params, session, socket) do
     settings_queries = settings_queries(socket)
-    {:ok, socket
-    |> assign(
-      page_title: l("Settings"),
-      all_units: e(settings_queries, :units_pages, :edges, []),
-      all_resources: e(settings_queries, :resource_specifications_pages, :edges, []),
-      all_properties: e(settings_queries, :observable_properties_pages, :edges, []),
-      all_phenomenons: e(settings_queries, :observable_phenomenon_pages, :edges, []),
-      all_value_calculations: e(settings_queries, :value_calculations_pages, :edges, []),
-      actions: e(settings_queries, :actions, [])
-    )}
+
+    {:ok,
+     assign(
+       socket,
+       page_title: l("Settings"),
+       all_units: e(settings_queries, :units_pages, :edges, []),
+       all_resources: e(settings_queries, :resource_specifications_pages, :edges, []),
+       all_properties: e(settings_queries, :observable_properties_pages, :edges, []),
+       all_phenomenons: e(settings_queries, :observable_phenomenon_pages, :edges, []),
+       all_value_calculations: e(settings_queries, :value_calculations_pages, :edges, []),
+       actions: e(settings_queries, :actions, [])
+     )}
   end
 
   def handle_info({:add_unit, unit}, socket) do
     {:noreply,
-    socket
-    |> assign(all_units: [unit] ++ socket.assigns.all_units)
-    |> assign_flash(:info, "Unit successfully created!")}
+     socket
+     |> assign(all_units: [unit] ++ socket.assigns.all_units)
+     |> assign_flash(:info, "Unit successfully created!")}
   end
 
   def handle_info({:add_resource_specification, resource}, socket) do
     {:noreply,
-    socket
-    |> assign(all_units: [resource] ++ socket.assigns.all_resources)
-    |> assign_flash(:info, "Resource specification successfully created!")}
+     socket
+     |> assign(all_units: [resource] ++ socket.assigns.all_resources)
+     |> assign_flash(:info, "Resource specification successfully created!")}
   end
 
   def handle_info({:add_property, property}, socket) do
     {:noreply,
-      socket
-      |> assign_flash(:info, "Property successfully created!")
-      |> assign(all_properties: [property] ++ socket.assigns.all_properties)
-    }
+     socket
+     |> assign_flash(:info, "Property successfully created!")
+     |> assign(all_properties: [property] ++ socket.assigns.all_properties)}
   end
 
   def handle_info({:add_phenomenon, phenomenon}, socket) do
     {:noreply,
-      socket
-      |> assign_flash(:info, "Phenomenon successfully created!")
-      |> assign(all_phenomenons: [phenomenon] ++ socket.assigns.all_phenomenons)
-    }
+     socket
+     |> assign_flash(:info, "Phenomenon successfully created!")
+     |> assign(all_phenomenons: [phenomenon] ++ socket.assigns.all_phenomenons)}
   end
 
   def handle_info({:add_vc, vc}, socket) do
     {:noreply,
-      socket
-      |> assign_flash(:info, "Value calculation successfully created!")
-      |> assign(all_value_calculations: [vc] ++ socket.assigns.all_value_calculations)
-    }
+     socket
+     |> assign_flash(:info, "Value calculation successfully created!")
+     |> assign(all_value_calculations: [vc] ++ socket.assigns.all_value_calculations)}
   end
-
 
   @graphql """
     {
@@ -124,8 +125,6 @@ defmodule Bonfire.Recyclapp.RecyclappSettingsLive do
     }
   """
 
-
-  def settings_queries(params \\ %{}, socket), do: liveql(socket, :settings_queries, params)
-
-
+  def settings_queries(params \\ %{}, socket),
+    do: liveql(socket, :settings_queries, params)
 end

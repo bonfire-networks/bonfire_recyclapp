@@ -1,4 +1,4 @@
-defmodule  Bonfire.Recyclapp.CreateResourceSpecForm do
+defmodule Bonfire.Recyclapp.CreateResourceSpecForm do
   import Ecto.Changeset
   import Bonfire.Recyclapp.Integration
   alias ValueFlows.Knowledge.ResourceSpecification.ResourceSpecifications
@@ -20,15 +20,26 @@ defmodule  Bonfire.Recyclapp.CreateResourceSpecForm do
     |> validate_length(:name, min: 2, max: 100)
   end
 
-  def send(changeset, %{"name" => name, "note" => note, "unit" => unit} = _params, socket) do
+  def send(
+        changeset,
+        %{"name" => name, "note" => note, "unit" => unit} = _params,
+        socket
+      ) do
     user = Utils.current_user(socket)
+
     case apply_action(changeset, :insert) do
       {:ok, _} ->
-
-        with {:ok, res} <- ResourceSpecifications.create(user, %{name: name, note: note, default_unit_of_effort: unit, is_public: true}) do
+        with {:ok, res} <-
+               ResourceSpecifications.create(user, %{
+                 name: name,
+                 note: note,
+                 default_unit_of_effort: unit,
+                 is_public: true
+               }) do
           {:ok, repo.preload(res, :default_unit_of_effort)}
-        else _e ->
-          {nil, "Incorrect details. Please try again..."}
+        else
+          _e ->
+            {nil, "Incorrect details. Please try again..."}
         end
 
       {:error, changeset} ->

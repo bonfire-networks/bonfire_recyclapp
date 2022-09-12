@@ -1,48 +1,53 @@
 defmodule Bonfire.Recyclapp.RecyclappDashboardLive do
   use Bonfire.UI.Common.Web, :live_view
 
-  use AbsintheClient, schema: Bonfire.API.GraphQL.Schema, action: [mode: :internal]
+  use AbsintheClient,
+    schema: Bonfire.API.GraphQL.Schema,
+    action: [mode: :internal]
 
   alias Bonfire.UI.Me.LivePlugs
   alias Bonfire.Me.Users
   alias Bonfire.UI.Me.CreateUserLive
   alias Bonfire.Recyclapp.CreateEventLive
 
-
   declare_extension("EveryCycle", icon: "mdi:bicycle-penny-farthing")
 
   def mount(params, session, socket) do
-    live_plug params, session, socket, [
+    live_plug(params, session, socket, [
       LivePlugs.LoadCurrentAccount,
       LivePlugs.LoadCurrentUser,
       Bonfire.UI.Common.LivePlugs.StaticChanged,
       Bonfire.UI.Common.LivePlugs.Csrf,
       Bonfire.UI.Common.LivePlugs.Locale,
-      &mounted/3,
-    ]
+      &mounted/3
+    ])
   end
 
   defp mounted(params, session, socket) do
     queries = queries(socket)
     events = e(queries, :economic_events_pages, :edges, [])
-    {:ok, socket
-    |> assign(
-      page_title: "Home",
-      observed: [],
-      all_resources: e(queries, :resource_specifications_pages, :edges, []),
-      all_events: Enum.filter(events, fn ev -> ev.triggered_by != nil end),
-      all_observable_properties: e(queries, :observable_properties_pages, :edges, []),
-      selected_property: List.first(e(queries, :observable_properties_pages, :edges, []))
-    )}
+
+    {:ok,
+     assign(
+       socket,
+       page_title: "Home",
+       observed: [],
+       all_resources: e(queries, :resource_specifications_pages, :edges, []),
+       all_events: Enum.filter(events, fn ev -> ev.triggered_by != nil end),
+       all_observable_properties: e(queries, :observable_properties_pages, :edges, []),
+       selected_property: List.first(e(queries, :observable_properties_pages, :edges, []))
+     )}
   end
 
-  def handle_info({:add_event, %{"event" => event, "reciprocals" => reciprocals}}, socket) do
+  def handle_info(
+        {:add_event, %{"event" => event, "reciprocals" => reciprocals}},
+        socket
+      ) do
     {:noreply,
-      socket
-      |> assign_flash(:info, "Donation successfully recorded!")
-      |> assign(all_events: [event] ++ socket.assigns.all_events)
-      |> redirect_to("/recyclapp/success/" <> e(reciprocals, :id, e(event, :id, "")))
-      }
+     socket
+     |> assign_flash(:info, "Donation successfully recorded!")
+     |> assign(all_events: [event] ++ socket.assigns.all_events)
+     |> redirect_to("/recyclapp/success/" <> e(reciprocals, :id, e(event, :id, "")))}
   end
 
   @graphql """
@@ -107,6 +112,4 @@ defmodule Bonfire.Recyclapp.RecyclappDashboardLive do
   """
 
   def queries(params \\ %{}, socket), do: liveql(socket, :queries, params)
-
-
 end
