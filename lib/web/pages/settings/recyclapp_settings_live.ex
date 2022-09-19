@@ -6,11 +6,11 @@ defmodule Bonfire.Recyclapp.RecyclappSettingsLive do
     action: [mode: :internal]
 
   alias Bonfire.UI.Me.LivePlugs
-  alias Bonfire.Recyclapp.CreateUnitLive
+  alias Bonfire.UI.ValueFlows.CreateUnitLive
   alias Bonfire.Recyclapp.CreateObservablePropertyLive
-  alias Bonfire.Recyclapp.CreateValueCalculationLive
+  alias Bonfire.UI.ValueFlows.CreateValueCalculationLive
   alias Bonfire.Recyclapp.CreatePhenomenonLive
-  alias Bonfire.Recyclapp.CreateResourceSpecificationLive
+  alias Bonfire.UI.ValueFlows.CreateResourceSpecificationLive
 
   def mount(params, session, socket) do
     live_plug(params, session, socket, [

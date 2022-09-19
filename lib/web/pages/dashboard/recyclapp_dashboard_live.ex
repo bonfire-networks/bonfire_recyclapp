@@ -10,7 +10,7 @@ defmodule Bonfire.Recyclapp.RecyclappDashboardLive do
   alias Bonfire.UI.Me.CreateUserLive
   alias Bonfire.Recyclapp.CreateEventLive
 
-  declare_extension("EveryCycle", icon: "mdi:bicycle-penny-farthing")
+  declare_extension("EveryCycle", icon: "twemoji:cyclone")
 
   def mount(params, session, socket) do
     live_plug(params, session, socket, [
