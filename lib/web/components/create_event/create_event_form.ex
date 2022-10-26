@@ -25,7 +25,7 @@ defmodule Bonfire.Recyclapp.CreateEventForm do
         %{"resource" => resource, "note" => note, "quantity" => quantity} = _params,
         socket
       ) do
-    user = Utils.current_user_required(socket)
+    user = Utils.current_user_required!(socket)
 
     {:ok, resource_spec} =
       ResourceSpecifications.one([

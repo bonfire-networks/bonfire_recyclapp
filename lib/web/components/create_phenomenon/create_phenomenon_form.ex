@@ -29,7 +29,7 @@ defmodule Bonfire.Recyclapp.CreatePhenomenonForm do
         } = _params,
         socket
       ) do
-    user = Utils.current_user_required(socket)
+    user = Utils.current_user_required!(socket)
     {float, ""} = Float.parse(formula)
 
     case apply_action(changeset, :insert) do

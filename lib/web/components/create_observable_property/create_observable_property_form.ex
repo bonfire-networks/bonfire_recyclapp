@@ -18,7 +18,7 @@ defmodule Bonfire.Recyclapp.CreateObservablePropertyForm do
   end
 
   def send(changeset, %{"name" => name, "note" => note} = _params, socket) do
-    user = Utils.current_user_required(socket)
+    user = Utils.current_user_required!(socket)
 
     case apply_action(changeset, :insert) do
       {:ok, _} ->

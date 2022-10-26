@@ -33,7 +33,7 @@ defmodule Bonfire.Recyclapp.CreateObservationForm do
         socket
       )
       when is_binary(result_phenomenon) do
-    user = Utils.current_user_required(socket)
+    user = Utils.current_user_required!(socket)
     provider = user.id
     debug(params)
     # debug(has_result)
