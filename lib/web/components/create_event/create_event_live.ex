@@ -12,7 +12,7 @@ defmodule Bonfire.Recyclapp.CreateEventLive do
      )}
   end
 
-  def handle_event("add_observation", %{"id" => id}, socket) do
+  def do_handle_event("add_observation", %{"id" => id}, socket) do
     cond do
       Enum.member?(socket.assigns.observed, id) == false ->
         socket = assign(socket, observed: [id] ++ socket.assigns.observed)
@@ -25,7 +25,7 @@ defmodule Bonfire.Recyclapp.CreateEventLive do
     end
   end
 
-  def handle_event("validate", %{"create_event_form" => params}, socket) do
+  def do_handle_event("validate", %{"create_event_form" => params}, socket) do
     debug(validate: params)
 
     changeset = CreateEventForm.changeset(params)
@@ -34,7 +34,7 @@ defmodule Bonfire.Recyclapp.CreateEventLive do
     {:noreply, socket}
   end
 
-  def handle_event("submit", %{"create_event_form" => params}, socket) do
+  def do_handle_event("submit", %{"create_event_form" => params}, socket) do
     debug(submit: params)
     changeset = CreateEventForm.changeset(params)
 

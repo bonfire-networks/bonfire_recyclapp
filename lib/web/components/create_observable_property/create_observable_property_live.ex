@@ -11,7 +11,7 @@ defmodule Bonfire.Recyclapp.CreateObservablePropertyLive do
      )}
   end
 
-  def handle_event(
+  def do_handle_event(
         "validate_property",
         %{"create_observable_property_form" => params},
         socket
@@ -22,7 +22,7 @@ defmodule Bonfire.Recyclapp.CreateObservablePropertyLive do
     {:noreply, socket}
   end
 
-  def handle_event(
+  def do_handle_event(
         "submit_property",
         %{"create_observable_property_form" => params},
         socket

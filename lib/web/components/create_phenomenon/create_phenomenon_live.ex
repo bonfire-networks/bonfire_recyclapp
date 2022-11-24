@@ -11,7 +11,7 @@ defmodule Bonfire.Recyclapp.CreatePhenomenonLive do
      )}
   end
 
-  def handle_event(
+  def do_handle_event(
         "validate_phenomenon",
         %{"create_phenomenon_form" => params},
         socket
@@ -22,7 +22,7 @@ defmodule Bonfire.Recyclapp.CreatePhenomenonLive do
     {:noreply, socket}
   end
 
-  def handle_event(
+  def do_handle_event(
         "submit_phenomenon",
         %{"create_phenomenon_form" => params},
         socket
