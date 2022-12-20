@@ -23,10 +23,10 @@
             name="tabs"
             class="block w-full py-2 pl-3 pr-10 text-base border-gray-300 rounded-md focus:outline-none focus:ring-secondary-500 focus:border-indigo-500 sm:text-sm"
           >
-            <option @click="tab = 'donation'" selected="{ 'true': tab === 'donation' }">
+            <option x-on:click="tab = 'donation'" selected="{ 'true': tab === 'donation' }">
               Register a donation
             </option>
-            <option @click="tab = 'txs'" selected="{ 'true': tab === 'txs' }">
+            <option x-on:click="tab = 'txs'" selected="{ 'true': tab === 'txs' }">
               Transactions history
             </option>
           </select>
@@ -36,7 +36,7 @@
             <nav class="flex -mb-px space-x-8" aria-label="Tabs">
               <button
                 x-bind:class="{'text-white border-white hover:text-white hover:border-white' : tab === 'donation'}"
-                @click="tab = 'donation'"
+                x-on:click="tab = 'donation'"
                 class="px-1 py-4 text-sm font-medium text-base-content opacity-60 border-b-2 border-transparent hover:text-base-content opacity-60 hover:border-gray-300 whitespace-nowrap"
                 aria-current="page"
               >
@@ -44,7 +44,7 @@
               </button>
               <button
                 x-bind:class="{'text-white border-white hover:text-white hover:border-white' : tab === 'txs'}"
-                @click="tab = 'txs'"
+                x-on:click="tab = 'txs'"
                 class="px-1 py-4 text-sm font-medium text-base-content opacity-60 border-b-2 border-transparent hover:text-base-content opacity-60 hover:border-gray-300 whitespace-nowrap"
               >
                 Transactions history
