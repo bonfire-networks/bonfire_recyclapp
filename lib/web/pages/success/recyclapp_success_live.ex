@@ -8,24 +8,14 @@ defmodule Bonfire.Recyclapp.RecyclappSuccessLive do
   alias Bonfire.UI.Social.HashtagsLive
   alias Bonfire.UI.Social.ParticipantsLive
 
-  alias Bonfire.UI.Me.LivePlugs
   alias Bonfire.Me.Users
   alias Bonfire.UI.Me.CreateUserLive
   alias Bonfire.Recyclapp.CreateEventForm
   alias Bonfire.Recyclapp.CreateObservationForm
 
-  def mount(params, session, socket) do
-    live_plug(params, session, socket, [
-      LivePlugs.LoadCurrentAccount,
-      LivePlugs.LoadCurrentUser,
-      Bonfire.UI.Common.LivePlugs.StaticChanged,
-      Bonfire.UI.Common.LivePlugs.Csrf,
-      Bonfire.UI.Common.LivePlugs.Locale,
-      &mounted/3
-    ])
-  end
+  on_mount {LivePlugs, [Bonfire.UI.Me.LivePlugs.LoadCurrentUser]}
 
-  defp mounted(%{"reciprocal_id" => reciprocal_id}, session, socket) do
+  def mount(%{"reciprocal_id" => reciprocal_id}, session, socket) do
     debug(reciprocal_id)
     reciprocal = reciprocal_by_id(reciprocal_id, socket)
 
@@ -37,7 +27,7 @@ defmodule Bonfire.Recyclapp.RecyclappSuccessLive do
      )}
   end
 
-  defp mounted(params, session, socket) do
+  def mount(params, session, socket) do
     {:ok,
      assign(
        socket,
