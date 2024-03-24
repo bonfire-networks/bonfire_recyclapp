@@ -9,7 +9,11 @@ defmodule Bonfire.Recyclapp.RecyclappDashboardLive do
   alias Bonfire.UI.Me.CreateUserLive
   alias Bonfire.Recyclapp.CreateEventLive
 
-  declare_extension("EveryCycle", icon: "twemoji:cyclone", emoji: "🌀")
+  declare_extension("EveryCycle",
+    icon: "twemoji:cyclone",
+    emoji: "🌀",
+    description: l("Circle of life.")
+  )
 
   on_mount {LivePlugs, [Bonfire.UI.Me.LivePlugs.LoadCurrentUser]}
 
