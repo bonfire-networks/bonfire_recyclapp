@@ -10,7 +10,7 @@ defmodule Bonfire.Recyclapp.RecyclappDashboardLive do
   alias Bonfire.Recyclapp.CreateEventLive
 
   declare_extension("EveryCycle",
-    icon: "twemoji:cyclone",
+    icon: "icon-park-outline:cycle",
     emoji: "🌀",
     description: l("Circle of life.")
   )
