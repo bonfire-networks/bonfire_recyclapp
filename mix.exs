@@ -26,7 +26,6 @@ defmodule Bonfire.Recyclapp.MixProject do
       deps:
         Mess.deps([
           {:phoenix_live_reload, "~> 1.2", only: :dev},
-
           {:floki, ">= 0.0.0", only: [:dev, :test]},
           {:absinthe, "~> 1.7.0", optional: true},
           # {:qr_code, "~> 2.2.0"}, # commented because of conflict its dependency `result` and another one
