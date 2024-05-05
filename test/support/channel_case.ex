@@ -17,7 +17,7 @@ defmodule Bonfire.Recyclapp.ChannelCase do
 
   use ExUnit.CaseTemplate
 
-  import Bonfire.Recyclapp.Integration
+  import Bonfire.Recyclapp
 
   using do
     quote do

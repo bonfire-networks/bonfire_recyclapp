@@ -6,5 +6,5 @@ defmodule Bonfire.Recyclapp.Test.FakeHelpers do
 
   import ExUnit.Assertions
 
-  import Bonfire.Recyclapp.Integration
+  import Bonfire.Recyclapp
 end

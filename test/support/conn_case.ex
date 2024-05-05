@@ -38,7 +38,7 @@ defmodule Bonfire.Recyclapp.ConnCase do
   end
 
   setup tags do
-    import Bonfire.Recyclapp.Integration
+    import Bonfire.Recyclapp
 
     Bonfire.Common.Test.Interactive.setup_test_repo(tags)
 
