@@ -40,7 +40,7 @@ defmodule Bonfire.Recyclapp.RecyclappDashboardLive do
     {:noreply,
      socket
      |> assign_flash(:info, "Donation successfully recorded!")
-     |> assign(all_events: [event] ++ socket.assigns.all_events)
+     |> assign(all_events: [event] ++ assigns(socket).all_events)
      |> redirect_to("/recyclapp/success/" <> e(reciprocals, :id, e(event, :id, "")))}
   end
 

@@ -14,12 +14,12 @@ defmodule Bonfire.Recyclapp.CreateEventLive do
 
   def handle_event("add_observation", %{"id" => id}, socket) do
     cond do
-      Enum.member?(socket.assigns.observed, id) == false ->
-        socket = assign(socket, observed: [id] ++ socket.assigns.observed)
+      Enum.member?(assigns(socket).observed, id) == false ->
+        socket = assign(socket, observed: [id] ++ assigns(socket).observed)
         {:noreply, socket}
 
-      Enum.member?(socket.assigns.observed, id) == true ->
-        socket = assign(socket, observed: List.delete(socket.assigns.observed, id))
+      Enum.member?(assigns(socket).observed, id) == true ->
+        socket = assign(socket, observed: List.delete(assigns(socket).observed, id))
 
         {:noreply, socket}
     end
