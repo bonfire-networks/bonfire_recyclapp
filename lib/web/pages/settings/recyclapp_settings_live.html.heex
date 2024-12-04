@@ -153,41 +153,41 @@
         </aside>
         <div class="divide-y divide-gray-200 lg:col-span-9">
           <div x-show="tab === 'units'">
-            <%= live_component(
+            {live_component(
               @socket,
               CreateUnitLive,
               id: "create_unit",
               all_units: @all_units
-            ) %>
+            )}
           </div>
           <div x-show="tab === 'res'">
-            <%= live_component(
+            {live_component(
               @socket,
               CreateResourceSpecificationLive,
               id: "create_resource_specification",
               all_resources: @all_resources,
               all_units: @all_units
-            ) %>
+            )}
           </div>
           <div x-show="tab === 'property'">
-            <%= live_component(
+            {live_component(
               @socket,
               CreateObservablePropertyLive,
               id: "create_robservable_property",
               all_properties: @all_properties
-            ) %>
+            )}
           </div>
           <div x-show="tab === 'phenomenon'">
-            <%= live_component(
+            {live_component(
               @socket,
               CreatePhenomenonLive,
               id: "create_phenomenon",
               all_properties: @all_properties,
               all_phenomenons: @all_phenomenons
-            ) %>
+            )}
           </div>
           <div x-show="tab === 'value_calculation'">
-            <%= live_component(
+            {live_component(
               @socket,
               CreateValueCalculationLive,
               id: "create_value_calculation",
@@ -195,7 +195,7 @@
               all_units: @all_units,
               all_value_calculations: @all_value_calculations,
               actions: @actions
-            ) %>
+            )}
           </div>
         </div>
       </div>

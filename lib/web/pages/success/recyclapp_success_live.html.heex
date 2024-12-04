@@ -16,12 +16,12 @@
             The donator received
           </h4>
           <h3 class="p-3 mx-auto mt-4 text-lg font-bold text-center text-blue-800 bg-base-100 bg-opacity-40 rounded w-96">
-            <%= @reciprocal.resource_quantity.has_numerical_value %> <%= e(
+            {@reciprocal.resource_quantity.has_numerical_value} {e(
               @reciprocal,
               :resource_conforms_to,
               :name,
               ""
-            ) %>
+            )}
           </h3>
 
           <%= live_redirect to: path(Bonfire.Recyclapp.RecyclappDashboardLive) do %>

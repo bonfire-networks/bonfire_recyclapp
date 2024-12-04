@@ -53,14 +53,14 @@
           </div>
         </div>
         <div x-show="tab === 'donation'">
-          <%= live_component(
+          {live_component(
             @socket,
             CreateEventLive,
             id: "create_event",
             all_resources: @all_resources,
             all_observable_properties: @all_observable_properties,
             selected_property: @selected_property
-          ) %>
+          )}
         </div>
         <div x-show="tab === 'txs'">
           <div class="flow-root">
@@ -72,34 +72,34 @@
                       <p class="text-base text-base-content opacity-80">
                         Donated
                         <b>
-                          <%= e(item, :triggered_by, :resource_quantity, :has_numerical_value, "") %> <%= e(
+                          {e(item, :triggered_by, :resource_quantity, :has_numerical_value, "")} {e(
                             item,
                             :triggered_by,
                             :resource_quantity,
                             :has_unit,
                             :label,
                             ""
-                          ) %>
+                          )}
                         </b>
                         of
                         <b>
-                          <%= List.first(
+                          {List.first(
                             String.split(
                               e(item, :triggered_by, :resource_conforms_to, :name, ""),
                               "-"
                             )
-                          ) %>
+                          )}
                         </b>
                       </p>
                       <p class="inline-flex items-center px-3 py-1 mt-1 text-sm font-medium text-green-800 bg-green-100 rounded-full">
                         Received
                         <b class="mx-1">
-                          <%= e(item, :resource_quantity, :has_numerical_value, "") %>
+                          {e(item, :resource_quantity, :has_numerical_value, "")}
                         </b>
                         <b>
-                          <%= List.first(
+                          {List.first(
                             String.split(e(item, :resource_conforms_to, :name, ""), "-")
-                          ) %>
+                          )}
                         </b>
                       </p>
                     </div>
