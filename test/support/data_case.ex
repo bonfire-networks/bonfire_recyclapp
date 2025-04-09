@@ -23,6 +23,8 @@ defmodule Bonfire.Recyclapp.DataCase do
       import Ecto.Changeset
       import Ecto.Query
       # import Bonfire.Recyclapp.DataCase
+
+      @moduletag :backend
     end
   end
 
